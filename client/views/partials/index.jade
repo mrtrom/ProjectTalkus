@@ -1,0 +1,32 @@
+.row-fluid
+    .span6
+        .centerform
+          form.form-horizontal(name='singInForm')
+            .control-group
+              .controls
+                input#inputUsername(ng-model='user.username', type='text', placeholder='Username', required)
+                label.error(for='username', ng-show='invalidUserInfo') Invalid info
+            .control-group
+              .controls
+                input#inputPassword(ng-model='user.password', type='password', placeholder='Password')
+            .control-group
+              .controls
+                button.btn.btn-primary(ng-click='submitLogin()') Sign in
+        .centerform
+          form.form-horizontal
+            .control-group
+              .controls
+                input#inputUsername(type='text', placeholder='Username')
+            .control-group
+              .controls
+                input#inputEmail(type='text', placeholder='Email')
+            .control-group
+              .controls
+                input#inputPassword(type='password', placeholder='Password')
+            .control-group
+              .controls
+                button.btn.btn-success(type='submit') Sign up
+      .span6
+        .middle
+          h4 Welcome to talkus!
+          p Chat with people all around the world, or you're neightbor!

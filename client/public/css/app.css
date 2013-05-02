@@ -1,0 +1,23 @@
+/* app css stylesheet */
+
+body {
+	background:#ececec;
+}
+.navbar-inner {
+  border-radius: 0 0 0 0;
+}
+.well.format {
+  background: none repeat scroll 0 0 transparent;
+  border: medium none;
+  padding: 0;
+}
+textarea {
+  height: auto;
+  width:inherit;
+}
+.span2.right {
+  text-align: right;
+}
+.row-fluid.profilepic img {
+  margin-bottom: 10px;
+}
