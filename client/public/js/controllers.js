@@ -2,14 +2,6 @@
 
 /* Controllers */
 
-//Index controllers
-function IndexCtrl($scope, $http) {
-  $http.get('/API/posts').
-    success(function(data, status, headers, config) {
-      $scope.posts = data.posts;
-    });
-}
-
 //Sessions controllers
 function LoginCtrl($scope, $http, $location) {
     $scope.user = {};
@@ -18,7 +10,6 @@ function LoginCtrl($scope, $http, $location) {
                 
         $http.post('/API/sessions', $scope.user).
         success(function(data, status, headers, config){
-            console.log('inicio');
             $scope.invalidUserInfo = false;
         }).
         error(function(data, status, headers, config){
@@ -28,5 +19,15 @@ function LoginCtrl($scope, $http, $location) {
             }
         });
     };
+    //$location.$$absUrl = $location.$$absUrl.replace('#/', '');
+    console.log($location);
+    console.log($location.$$absUrl);
     
+}
+
+function DetailCtrl($scope, $http, $location) {
+    console.log('entró');
+    //$location.$$absUrl = $location.$$absUrl.replace('#/', '');
+    console.log("asd" + $location);
+    console.log($location.$$absUrl);
 }

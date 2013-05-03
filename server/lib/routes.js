@@ -69,6 +69,5 @@ app.post('/API/mails', mails.send);
 //Define resources and routes for client
 
 app.get('/', clientRoutes.index);
-
 app.get('/partials/:name', clientRoutes.partials);
 

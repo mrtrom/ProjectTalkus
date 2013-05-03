@@ -7,7 +7,8 @@ var util = require('util'),
     path = require('path'), 
     viewsDir = path.resolve(__dirname, '..', 'client/views'),
     publicDir = path.resolve(__dirname, '..', 'client/public'),
-    MongoStore = require('connect-mongo')(express);
+    MongoStore = require('connect-mongo')(express),
+    clientRoutes = require('../client/routes/index');
 
 //Var's
 var app = express(),
@@ -25,7 +26,6 @@ pub_dir = __dirname + pub_dir;
 
 //App config
 app.configure(function() {
-    
   app.set('views', viewsDir);
   app.set('view engine', 'jade');
   app.set('view options', {
