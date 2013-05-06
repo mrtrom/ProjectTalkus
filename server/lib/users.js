@@ -25,7 +25,9 @@ User.schema.path('password').validate(function(v) {
 //Create new user
 users.create = function(req, res) {
     var user = new User(req.body.user);
-        
+    
+    console.log(user);
+    
     user.password = utils.crypt(user.password);
     
     return user.save(function(error) {

@@ -22,6 +22,12 @@ sessions.check = function(req, res, next) {
 
 //Login
 sessions.login = function(req, res) {
+    
+    //Entries validations
+    if (req.body.username === undefined){req.body.username = "";}
+    if (req.body.password === undefined){req.body.password = "";}
+    
+    //Credentials
     var credentials = req.body, 
         criteria = {
             $or: [
@@ -32,12 +38,11 @@ sessions.login = function(req, res) {
             }
             ],
             password: utils.crypt(credentials.password)
-        };;  
+        }; 
   
     return User.findOne(criteria, {
         password: 0
     }, function(error, user) {
-        //console.log('user' + user);
         if (error !== null) {
             res.statusCode = 500;
             return res.end(JSON.stringify(error));

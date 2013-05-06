@@ -1,32 +1,65 @@
+script(type='text/javascript')
+  $('.thetool').tooltip('hide');
+  $('.carousel').carousel({
+        interval: 10000
+    })
+#myCarousel.carousel.slide
+  .carousel-inner
+    .active.item 
+        img(src='http://lorempixel.com/1601/768/city/', alt='')
+    .item 
+        img(src='http://lorempixel.com/1600/768/city/', alt='')
+    .item 
+        img(src='http://lorempixel.com/1602/768/city/', alt='')
+
 .row-fluid
     .span6
         .centerform
-          form.form-horizontal(name='singInForm')
+          h3.muted.label-all Sign in
+          form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
+            .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
+              p
+                strong Username
+                |    or  
+                strong Password
+                |    incorrect
+                
             .control-group
               .controls
-                input#inputUsername(ng-model='user.username', type='text', placeholder='Username', required)
-                label.error(for='username', ng-show='invalidUserInfo') Invalid info
+                input#inputUsername(name='username', id='username', ng-model='user.username', type='text', placeholder='Username or email', required)
+                a.thetool(ng-show='singInForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username or an email')
+                  i.icon-exclamation-sign.moveicon
+            .control-group.password
+              .controls
+                input#inputPassword(name='password', id='password',ng-model='user.password', type='password', placeholder='Password' , required)
+                a.thetool(ng-show='singInForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
+                  i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                input#inputPassword(ng-model='user.password', type='password', placeholder='Password')
-            .control-group
-              .controls
-                button.btn.btn-primary(ng-click='submitLogin()') Sign in
+                button.btn.btn-primary(type='submit') Sign in
+        .or
         .centerform
-          form.form-horizontal
+          h3.muted.label-all Sign up
+          form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
             .control-group
               .controls
-                input#inputUsername(type='text', placeholder='Username')
+                input#inputUsername(name='username', id='username', ng-model='user.username', type='text', placeholder='Username', required)
+                a.thetool(ng-show='registerForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username')
+                  i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                input#inputEmail(type='text', placeholder='Email')
-            .control-group
+                input#inputUsername(name='email', id='email', ng-model='user.email', type='text', placeholder='Email', required)
+                a.thetool(ng-show='registerForm.email.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter an email')
+                  i.icon-exclamation-sign.moveicon
+            .control-group.password
               .controls
-                input#inputPassword(type='password', placeholder='Password')
+                input#inputPassword(name='password', id='password',ng-model='user.password', type='password', placeholder='Password' , required)
+                a.thetool(ng-show='registerForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
+                  i.icon-exclamation-sign.moveicon
             .control-group
               .controls
                 button.btn.btn-success(type='submit') Sign up
       .span6
         .middle
-          h4 Welcome to talkus!
+          h1.muted Welcome to talkus!
           p Chat with people all around the world, or you're neightbor!
