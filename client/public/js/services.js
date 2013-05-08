@@ -1,9 +1,21 @@
 'use strict';
 
-/* Services */
+//Resources
 
+angular.module('myApp.services', [])
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('myApp.services', []).
-  value('version', '0.1');
+.factory('User', ['$resource', function($resource) {
+    console.log('hola');
+    
+    var User, _postsUrl, _url;
+    _url = '/API/users/:username';
+    _postsUrl = '/API/users/:id/posts';
+    User = $resource(_url, {}, {
+      update: {
+        method: 'PUT'
+      }
+    });
+    
+    return User;
+  }
+]);

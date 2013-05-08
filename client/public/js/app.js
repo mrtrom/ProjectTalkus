@@ -6,6 +6,7 @@ var Modules = {
 
 // Declare app level module which depends on filters, and services
 var App = angular.module('myApp', [
+    'ngResource',
     'myApp.controllers',
     'myApp.directives',
     'myApp.filters',
