@@ -16,7 +16,7 @@ script(type='text/javascript')
     .span6
         .centerform
           h3.muted.label-all Sign in
-          form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
+          form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()", user="newUser")
             .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
               p
                 strong Username
@@ -40,7 +40,7 @@ script(type='text/javascript')
         .or
         .centerform
           h3.muted.label-all Sign up
-          form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
+          form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()", user="newUser")
             .control-group
               .controls
                 input#inputUsername(name='username', id='username', ng-model='user.username', type='text', placeholder='Username', required)

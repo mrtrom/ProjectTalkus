@@ -85,10 +85,11 @@ div.middle h1.muted , div.middle p{
   }
 }
 div.centerform {
-    background: rgba(250, 250, 250, 0.9);
+    background: rgb(255, 255, 255);
     float: left;
     padding: 0 16px;
+    box-shadow: 0 0 7px -1px rgb(0, 0, 0);
     margin-bottom: 10px;
     border-radius: 10px;
-    width:245px;
+    width: 245px;
 }

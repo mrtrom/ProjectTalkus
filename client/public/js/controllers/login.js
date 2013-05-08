@@ -1,5 +1,11 @@
 Modules.controllers.controller('LoginController', ['$scope', '$http', '$location', 'User', function($scope, $http, $location, User) {
     
+    $scope.newUser = {
+      username: null,
+      email: null,
+      password: null,
+    };
+    
     //Objet
     $scope.user = {};
     
