@@ -1,26 +1,5 @@
 extends layout
 
 block body
-    
-    .navbar
-      .navbar-inner
-        .container
-          a.btn.btn-navbar(data-target='.navbar-responsive-collapse', data-toggle='collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand(href='#') Proyect Talk
-          .nav-collapse.collapse.navbar-responsive-collapse
-            ul.nav
-              li#home
-                a.transition(href='#/') Home
-              li#chat
-                a.transition(href='#/chat') Chat
-              li#account
-                a.transition(href='#/account') Account
-          //
-             /.nav-collapse 
-      //
-         /navbar-inner 
     .container.trs
       div(ng-view='ng-view')

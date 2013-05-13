@@ -1,0 +1,34 @@
+@media (max-width: 767px) {
+    div.middle{
+        display:block;
+        width:auto;
+        text-align:right;
+        height:auto;
+    }
+    div.centerform{
+        float:none;
+        overflow:hidden;
+        margin:0 auto;
+    }
+    div.centerform.chatnow{
+        margin-top:20px;
+        margin-bottom:20px;
+    }
+    div.or{
+        float:none;
+        margin: 20px auto;
+    }
+    div.row-fluid.home{
+        padding:0;
+    }
+}
+@media (max-width: 480px) {
+    div.centerform{
+        width:90%;
+        text-align:center;
+    }
+    div.centerform.chatnow{
+        width:100%;
+        text-align:center;
+    }
+}

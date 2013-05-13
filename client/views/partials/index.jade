@@ -3,19 +3,11 @@ script(type='text/javascript')
   $('.carousel').carousel({
         interval: 10000
     })
-#myCarousel.carousel.slide
-  .carousel-inner
-    .active.item 
-        img(src='http://lorempixel.com/1601/768/city/', alt='')
-    .item 
-        img(src='http://lorempixel.com/1600/768/city/', alt='')
-    .item 
-        img(src='http://lorempixel.com/1602/768/city/', alt='')
 
-.row-fluid
+.row-fluid.home
     .span6
         .centerform
-          h3.muted.label-all Sign in
+          h3.in Sign in
           form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()", user="newUser")
             .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
               p
@@ -36,10 +28,10 @@ script(type='text/javascript')
                   i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                button.btn.btn-primary(type='submit') Sign in
+                button.btn.btn-info(type='submit') Sign in
         .or
         .centerform
-          h3.muted.label-all Sign up
+          h3.up Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()", user="newUser")
             .control-group
               .controls
@@ -59,7 +51,9 @@ script(type='text/javascript')
             .control-group
               .controls
                 button.btn.btn-success(type='submit') Sign up
-      .span6
-        .middle
-          h1.muted Welcome to talkus!
-          p Chat with people all around the world, or you're neightbor!
+        .centerform.chatnow
+          button.btn.btn-large.btn-block.btn-primary(type='submit') Or chat anonymously!
+    .span6
+      .middle
+        h1.muted Welcome to talkus!
+        p.text-success Chat with people all around the world, or you're neightbor!
