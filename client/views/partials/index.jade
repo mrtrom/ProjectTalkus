@@ -8,7 +8,7 @@ script(type='text/javascript')
     .span6
         .centerform
           h3.in Sign in
-          form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()", user="newUser")
+          form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
             .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
               p
                 strong Username
@@ -18,12 +18,12 @@ script(type='text/javascript')
                 
             .control-group
               .controls
-                input#inputUsername(name='username', id='username', ng-model='user.username', type='text', placeholder='Username or email', required)
+                input#inputUsername(name='username', id='username', ng-model='singInForm.user.username', type='text', placeholder='Username or email', required)
                 a.thetool(ng-show='singInForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username or an email')
                   i.icon-exclamation-sign.moveicon
             .control-group.password
               .controls
-                input#inputPassword(name='password', id='password',ng-model='user.password', type='password', placeholder='Password' , required)
+                input#inputPassword(name='password', id='password',ng-model='singInForm.user.password', type='password', placeholder='Password' , required)
                 a.thetool(ng-show='singInForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
                   i.icon-exclamation-sign.moveicon
             .control-group
@@ -32,20 +32,20 @@ script(type='text/javascript')
         .or
         .centerform
           h3.up Sign up
-          form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()", user="newUser")
+          form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
             .control-group
               .controls
-                input#inputUsername(name='username', id='username', ng-model='user.username', type='text', placeholder='Username', required)
+                input#inputUsername(name='username', id='username', ng-model='registerForm.user.username', type='text', placeholder='Username', required)
                 a.thetool(ng-show='registerForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username')
                   i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                input#inputUsername(name='email', id='email', ng-model='user.email', type='text', placeholder='Email', required)
+                input#inputUsername(name='email', id='email', ng-model='registerForm.user.email', type='text', placeholder='Email', required)
                 a.thetool(ng-show='registerForm.email.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter an email')
                   i.icon-exclamation-sign.moveicon
             .control-group.password
               .controls
-                input#inputPassword(name='password', id='password',ng-model='user.password', type='password', placeholder='Password' , required)
+                input#inputPassword(name='password', id='password',ng-model='registerForm.user.password', type='password', placeholder='Password' , required)
                 a.thetool(ng-show='registerForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
                   i.icon-exclamation-sign.moveicon
             .control-group

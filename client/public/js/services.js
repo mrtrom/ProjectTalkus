@@ -5,8 +5,6 @@
 angular.module('myApp.services', [])
 
 .factory('User', ['$resource', function($resource) {
-    console.log('hola');
-    
     var User, _postsUrl, _url;
     _url = '/API/users/:username';
     _postsUrl = '/API/users/:id/posts';
@@ -15,7 +13,6 @@ angular.module('myApp.services', [])
         method: 'PUT'
       }
     });
-    
     return User;
   }
 ]);
