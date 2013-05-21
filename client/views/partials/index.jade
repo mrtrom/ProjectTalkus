@@ -33,6 +33,16 @@ script(type='text/javascript')
         .centerform
           h3.up Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
+            .alert.alert-error.error(ng-show='validations.invalidEmailFormat')
+              p
+                strong Email
+                |    format is incorrect
+            .alert.alert-error.error(ng-show='validations.invalidUsername')
+              p
+                strong Username
+                |    format is incorrect
+            .alert.alert-success(ng-show='succesMesages.creationSucces')
+              p Succes!!
             .control-group
               .controls
                 input#inputUsername(name='username', id='username', ng-model='registerForm.user.username', type='text', placeholder='Username', required)
