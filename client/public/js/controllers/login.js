@@ -12,6 +12,10 @@ Modules.controllers.controller('LoginController', ['$scope', '$http', '$location
         invalidUsername: false
     };
     
+    $scope.loginValidations = {
+        userSessionExist: false
+    };
+    
     $scope.succesMesages = {
         creationSucces: false
     };
@@ -39,8 +43,7 @@ Modules.controllers.controller('LoginController', ['$scope', '$http', '$location
             $scope.validations.invalidUsername = false;
             $scope.succesMesages.creationSucces = true;
         }).
-        error(function(data, status, headers, config){    
-            console.log(data.errors);
+        error(function(data, status, headers, config){
             switch (status) {
                 case 400:
                     var countErrors = data.errors.length;
