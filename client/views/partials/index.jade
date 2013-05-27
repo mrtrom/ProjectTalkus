@@ -18,12 +18,12 @@ script(type='text/javascript')
                 
             .control-group
               .controls
-                input#inputUsername(name='username', id='username', ng-model='singInForm.user.username', type='text', placeholder='Username or email', required)
+                input#inputUsername(name='username', id='username', ng-model='session.username', type='text', placeholder='Username or email', required)
                 a.thetool(ng-show='singInForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username or an email')
                   i.icon-exclamation-sign.moveicon
             .control-group.password
               .controls
-                input#inputPassword(name='password', id='password',ng-model='singInForm.user.password', type='password', placeholder='Password' , required)
+                input#inputPassword(name='password', id='password',ng-model='session.password', type='password', placeholder='Password' , required)
                 a.thetool(ng-show='singInForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
                   i.icon-exclamation-sign.moveicon
             .control-group

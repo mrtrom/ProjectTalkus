@@ -27,6 +27,15 @@ responds
 app.post('/API/sessions', sessions.login);
 
 /*
+GET
+responds
+  200
+    {user - session's user object}
+  404 - if no user attached to session
+*/
+app.get('/API/sessions', sessions.getSessionUser);
+
+/*
 DELETE
 responds
   200 - if logged-out successfully

@@ -1,4 +1,4 @@
-Modules.controllers.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session', function($rootScope, $scope, $http, $location, Session) {
 
     //Validations
     $scope.permissions = {
@@ -20,14 +20,19 @@ Modules.controllers.controller('LoginController', ['$scope', '$http', '$location
         creationSucces: false
     };
     
+    //Session
+    $scope.session = new Session();
+    
     //Login action button
     $scope.submitLogin = function () {
-        $http.post('/API/sessions', $scope.singInForm.user).
-        success(function(data, status, headers, config){
+        
+        $scope.session.$save(function(res) {
+            $rootScope.user = res;
             $scope.permissions.invalidUserInfo = false;
-        }).
-        error(function(data, status, headers, config){
-            switch (status) {
+            console.log('response ' + JSON.stringify(res));
+        },
+        function(res){
+            switch (res.status) {
                 case 403:
                     $scope.permissions.invalidUserInfo = true; //Invalid user or password
             }

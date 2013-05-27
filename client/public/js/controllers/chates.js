@@ -1,20 +1,13 @@
-Modules.controllers.controller('ChatesController', ['$scope', '$http', '$location', function($scope, $http, $location) {
-    $scope.permissions = {
-        invalidUserInfo: false
-    };
+Modules.controllers.controller('ChatesController', ['$rootScope', '$scope', '$http', '$location',  'Session',
+    function($rootScope, $scope, $http, $location, Session) {
     
-    //Login action button
-    $scope.submitLogin = function () {
-        $http.post('/API/sessions', $scope.singInForm.user).
-        success(function(data, status, headers, config){
-            $scope.permissions.invalidUserInfo = false;
-        }).
-        error(function(data, status, headers, config){
-            switch (status) {
-                case 403:
-                    $scope.permissions.invalidUserInfo = true; //Invalid user or password
-            }
-        });
-    };
+    Session.get(function(response) {
+        if ((response !== null ? response._id : void 0) !== null) {
+            $rootScope.user = response;
+            $scope.username = response.username;
+        }
+    }, function(response) {
+        
+    });
     
 }]);

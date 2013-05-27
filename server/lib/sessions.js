@@ -9,7 +9,6 @@ var schemas = require('./schemas'),
 //Checks if the request has a valid session user
 sessions.check = function(req, res, next) {
     var _ref;
-
     if (((_ref = req.session) !== null ? _ref.user : void 0) !== null) {
         return next();
     } else {
@@ -22,10 +21,10 @@ sessions.check = function(req, res, next) {
 
 //Login
 sessions.login = function(req, res) {
-    
     //Entries validations
     if (req.body.username === undefined){req.body.username = "";}
     if (req.body.password === undefined){req.body.password = "";}
+    
     
     //Credentials
     var credentials = req.body, 
@@ -64,4 +63,15 @@ sessions.logout = function(req, res) {
   req.session.user = null;
   res.statusCode = 200;
   return res.end();
+};
+
+//Get session object
+sessions.getSessionUser = function(req, res) {
+    if (req.session.user !== null) {
+        res.statusCode = 200;
+        return res.end(JSON.stringify(req.session.user));
+    } else {
+        res.statusCode = 204;
+        return res.end();
+    }
 };
