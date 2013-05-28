@@ -48,7 +48,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             $scope.validations.invalidEmailFormat = false;
             $scope.validations.invalidUsername = false;
             $scope.succesMesages.creationSucces = true;
-        
         },
         function(res){
             console.log(res);

@@ -13,8 +13,8 @@ angular.module('myApp.services', [])
 ])
 
 .factory('User', ['$resource', function($resource) {
-    var _url = '/API/users',
-        User = $resource(_url);
+    var _url = '/API/users/:username',
+        User = $resource(_url, {}, {update: {method: 'PUT'}});
         
     return User;
   }

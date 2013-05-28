@@ -41,3 +41,49 @@ users.create = function(req, res) {
         }
     });
 };
+
+//Get user info by username
+users.getByUsername = function(username, fields, callback) {
+    return User.findOne({
+        username: username,
+        confirmed: true
+    }, fields, function(error, user) {
+        if (error !== null) {
+            return typeof callback === "function" ? callback(error, null) : void 0;
+        } else if (user !== null) {
+            return typeof callback === "function" ? callback(null, user) : void 0;
+        } else {
+            return typeof callback === "function" ? callback(null, null) : void 0;
+        }
+    });
+};
+
+//Get user info
+users.get = function(req, res) {
+    var username = req.params.username,
+        fields = {
+            username: 1,
+            name: 1,
+            avatar: 1,
+            email: 1,
+            gender: 1,
+            birth: 1,
+            description: 1
+        };
+    
+    return users.getByUsername(username, fields, function(error, user) {
+        var _user;
+
+        if (error !== null) {
+            //return errors.handle(error, res);
+            console.log(JSON.stringify(error));
+        } else if (user !== null) {
+            _user = user.toObject();
+            res.statusCode = 200;
+            return res.end(JSON.stringify(_user));
+        } else {
+            res.statusCode = 404;
+            return res.end();
+        }
+    });
+};
