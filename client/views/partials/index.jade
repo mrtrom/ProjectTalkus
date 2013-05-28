@@ -28,10 +28,9 @@ script(type='text/javascript')
                   i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                button.btn.btn-info(type='submit') Sign in
-        .or
+                button.btn.btn-primary.log(type='submit') Sign in
         .centerform
-          h3.up Sign up
+          h3.in Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
             .alert.alert-error.error(ng-show='validations.invalidEmailFormat')
               p
@@ -60,9 +59,9 @@ script(type='text/javascript')
                   i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                button.btn.btn-success(type='submit') Sign up
+                button.btn.btn-primary.log(type='submit') Sign up
         .centerform.chatnow
-          button.btn.btn-large.btn-block.btn-primary(type='submit') Or chat anonymously!
+          button.btn.btn-large.btn-block.btn-primary.log(type='submit') Or chat anonymously!
     .span6
       .middle
         h1.muted Welcome to talkus!

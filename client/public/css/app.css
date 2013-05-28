@@ -1,11 +1,19 @@
 /* app css stylesheet */
 
 body {
-    background:url(../img/bkg.jpg) no-repeat center center fixed;
+background: rgb(53,106,160);
+
+    /*background:url(../img/bkg.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
+}
+::selection {
+    background: rgba(0,0,0,0.2); /* Safari */
+    }
+::-moz-selection {
+	background: rgba(0,0,0,0.2); /* Firefox */
 }
 .navbar-inner {
   border-radius: 0 0 0 0;
@@ -86,9 +94,9 @@ div.middle h1.muted , div.middle p{
 div.centerform {
     float: left;
     clear: both;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.2);
     padding: 0 16px;
-    box-shadow: 0 0px 8px -2px #000;
+    box-shadow: 0 0 9px -2px rgb(0, 0, 0) inset;
     width: 247px;
     margin-bottom: 10px;
     border-radius: 10px;
@@ -104,8 +112,26 @@ div.middle p{
     font-size:20px;
 }
 h3.in{
-    color:#77b8db;
+    color:#fff;
 }
-h3.up{
-    color:#9cd3a5;
+.home .btn.btn-primary.log{
+    background: rgba(53, 106, 160, 1);
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2) inset;
+    border: none;
+}
+.home .btn.btn-primary.random{
+    background: rgba(0,0,0,0.2);
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2) inset;
+    border: none;
+}
+p.muted.text-center.copyright{
+    color:#fff;
+}
+.home .btn.btn-primary.log:hover{
+    background: rgba(0,0,0,0.5);
+}
+.home .btn.btn-primary.log{
+    background: rgba(0,0,0,0.2);
+}
+.well-large{
 }
