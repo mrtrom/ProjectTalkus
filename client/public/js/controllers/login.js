@@ -1,4 +1,4 @@
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session', function($rootScope, $scope, $http, $location, Session) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session', 'User', function($rootScope, $scope, $http, $location, Session , User) {
 
     //Validations
     $scope.permissions = {
@@ -22,6 +22,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     //Session
     $scope.session = new Session();
+    //User
+    $scope.userObject = new User();
     
     //Login action button
     $scope.submitLogin = function () {
@@ -41,19 +43,20 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     //Register action button
     $scope.submitRegister = function () {
-        $http.post('/API/users', $scope.registerForm).
-        success(function(data, status, headers, config){
+        $scope.userObject.$save(function(res){
             $scope.permissions.invalidUserInfo = false;
             $scope.validations.invalidEmailFormat = false;
             $scope.validations.invalidUsername = false;
             $scope.succesMesages.creationSucces = true;
-        }).
-        error(function(data, status, headers, config){
-            switch (status) {
+        
+        },
+        function(res){
+            console.log(res);
+            switch (res.status) {
                 case 400:
-                    var countErrors = data.errors.length;
+                    var countErrors = res.data.errors.length;
                     for (var i = 0; i < countErrors; i++){
-                        switch (data.errors[i].path) {
+                        switch (res.data.errors[i].path) {
                             case 'email':
                                 $scope.validations.invalidEmailFormat = true;
                                 break;

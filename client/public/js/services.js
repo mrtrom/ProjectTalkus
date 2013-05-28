@@ -10,4 +10,12 @@ angular.module('myApp.services', [])
         
     return Session;
   }
+])
+
+.factory('User', ['$resource', function($resource) {
+    var _url = '/API/users',
+        User = $resource(_url);
+        
+    return User;
+  }
 ]);

@@ -45,17 +45,17 @@ script(type='text/javascript')
               p Succes!!
             .control-group
               .controls
-                input#inputUsername(name='username', id='username', ng-model='registerForm.user.username', type='text', placeholder='Username', required)
+                input#inputUsername(name='username', id='username', ng-model='userObject.user.username', type='text', placeholder='Username', required)
                 a.thetool(ng-show='registerForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username')
                   i.icon-exclamation-sign.moveicon
             .control-group
               .controls
-                input#inputUsername(name='email', id='email', ng-model='registerForm.user.email', type='text', placeholder='Email', required)
+                input#inputUsername(name='email', id='email', ng-model='userObject.user.email', type='text', placeholder='Email', required)
                 a.thetool(ng-show='registerForm.email.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter an email')
                   i.icon-exclamation-sign.moveicon
             .control-group.password
               .controls
-                input#inputPassword(name='password', id='password',ng-model='registerForm.user.password', type='password', placeholder='Password' , required)
+                input#inputPassword(name='password', id='password',ng-model='userObject.user.password', type='password', placeholder='Password' , required)
                 a.thetool(ng-show='registerForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
                   i.icon-exclamation-sign.moveicon
             .control-group
