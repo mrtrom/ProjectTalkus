@@ -134,4 +134,66 @@ p.muted.text-center.copyright{
     background: rgba(0,0,0,0.2);
 }
 .well-large{
+    border-radius:0px 0px 6px 6px;
+    overflow-y:scroll;
+}
+.user{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: rgba(255,255,255,0.9);
+    overflow-y:scroll;
+    z-index:2;
+}
+.profile{
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: rgba(255,255,255,0.9);
+    overflow-y:scroll;
+    z-index:2;
+}
+.user .span12 .well , .profile .span12 .well{
+    background:none;
+}
+div.icon.useri{
+    background: #fff;
+    padding: 10px 5px;
+    border-radius: 0px 0px 17px 0px;
+    position: fixed;
+    left: 0px;
+    top:0%;
+    cursor:pointer;
+    z-index:2;
+}
+.icon.profilei{
+    background: #fff;
+    padding: 10px 5px;
+    border-radius: 0px 0px 0px 17px;
+    position: fixed;
+    right: 0;
+    top:0;
+    cursor:pointer;
+    z-index:2;
+}
+.wrapuser{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0%;
+}
+.shadow {
+    -webkit-box-shadow: 0px 0px 4px 2px #fff;
+    -moz-box-shadow: 0px 0px 4px 2px #fff;
+    box-shadow: 0px 0px 4px 2px #fff;
+    -webkit-transition: all 1s linear;
+    -o-transition: all 1s linear;
+    -moz-transition: all 1s linear;
+    -ms-transition: all 1s linear;
+    -kthtml-transition: all 1s linear;
+    transition: all 1s linear;
 }
