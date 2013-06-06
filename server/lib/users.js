@@ -44,6 +44,7 @@ users.create = function(req, res) {
 
 //Get user info by username
 users.getByUsername = function(username, fields, callback) {
+    console.log('entro');
     return User.findOne({
         username: username,
         confirmed: true
@@ -60,6 +61,7 @@ users.getByUsername = function(username, fields, callback) {
 
 //Get user info
 users.get = function(req, res) {
+    
     var username = req.params.username,
         fields = {
             username: 1,

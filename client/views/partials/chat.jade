@@ -1,4 +1,72 @@
-.row-fluid
+script(src='js/lib/chat.js')
+.icon.useri
+  i.icon-user
+.user
+  .row-fluid
+    .span12
+        .well
+          form
+            fieldset
+              legend Profile
+              .row-fluid.profilepic
+                img.img-rounded(src='http://lorempixel.com/200/200/people/')
+              label Name
+              label {username}
+              label Location
+              label {userLocation}
+              label Gender
+              label {userGender}
+              label About you
+              .well
+                {userInfo}
+.icon.profilei
+  i.icon-edit
+.profile
+  .row-fluid
+    .span12
+        .well
+          .alert.alert-error
+            button.close(type='button', data-dismiss='alert') ×
+            | Please fill all required fields
+          .alert.alert-success
+            button.close(type='button', data-dismiss='alert') ×
+            | you're account has been updated succesfully!
+          form
+            fieldset
+              legend Profile
+              p.muted This information appears on your public profile.
+              .row-fluid.profilepic
+                .span2
+                  img.img-rounded(src='http://lorempixel.com/200/200/people/')
+                .span10
+                  .btn-group
+                    a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
+                      | Change picture
+                      span.caret
+                    ul.dropdown-menu
+                      li
+                        a(href='') Upload photo
+                      li
+                        a(href='') Delete photo
+                  p.muted
+                    span Share this photo
+                    input(type='checkbox')
+              label Name
+              input(type='text', placeholder='Real name or alias')
+              label Location
+              input(type='text', placeholder='Where are you?')
+              label Gender
+              label.radio.inline
+                input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='checked')
+                | Male
+              label.radio.inline
+                input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='checked')
+                | Female
+              label About you
+              textarea
+              div
+                button.btn.btn-success(type='submit') Save changes
+.row-fluid.chatwrap
     .span12
         .well.well-large
           p.muted Connecting to server...
