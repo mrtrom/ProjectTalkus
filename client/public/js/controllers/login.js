@@ -31,7 +31,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         $scope.session.$save(function(res) {
             $rootScope.user = res;
             $scope.permissions.invalidUserInfo = false;
-            console.log('response ' + JSON.stringify(res));
+            $location.path("/chat");
         },
         function(res){
             switch (res.status) {

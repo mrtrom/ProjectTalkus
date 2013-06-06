@@ -45,8 +45,7 @@ users.create = function(req, res) {
 //Get user info by username
 users.getByUsername = function(username, fields, callback) {
     return User.findOne({
-        username: username,
-        confirmed: true
+        username: username
     }, fields, function(error, user) {
         if (error !== null) {
             return typeof callback === "function" ? callback(error, null) : void 0;
@@ -73,7 +72,6 @@ users.get = function(req, res) {
     
     return users.getByUsername(username, fields, function(error, user) {
         var _user;
-
         if (error !== null) {
             //return errors.handle(error, res);
             console.log(JSON.stringify(error));
