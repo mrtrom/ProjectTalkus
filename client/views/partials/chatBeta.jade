@@ -1,0 +1,42 @@
+.row-fluid
+    script
+        var socket = io.connect('http://talkus.mrtrom.c9.io/');
+        socket.on('connect', function () {
+            $('#userLabel').css('display', 'block');
+        });
+        socket.on('updatechat', function (username, data) {
+            $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+        });
+        socket.on('updateusers', function (data) {
+            $('#users').empty();
+            $.each(data, function (key, value) {
+                $('#users').append('<div>' + key + '</div>');
+            });
+        });
+        $(function () {
+            $('#datasend').click(function () {
+                var message = $('#data').val();
+                $('#data').val('');
+                socket.emit('sendchat', message);
+            });
+            $('#data').keypress(function (e) {
+                if (e.which == 13) {
+                    $(this).blur();
+                    $('#datasend').focus().click();
+                }
+            });
+            $('#addUser').click(function () {
+                socket.emit('adduser', $('#userText').val());
+            });
+        });
+        
+    div(style='float: left; width: 100px; border-right: 1px solid black; height: 300px; padding: 10px; overflow: scroll-y;')
+        b USERS
+        #users
+    #userLabel(style='display: none;')
+        input#userText(type='text')
+        input#addUser(type='button')
+    div(style='float: left; width: 300px; height: 250px; overflow: scroll-y; padding: 10px;')
+        #conversation
+        input#data(style='width: 200px;')
+        input#datasend(type='button', value='send')

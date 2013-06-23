@@ -1,0 +1,1 @@
+jQuery(".container.trs , .view , html , body ").addClass("fullHeight");

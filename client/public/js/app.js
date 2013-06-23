@@ -16,6 +16,8 @@ var App = angular.module('myApp', [
 App.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {    
     $routeProvider.when('/', {templateUrl: 'partials/index',controller: 'LoginController'});
     $routeProvider.when('/chat/', {templateUrl: 'partials/chat',controller: 'AccountController'});
+    $routeProvider.when('/chatbeta/', {templateUrl: 'partials/chatBeta',controller: 'AccountController'});
+    $routeProvider.when('/welcome/', {templateUrl: 'partials/welcome',controller: 'WelcomeController'});
     $routeProvider.otherwise({redirectTo: '/'});
   }
 ]);
