@@ -5,18 +5,17 @@ var util = require('util'),
     CONF = require('config'),
     mongoose = require('mongoose'),
     path = require('path'), 
+    _ = require('underscore'),
     viewsDir = path.resolve(__dirname, '..', 'client/views'),
     publicDir = path.resolve(__dirname, '..', 'client/public'),
     MongoStore = require('connect-mongo')(express),
-    clientRoutes = require('../client/routes/index'),
     io = require('socket.io');
 
 //Var's
 var app = express(),
     numCPUs = require('os').cpus().length,
     timeouts = {},
-    pub_dir = CONF.app.pub_dir,
-    staticServer;
+    pub_dir = CONF.app.pub_dir;
     
 //pub_dir config
 if (pub_dir[0] != '/') { 
@@ -106,9 +105,9 @@ if ((cluster.isMaster) && (process.env.NODE_CLUSTERED === 1)) {
       process.on(signal, function(){
         _.each(cluster.workers, function(worker){
           worker.destroy();
-        })
-      })
-    })
+        });
+      });
+    });
   }
 
 } else {
@@ -116,40 +115,59 @@ if ((cluster.isMaster) && (process.env.NODE_CLUSTERED === 1)) {
   util.log("Express server instance listening on port " + process.env.PORT + " and host " + process.env.IP);
 }
 
-//require('./lib/chat');
 
-// usernames which are currently connected to the chat
-var usernames = {};
+var globalChatUsers = null;
+var rooms = [];
+var userObject = {};
 
 io.sockets.on('connection', function (socket) {
 
-    // when the client emits 'sendchat', this listens and executes
-    socket.on('sendchat', function (data) {
-        // we tell the client to execute 'updatechat' with 2 parameters
-		io.sockets.emit('updatechat', socket.username, data);
+    socket.on('adduser', function(username){ 
+        userObject = {};
+        userObject.username = username;
+        
+        if (globalChatUsers !== null){
+            if (Object.keys(globalChatUsers).length % 2 === 0){
+                rooms.push(username + 'Room');
+                userObject.room = username + 'Room';
+                userObject.estado = 'online';
+                globalChatUsers[username] = userObject;
+            }
+            else{
+                for (var userN in globalChatUsers){
+                    if (globalChatUsers[userN].estado == 'online'){
+                        userObject.room = globalChatUsers[userN].room;
+                        userObject.estado = 'busy';
+                        globalChatUsers[userN].estado = 'busy';
+                        break;
+                    }
+                }
+                globalChatUsers[username] = userObject;
+            }
+        }
+        else{
+            globalChatUsers = {};
+            rooms.push(username + 'Room');
+            userObject.room = username + 'Room';
+            userObject.estado = 'online';
+            globalChatUsers[username] = userObject;
+        }
+        
+        console.log('usuarios: ' + JSON.stringify(globalChatUsers));
+        
+        socket.userObject = userObject;
+		socket.join(socket.userObject.room);
+		socket.emit('updatechat', 'SERVER', 'you have connected to: ' + socket.userObject.room);
+		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', username + ' has connected to this room');
 	});
-
-	// when the client emits 'adduser', this listens and executes
-	socket.on('adduser', function(username){
-		// we store the username in the socket session for this client
-		socket.username = username;
-		// add the client's username to the global list
-		usernames[username] = username;
-		// echo to client they've connected
-		socket.emit('updatechat', 'SERVER', 'you have connected');
-		// echo globally (all clients) that a person has connected
-		socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
-		// update the list of users in chat, client-side
-		io.sockets.emit('updateusers', usernames);
+	
+	socket.on('sendchat', function (message) {
+		io.sockets.in(socket.userObject.room).emit('updatechat', socket.userObject.username, message);
 	});
-
-	// when the user disconnects.. perform this
-	socket.on('disconnect', function(){
-		// remove the username from global usernames list
-		delete usernames[socket.username];
-		// update list of users in chat, client-side
-		io.sockets.emit('updateusers', usernames);
-		// echo globally that this client has left
-		socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+	
+	socket.on('disconnect', function(){ 
+		delete globalChatUsers[socket.userObject.username];
+		socket.broadcast.emit('updatechat', 'SERVER', socket.userObject.username + ' has disconnected');
+		socket.leave(socket.userObject.room);
 	});
 });
