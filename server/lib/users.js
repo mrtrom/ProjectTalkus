@@ -41,6 +41,25 @@ users.create = function(req, res) {
         }
     });
 };
+//update users
+users.update = function(req, res) {
+    console.log('entroBackend');
+    var user = new User(req.body.user);
+    //Entries validations
+    if (user.email === undefined){user.email = "";}
+    
+    return user.update(function(error) {
+        
+        if (error !== null) {
+            res.statusCode = 400;
+            return res.end(utils.parseError(error));
+        } else {
+            res.statusCode = 200;
+            return res.end(JSON.stringify(user));
+        }
+    });
+};
+//fin update
 
 //Get user info by username
 users.getByUsername = function(username, fields, callback) {

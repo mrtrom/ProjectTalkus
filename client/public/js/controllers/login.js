@@ -24,7 +24,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.session = new Session();
     //User
     $scope.userObject = new User();
-    
+            
     //Login action button
     $scope.submitLogin = function () {
         
@@ -68,4 +68,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             }
         });
     };
+    
+    
 }]);

@@ -62,6 +62,21 @@ responds
 app.post('/API/users', users.create);
 
 /*
+
+/*
+PUT
+params
+  user: Object
+    email: String
+responds
+  200 
+    - if created successfully
+  400 
+    error: Object - validation error if any
+*/
+app.put('/API/users', users.update);
+
+/*
 GET
 params
   user: Object
