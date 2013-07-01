@@ -8,8 +8,9 @@ var util = require('util'),
     _ = require('underscore'),
     viewsDir = path.resolve(__dirname, '..', 'client/views'),
     publicDir = path.resolve(__dirname, '..', 'client/public'),
-    MongoStore = require('connect-mongo')(express),
-    io = require('socket.io');
+    MongoStore = require('connect-mongo')(express);
+    
+    
 
 //Var's
 var app = express(),
@@ -111,63 +112,7 @@ if ((cluster.isMaster) && (process.env.NODE_CLUSTERED === 1)) {
   }
 
 } else {
-  io = io.listen(app.listen(process.env.PORT, process.env.IP));
   util.log("Express server instance listening on port " + process.env.PORT + " and host " + process.env.IP);
+  require('./lib/chat');
 }
 
-
-var globalChatUsers = null;
-var rooms = [];
-var userObject = {};
-
-io.sockets.on('connection', function (socket) {
-
-    socket.on('adduser', function(username){ 
-        userObject = {};
-        userObject.username = username;
-        
-        if (globalChatUsers !== null){
-            if (Object.keys(globalChatUsers).length % 2 === 0){
-                rooms.push(username + 'Room');
-                userObject.room = username + 'Room';
-                userObject.estado = 'online';
-                globalChatUsers[username] = userObject;
-            }
-            else{
-                for (var userN in globalChatUsers){
-                    if (globalChatUsers[userN].estado == 'online'){
-                        userObject.room = globalChatUsers[userN].room;
-                        userObject.estado = 'busy';
-                        globalChatUsers[userN].estado = 'busy';
-                        break;
-                    }
-                }
-                globalChatUsers[username] = userObject;
-            }
-        }
-        else{
-            globalChatUsers = {};
-            rooms.push(username + 'Room');
-            userObject.room = username + 'Room';
-            userObject.estado = 'online';
-            globalChatUsers[username] = userObject;
-        }
-        
-        console.log('usuarios: ' + JSON.stringify(globalChatUsers));
-        
-        socket.userObject = userObject;
-		socket.join(socket.userObject.room);
-		socket.emit('updatechat', 'SERVER', 'you have connected to: ' + socket.userObject.room);
-		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', username + ' has connected to this room');
-	});
-	
-	socket.on('sendchat', function (message) {
-		io.sockets.in(socket.userObject.room).emit('updatechat', socket.userObject.username, message);
-	});
-	
-	socket.on('disconnect', function(){ 
-		delete globalChatUsers[socket.userObject.username];
-		socket.broadcast.emit('updatechat', 'SERVER', socket.userObject.username + ' has disconnected');
-		socket.leave(socket.userObject.room);
-	});
-});
