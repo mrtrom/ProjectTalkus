@@ -9,8 +9,6 @@ var util = require('util'),
     viewsDir = path.resolve(__dirname, '..', 'client/views'),
     publicDir = path.resolve(__dirname, '..', 'client/public'),
     MongoStore = require('connect-mongo')(express);
-    
-    
 
 //Var's
 var app = express(),
@@ -112,7 +110,7 @@ if ((cluster.isMaster) && (process.env.NODE_CLUSTERED === 1)) {
   }
 
 } else {
-  util.log("Express server instance listening on port " + process.env.PORT + " and host " + process.env.IP);
   require('./lib/chat');
+  util.log("Express server instance listening on port " + process.env.PORT + " and host " + process.env.IP);
 }
 

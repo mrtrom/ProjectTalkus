@@ -74,7 +74,7 @@ responds
   400 
     error: Object - validation error if any
 */
-app.put('/API/users', users.update);
+app.put('/API/users/:username', users.update);
 
 /*
 GET

@@ -14,7 +14,9 @@ angular.module('myApp.services', [])
 
 .factory('User', ['$resource', function($resource) {
     var _url = '/API/users/:username',
-        User = $resource(_url, {username: '@username'}, {update: {method: 'PUT'}});
+        User = $resource(_url, {username: '@username'}, 
+            //{update: {method: 'PUT', params:{username: '@username'}}});
+            {update: {method: 'PUT'}});
     return User;
   }
 ]);

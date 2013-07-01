@@ -34,7 +34,7 @@ script(src='js/lib/chat.js')
             | you're account has been updated succesfully!
           form(name='registerForm', ng-submit="updateusers()")
             fieldset
-              legend Profile
+              legend Profile {{userInformation.username}}
               p.muted This information appears on your public profile.
               .row-fluid.profilepic
                 .span2
@@ -53,9 +53,9 @@ script(src='js/lib/chat.js')
                     span Share this photo
                     input(type='checkbox')
               label Name
-              input#inputUsername(name='username', id='username', ng-model='session.username', type='text', placeholder = "{{username}}")
+              input#inputUsername(name='name', id='name', ng-model='userInformation.name', type='text', placeholder = "Name")
               label Email
-              input#inputUsername(name='email', id='email', ng-model='session.email', type='text', placeholder = "{{email}}")
+              input#inputUsername(name='email', id='email', ng-model='userInformation.email', type='text', placeholder = "Email contact")
               label Location
               input(type='text', placeholder='Where are you?')
               label Gender
@@ -66,7 +66,7 @@ script(src='js/lib/chat.js')
                 input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='checked')
                 | Female
               label About you
-              textarea
+              textarea(name='about', id='about', ng-model='userInformation.description', type='text', placeholder = "Description")
               div
                 button.btn.btn-success(type='submit') Save changes
 .row-fluid.chatwrap
