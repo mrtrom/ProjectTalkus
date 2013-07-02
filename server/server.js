@@ -110,7 +110,7 @@ if ((cluster.isMaster) && (process.env.NODE_CLUSTERED === 1)) {
   }
 
 } else {
-  require('./lib/chat');
+  require('./lib/chatConfig');
   util.log("Express server instance listening on port " + process.env.PORT + " and host " + process.env.IP);
 }
 

@@ -68,7 +68,6 @@ users.update = function(req, res) {
 
 //Get user info by username
 users.getByUsername = function(username, fields, callback) {
-    console.log('entro');
     return User.findOne({
         username: username
     }, fields, function(error, user) {

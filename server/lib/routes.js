@@ -1,9 +1,10 @@
 //Export module
-var app = module.parent.exports.app
+var app = module.parent.exports.app;
 
 //Require modules
 var users = require('./users'),
     mails = require('./mails'),
+    chat = require('./chat'),
     sessions = require('./sessions'),
     clientRoutes = require('../../client/routes/index');
 
@@ -90,6 +91,25 @@ responds
     error: Object - validation error if any
 */
 app.get('/API/users/:username', users.get);
+
+/*--------mails-------------*/
+
+/*--------chat-------------*/
+
+/*
+GET
+params
+  user: Object
+    username: String
+    email: String
+    password: String - Minimun length: 6 chars
+responds
+  200 
+    - if created successfully
+  400 
+    error: Object - validation error if any
+*/
+app.get('/API/chat/:username', chat.getUser);
 
 /*--------mails-------------*/
 /*

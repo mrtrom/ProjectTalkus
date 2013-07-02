@@ -1,4 +1,33 @@
 script(src='js/lib/chat.js')
+script
+    var socket = io.connect('http://talkus.mrtrom.c9.io/#/chatbeta');
+    
+    socket.on('connect', function(){
+        var username = $('#username').val();
+        socket.emit('adduser', username);
+    });
+    
+    socket.on('updatechat', function (username, data) {
+        $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+    });
+    
+    socket.on('updateAnonymInfo', function (username, user) {
+        $('#confirm').click();
+    });
+    
+    $('#datasend').on('click', function() {
+        var message = $('#data').val();
+        $('#data').val('');
+        socket.emit('sendchat', message);
+    });
+    
+    $('#data').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('#datasend').focus().click();
+            $('#data').focus();
+        }
+    });
 #city
 .icon.useri
   i.icon-user
@@ -8,18 +37,15 @@ script(src='js/lib/chat.js')
         .well
           form
             fieldset
-              legend Profile
+              legend Profile {{otherUserInfo.username}}
+              input#confirm(type='button', ng-click='changeName()', style='display: none;')
               .row-fluid.profilepic
                 img.img-rounded(src='http://lorempixel.com/200/200/people/')
               label Name
-              label {username}
-              label Location
-              label {userLocation}
-              label Gender
-              label {userGender}
+              label {{otherUserInfo.name}}
               label About you
               .well
-                {userInfo}
+                {{otherUserInfo.description}}
 .icon.profilei
   i.icon-edit
 .profile
@@ -35,6 +61,7 @@ script(src='js/lib/chat.js')
           form(name='registerForm', ng-submit="updateusers()")
             fieldset
               legend Profile {{userInformation.username}}
+              input#username(type='hidden', value='{{userInformation.username}}')
               p.muted This information appears on your public profile.
               .row-fluid.profilepic
                 .span2
@@ -75,57 +102,13 @@ script(src='js/lib/chat.js')
           p.muted Connecting to server...
           p.muted
             strong Connected!
-          div
-            i.icon-user
-            span.text-info Tromboy:
-            | Hi!
-          div
-            i.icon-user
-            span.text-success Night:
-            | How you doing?!
-            i.icon-ok-sign
-            i.icon-ok-sign
-          div
-            i.icon-user
-            span.text-info Tromboy:
-            | Lollipop macaroon sweet fruitcake gingerbread cookie jelly sesame snaps. Cookie chocolate bar powder powder. Jelly-o wafer croissan
-          div
-            i.icon-user
-            span.text-success Night:
-            | olate icing jujubes. Liquorice cake chocolate. Oat cake bonbon applicake marshmallow cupcake. Macaroon caramels chocolate jelly chocolate bar chocolate bar. Apple pie ice cream jujubes jelly icing dessert lemon drops. Halvah liquorice ice cream sweet roll topping croissant sweet dessert candy. Bonbon sugar plum chupa chups. Sweet roll candy carrot cake candy canes. Icing jujubes chocolate cake. Carrot cake oat cake marzipan cookie. Oa
-            i.icon-ok-sign
-            i.icon-ok-sign
-          div
-            i.icon-user
-            span.text-info Tromboy:
-            | Carrot cake drag gummi bears ice cream jelly beans wypas. Cheesecake pie toot
-          div
-            i.icon-user
-            span.text-success Night:
-            | How you doing?!
-            i.icon-ok-sign
-            i.icon-ok-sign
-          div
-            i.icon-user
-            span.text-info Tromboy:
-            | Hi!
-          div
-            i.icon-user
-            span.text-success Night:
-            | How you doing?!
-            i.icon-ok-sign
-            i.icon-ok-sign
-          div
-            i.icon-user
-            span.text-info Tromboy:
-            | Hi!
-          div
-            i.icon-user
-            span.text-success Night:
-            | How you doing?!
-            i.icon-ok-sign
-            i.icon-ok-sign
+          #conversation
+            div
+              i.icon-user
+              span.text-info Tromboy:
+              | Hi!
         form.form-inline
           .row-fluid
             .span12
-              textarea(placeholder='Press enter to send')
+              textarea#data(placeholder='Press enter to send')
+              input#datasend(type='button', value='send')

@@ -12,6 +12,14 @@ angular.module('myApp.services', [])
   }
 ])
 
+.factory('ChatUser', ['$resource', function($resource) {
+    var _url = '/API/chat/:username',
+        ChatUser = $resource(_url);
+        
+    return ChatUser;
+  }
+])
+
 .factory('User', ['$resource', function($resource) {
     var _url = '/API/users/:username',
         User = $resource(_url, {username: '@username'}, 
