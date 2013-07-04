@@ -31,7 +31,7 @@ app.configure(function() {
     layout: false
   });
     
-  app.use(express.bodyParser());
+  app.use(express.bodyParser({ keepExtensions: true, uploadDir: 'server/uploads/images/avatars' }));
   app.use(express.methodOverride());
   app.use(express.static(publicDir));
   app.use(express.query());

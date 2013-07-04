@@ -6,6 +6,7 @@ var users = require('./users'),
     mails = require('./mails'),
     chat = require('./chat'),
     sessions = require('./sessions'),
+    upload = require('./upload'),
     clientRoutes = require('../../client/routes/index');
 
 //Define resources and routes for server 
@@ -91,8 +92,21 @@ responds
     error: Object - validation error if any
 */
 app.get('/API/users/:username', users.get);
+/*--------------------------*/
 
 /*--------mails-------------*/
+/*
+POST
+params
+ 
+responds
+  200 
+    - if created successfully
+  400 
+    error: Object - validation error if any
+*/
+app.post('/API/mails', mails.send);
+/*--------------------------*/
 
 /*--------chat-------------*/
 
@@ -110,20 +124,25 @@ responds
     error: Object - validation error if any
 */
 app.get('/API/chat/:username', chat.getUser);
+/*--------------------------*/
 
-/*--------mails-------------*/
+/*--------upload-------------*/
+
 /*
-POST
+GET
 params
- 
+  user: Object
+    username: String
+    email: String
+    password: String - Minimun length: 6 chars
 responds
   200 
     - if created successfully
   400 
     error: Object - validation error if any
 */
-app.post('/API/mails', mails.send);
-
+app.post('/API/upload', upload.post);
+/*--------------------------*/
 
 //Define resources and routes for client
 

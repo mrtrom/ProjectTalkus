@@ -38,7 +38,7 @@ script
           form
             fieldset
               legend Profile {{otherUserInfo.username}}
-              input#confirm(type='button', ng-click='changeName()', style='display: none;')
+              input#confirm(type='button', ng-click='otherUser()', style='display: none;')
               .row-fluid.profilepic
                 img.img-rounded(src='http://lorempixel.com/200/200/people/')
               label Name
@@ -58,7 +58,7 @@ script
           .alert.alert-success
             button.close(type='button', data-dismiss='alert') ×
             | you're account has been updated succesfully!
-          form(name='registerForm', ng-submit="updateusers()")
+          form(name='registerForm',ng-upload='ng-upload', method='POST', action='/API/upload')
             fieldset
               legend Profile {{userInformation.username}}
               input#username(type='hidden', value='{{userInformation.username}}')
@@ -68,14 +68,10 @@ script
                   img.img-rounded(src='http://lorempixel.com/200/200/people/')
                 .span10
                   .btn-group
-                    a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
-                      | Change picture
-                      span.caret
-                    ul.dropdown-menu
-                      li
-                        a(href='') Upload photo
-                      li
-                        a(href='') Delete photo
+                      p
+                        input(type='file', name='file')
+                      p
+                        input.btn(upload-submit='uploadImage(content)', type='submit', value='Submit')
                   p.muted
                     span Share this photo
                     input(type='checkbox')
@@ -95,7 +91,8 @@ script
               label About you
               textarea(name='about', id='about', ng-model='userInformation.description', type='text', placeholder = "Description")
               div
-                button.btn.btn-success(type='submit') Save changes
+                button.btn.btn-success(type='button',ng-click="updateUsers()") Save changes
+                
 .row-fluid.chatwrap
     .span12
         .well.well-large

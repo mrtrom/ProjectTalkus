@@ -1,6 +1,5 @@
 //Export module
 var chat = module.exports;
-    
 
 //Require modules
 var users = require('./users');
@@ -22,14 +21,14 @@ chat.getUser = function(req, res) {
     }
     
     var fields = {
-            username: 1,
-            name: 1,
-            avatar: 1,
-            email: 1,
-            gender: 1,
-            birth: 1,
-            description: 1
-        };
+        username: 1,
+        name: 1,
+        avatar: 1,
+        email: 1,
+        gender: 1,
+        birth: 1,
+        description: 1
+    };
     
     return users.getByUsername(username, fields, function(error, user) {
         var _user;
