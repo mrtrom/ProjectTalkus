@@ -40,10 +40,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 });
             }
             
+            console.log('$location: ' + JSON.stringify($location.$$host));
+            
             if ($scope.userInformation.email === undefined || $scope.userInformation.email === ''){$scope.userInformation.email = "";}
             if ($scope.userInformation.name === undefined || $scope.userInformation.name === ''){$scope.userInformation.name = $scope.userInformation.username;}
             if ($scope.userInformation.gender === undefined || $scope.userInformation.gender === ''){$scope.userInformation.gender = "";}
-            if ($scope.userInformation.avatar === undefined || $scope.userInformation.avatar === ''){$scope.userInformation.avatar = "server/uploads/images/avatars/default.jpg";}
+            if ($scope.userInformation.avatar === undefined || $scope.userInformation.avatar === ''){$scope.userInformation.avatar = "uploads/images/avatars/default.jpg";}
             if ($scope.userInformation.description === undefined || $scope.userInformation.description === ''){$scope.userInformation.description = "";}
             if ($scope.userInformation.location === undefined || $scope.userInformation.location === ''){$scope.userInformation.location = "";}
             if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = "";}
@@ -84,6 +86,14 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                     break;
                 }
             });
+            
+            if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.otherUserInfo.email = "";}
+            if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.otherUserInfo.name = $scope.otherUserInfo.username;}
+            if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.otherUserInfo.gender = "";}
+            if ($scope.otherUserInfo.avatar === undefined || $scope.otherUserInfo.avatar === ''){$scope.otherUserInfo.avatar = "uploads/images/avatars/default.jpg";}
+            if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.otherUserInfo.description = "";}
+            if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.otherUserInfo.location = "";}
+            if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === ''){$scope.otherUserInfo.birth = "";}
         }
     };
 }]);

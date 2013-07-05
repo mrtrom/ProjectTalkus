@@ -41,7 +41,7 @@ script
               legend Profile {{otherUserInfo.username}}
               input#confirm(type='button', ng-click='otherUser()', style='display: none;')
               .row-fluid.profilepic
-                img.img-rounded(src='http://lorempixel.com/200/200/people/')
+                img.img-rounded(ng-src='{{otherUserInfo.avatar}}')
             div(ng-hide='validations.anonymOtherUser')
               label Name
               label {{otherUserInfo.name}}

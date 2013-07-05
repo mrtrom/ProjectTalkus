@@ -8,6 +8,7 @@ var util = require('util'),
     _ = require('underscore'),
     viewsDir = path.resolve(__dirname, '..', 'client/views'),
     publicDir = path.resolve(__dirname, '..', 'client/public'),
+    uploadDir = path.resolve(__dirname, '..', 'client/public/uploads/images/avatars'),
     MongoStore = require('connect-mongo')(express);
 
 //Var's
@@ -31,7 +32,7 @@ app.configure(function() {
     layout: false
   });
     
-  app.use(express.bodyParser({ keepExtensions: true, uploadDir: 'server/uploads/images/avatars' }));
+  app.use(express.bodyParser({ keepExtensions: true, uploadDir: uploadDir }));
   app.use(express.methodOverride());
   app.use(express.static(publicDir));
   app.use(express.query());
