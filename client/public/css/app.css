@@ -195,3 +195,10 @@ div.icon.useri{
 #about{
     width:205px;
 }
+#checklocation{
+    margin-top: -2px;
+    margin-left: 6px;
+}
+.ui-datepicker-prev.ui-corner-all , .ui-datepicker-next.ui-corner-all{
+    display:none;
+}

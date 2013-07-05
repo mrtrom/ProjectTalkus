@@ -1,5 +1,6 @@
 script(src='js/lib/chat.js')
 script(src='js/lib/location.js')
+script(src='js/jquery-ui-1.9.2.custom.min.js')
 script
     var socket = io.connect('http://talkus.mrtrom.c9.io/#/chatbeta');
     
@@ -73,11 +74,17 @@ script
                 label Name
                 input.FocusAccion#inputUsername(name='name', id='name', ng-model='userInformation.name', type='text', placeholder = "Name")
               div(ng-hide='validations.anonymUser')
+                label Birthday
+                input#datepicker(name='datepicker', type='text')
+              div(ng-hide='validations.anonymUser')
                 label(ng-hide='validations.anonymUser') Email
                 input.FocusAccion#inputUsername(name='email', id='email', ng-model='userInformation.email', type='text', placeholder = "Email contact")
               div(ng-hide='validations.anonymUser')
                 label(ng-hide='validations.anonymUser') Location
-                input.FocusAccion(type='text', placeholder='Where are you?')
+                input.FocusAccion#locationapi(type='text', placeholder='Where are you?' , ng-model='userInformation.location' , disabled)
+                .share
+                  label Would you like to share your location?
+                    input#checklocation(type="checkbox" , ng-model="confirmed" , ng-change="locationBool(); updateUsers();")
               div.sex(ng-hide='validations.anonymUser')
                   label Gender
                   .btn-group

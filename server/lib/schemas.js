@@ -18,17 +18,11 @@ var UserSchema = new Schema({
   gender: {type: String},
   avatar: {type: String},
   birth: {type: Date},
-  location: [ObjectId],
+  location: {type: String},
   description: {type: String}
 });
 
-//Location module's Schemas
-var LocationSchema = new Schema({
-    latitude: {type: String, required: true},
-    longitude: {type: String, required: true}
-});
 
 
 //=======Registering and exporting schemas========
 module.exports.User = mongoose.model('User', UserSchema);
-module.exports.Location = mongoose.model('Location', LocationSchema);

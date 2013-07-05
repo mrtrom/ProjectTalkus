@@ -31,7 +31,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         if ((response !== null ? response._id : void 0) !== null) {
             if (response._id !== null && response._id !== undefined){
                 $scope.loginValidations.userSessionExist = true;
-                $location.path("/welcome");
+                //lo desabilite temporalmente men
+                //$location.path("/welcome");
             }
         }
     }, function(response) {

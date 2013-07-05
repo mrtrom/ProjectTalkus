@@ -19,7 +19,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         location: '',
         birth: ''
     };
-    
+    var googleBool = false;
     //get user session
     $scope.loadInfo = function () {
         Session.get(function(response) {
@@ -59,7 +59,19 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.uploadImage = function(content){
         console.log('entro: ' + content);
     };
-    
+    //datePicker
+    $(function() {
+        $( "#datepicker" ).datepicker({
+           onSelect: function(dateText, inst) { 
+               $scope.userInformation.birth = dateText;
+               $('.updateUser').click();
+           },
+          changeMonth: true,
+          changeYear: true,
+          yearRange: "-80:+0",
+          dateFormat: 'dd/mm/yy'
+        });
+      });
     //update user info
     $scope.updateUsers = function () {
         User.update($scope.userInformation,
@@ -70,7 +82,18 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             console.log("Couldn't save user.");
         });
     };
-    
+    $scope.locationBool = function () {
+        getLocation();
+        if(googleBool == false){
+            googleBool = true;
+            $scope.userInformation.location = document.getElementById('locationapi').value;
+            $("#locationapi").prop('disabled', false);
+        }else{
+            $scope.userInformation.location = '';
+            googleBool = false;
+            $("#locationapi").prop('disabled', true);
+        }
+    };
     //get other user info
     $scope.otherUser = function (){
         if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){

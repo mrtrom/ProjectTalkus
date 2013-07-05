@@ -46,8 +46,3 @@ $(".FocusAccion").focusout(function() {
     $('.updateUser').click();
 });
 
-/*
-$(".sex ul li").click(function () {
-      $('#gender').val($(this).text());
-      $('.updateUser').click();
-});*/
