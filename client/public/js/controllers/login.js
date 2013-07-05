@@ -1,4 +1,5 @@
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session', 'User', function($rootScope, $scope, $http, $location, Session , User) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session', 'User', 
+    function($rootScope, $scope, $http, $location, Session , User) {
 
     //Validations
     $scope.permissions = {
@@ -24,6 +25,18 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.session = new Session();
     //User
     $scope.userObject = new User();
+    
+    //Redireccion si ya está logueado
+    Session.get(function(response) {
+        if ((response !== null ? response._id : void 0) !== null) {
+            if (response._id !== null && response._id !== undefined){
+                $scope.loginValidations.userSessionExist = true;
+                $location.path("/welcome");
+            }
+        }
+    }, function(response) {
+        //error
+    });
             
     //Login action button
     $scope.submitLogin = function () {
