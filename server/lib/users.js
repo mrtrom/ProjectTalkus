@@ -51,10 +51,11 @@ users.update = function(req, res) {
     if (user.email === undefined || user.email === ''){user.email = "";}
     if (user.username === undefined || user.username === ''){user.username = "";}
     if (user.name === undefined || user.name === ''){user.name = "";}
+    if (user.gender === undefined || user.gender === ''){user.gender = "";}
     if (user.description === undefined || user.description === ''){user.description = "";}
     return User.findByIdAndUpdate({
         _id: user._id
-    }, {$set: {email: user.email, name: user.name, description: user.description}}, function(error) {
+    }, {$set: {email: user.email, name: user.name, gender: user.gender, description: user.description}}, function(error) {
         
         if (error !== null) {
             res.statusCode = 400;

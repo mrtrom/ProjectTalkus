@@ -1,4 +1,5 @@
 script(src='js/lib/chat.js')
+script(src='js/lib/location.js')
 script
     var socket = io.connect('http://talkus.mrtrom.c9.io/#/chatbeta');
     
@@ -28,7 +29,6 @@ script
             $('#data').focus();
         }
     });
-#city
 .icon.useri
   i.icon-user
 .user
@@ -52,12 +52,6 @@ script
   .row-fluid
     .span12
         .well
-          .alert.alert-error
-            button.close(type='button', data-dismiss='alert') ×
-            | Please fill all required fields
-          .alert.alert-success
-            button.close(type='button', data-dismiss='alert') ×
-            | you're account has been updated succesfully!
           form(name='registerForm',ng-upload='ng-upload', method='POST', action='/API/upload')
             fieldset
               legend Profile {{userInformation.username}}
@@ -72,26 +66,29 @@ script
                         input(type='file', name='file')
                       p
                         input.btn(upload-submit='uploadImage(content)', type='submit', value='Submit')
-                  p.muted
-                    span Share this photo
-                    input(type='checkbox')
               label Name
-              input#inputUsername(name='name', id='name', ng-model='userInformation.name', type='text', placeholder = "Name")
+              input.FocusAccion#inputUsername(name='name', id='name', ng-model='userInformation.name', type='text', placeholder = "Name")
               label Email
-              input#inputUsername(name='email', id='email', ng-model='userInformation.email', type='text', placeholder = "Email contact")
+              input.FocusAccion#inputUsername(name='email', id='email', ng-model='userInformation.email', type='text', placeholder = "Email contact")
               label Location
-              input(type='text', placeholder='Where are you?')
-              label Gender
-              label.radio.inline
-                input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='checked')
-                | Male
-              label.radio.inline
-                input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='checked')
-                | Female
+              input.FocusAccion(type='text', placeholder='Where are you?')
+              .sex
+                  label Gender
+                  .btn-group
+                    a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
+                        | {{userInformation.gender}} 
+                        span.caret
+                    ul.dropdown-menu
+                      li#male 
+                        a(ng-click="userInformation.gender = 'Male'; updateUsers();") Male
+                      li#female 
+                        a(ng-click="userInformation.gender = 'Female'; updateUsers();") Female
+                      li#other 
+                        a(ng-click="userInformation.gender = 'Other'; updateUsers();") Other
               label About you
-              textarea(name='about', id='about', ng-model='userInformation.description', type='text', placeholder = "Description")
+              textarea.FocusAccion(name='about', id='about', ng-model='userInformation.description', type='text', placeholder = "Description")
               div
-                button.btn.btn-success(type='button',ng-click="updateUsers()") Save changes
+                label.updateUser(ng-click="updateUsers()")
                 
 .row-fluid.chatwrap
     .span12

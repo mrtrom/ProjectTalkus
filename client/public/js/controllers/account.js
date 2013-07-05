@@ -22,6 +22,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     }, function(response) {
         //error
     });
+    /*function getUserSession(){
+        Session.get(function(response) {
+            console.log('entrolavuela');
+            if ((response !== null ? response._id : void 0) !== null) {
+                if (response._id !== null){
+                    $scope.userInformation = response;
+                    $scope.validations.anonymUser = false;
+                }
+                else{
+                    //información usuario anónimo
+                }
+            }
+        }, function(response) {
+            //error
+        });
+    }*/
     
     //upload images
     $scope.uploadImage = function(content){
