@@ -124,6 +124,22 @@ responds
     error: Object - validation error if any
 */
 app.get('/API/chat/:username', chat.getUser);
+
+/*
+GET
+params
+  user: Object
+    username: String
+    email: String
+    password: String - Minimun length: 6 chars
+responds
+  200 
+    - if created successfully
+  400 
+    error: Object - validation error if any
+*/
+app.get('/API/chat/chatUsername/:username/get', chat.getUsername);
+
 /*--------------------------*/
 
 /*--------upload-------------*/

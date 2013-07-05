@@ -41,7 +41,18 @@ chat.getUser = function(req, res) {
             return res.end(JSON.stringify(_user));
         } else {
             res.statusCode = 404;
-            return res.end();
+            return res.end(username);
         }
     });
+    
+};
+
+chat.getUsername = function(req, res){
+    var userIdObject = {
+            count: 1
+        };
+    if (GLOBAL.globalChatUsers !== null && Object.keys(GLOBAL.globalChatUsers).length > 0){
+        userIdObject.count = Object.keys(GLOBAL.globalChatUsers).length +1;
+    }
+    res.end(JSON.stringify(userIdObject));
 };

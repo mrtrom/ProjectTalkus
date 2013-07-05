@@ -50,7 +50,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             $scope.succesMesages.creationSucces = true;
         },
         function(res){
-            console.log(res);
             switch (res.status) {
                 case 400:
                     var countErrors = res.data.errors.length;
