@@ -50,6 +50,7 @@ users.update = function(req, res) {
     //Entries validations
     if (user.email === undefined || user.email === ''){user.email = "";}
     if (user.username === undefined || user.username === ''){user.username = "";}
+    if (user.avatar === undefined || user.avatar === ''){user.avatar = "";}
     if (user.birth === undefined || user.birth === ''){user.birth = "";}
     if (user.name === undefined || user.name === ''){user.name = "";}
     if (user.gender === undefined || user.gender === ''){user.gender = "";}
@@ -57,7 +58,7 @@ users.update = function(req, res) {
     if (user.description === undefined || user.description === ''){user.description = "";}
     return User.findByIdAndUpdate({
         _id: user._id
-    }, {$set: {email: user.email, name: user.name,birth: user.birth, gender: user.gender,location: user.location, description: user.description}}, function(error) {
+    }, {$set: {email: user.email, name: user.name,birth: user.birth, avatar: user.avatar, gender: user.gender,location: user.location, description: user.description}}, function(error) {
         
         if (error !== null) {
             res.statusCode = 400;

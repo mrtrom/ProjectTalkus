@@ -20,6 +20,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         birth: ''
     };
     var googleBool = false;
+    var imgurl;
     //get user session
     $scope.loadInfo = function () {
         Session.get(function(response) {
@@ -57,7 +58,19 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     
     //upload images
     $scope.uploadImage = function(content){
-        console.log('entro: ' + content);
+        if(content.path === undefined || content.path === ""){}else{
+            //trim path, quite lo que no necesita, con tal que a la final el path queda /uploads/images/avatars[[image.jpg]]
+            $scope.userInformation.avatar = content.path.substr(content.path.indexOf("/uploads/images/avatars/") + 1);
+            
+            //se debe hacer aqui el mismo update
+            User.update($scope.userInformation,
+            function (data) {
+                console.log('modificó');
+            }, function ($http) {
+                //error
+                console.log("Couldn't save user.");
+            });
+            }
     };
     //datePicker
     $(function() {
