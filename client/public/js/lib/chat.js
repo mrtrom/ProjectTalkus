@@ -42,7 +42,4 @@ jQuery('.icon.profilei').click(function(){
 });
 /*FIN DESPLIEGUE USUERIO*/
 /*FOCUSOUT FORM SUBMIT*/
-$(".FocusAccion").focusout(function() {
-    $('.updateUser').click();
-});
 

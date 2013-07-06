@@ -55,21 +55,24 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             //error
         });
     };
-    
     //upload images
+    $('#fileimg').change(function(){
+        $('#imgbtn').click();
+    });
+    $scope.uploadClick = function(){
+        $('#fileimg').click();
+    }
+    $scope.deletePhoto = function(){
+        $scope.userInformation.avatar = "/uploads/images/avatars/default.jpg";
+        updateUserAll();
+    }
     $scope.uploadImage = function(content){
         if(content.path === undefined || content.path === ""){}else{
             //trim path, quite lo que no necesita, con tal que a la final el path queda /uploads/images/avatars[[image.jpg]]
             $scope.userInformation.avatar = content.path.substr(content.path.indexOf("/uploads/images/avatars/") + 1);
-            
+            console.log($scope.userInformation.avatar); 
             //se debe hacer aqui el mismo update
-            User.update($scope.userInformation,
-            function (data) {
-                console.log('modificó');
-            }, function ($http) {
-                //error
-                console.log("Couldn't save user.");
-            });
+            updateUserAll();
             }
     };
     //datePicker
@@ -77,7 +80,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         $( "#datepicker" ).datepicker({
            onSelect: function(dateText, inst) { 
                $scope.userInformation.birth = dateText;
-               $('.updateUser').click();
+               updateUserAll();
            },
           changeMonth: true,
           changeYear: true,
@@ -86,14 +89,21 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         });
       });
     //update user info
-    $scope.updateUsers = function () {
-        User.update($scope.userInformation,
+    $(".FocusAccion").focusout(function() {
+        updateUserAll();
+    });
+    //aqui esta la funcion como tal para el update, recomendado mejor en una funcion ya que se usa varias veces
+    function updateUserAll(){
+    User.update($scope.userInformation,
         function (data) {
             console.log('modificó');
         }, function ($http) {
             //error
             console.log("Couldn't save user.");
         });
+    }
+    $scope.updateUsers = function () {
+        updateUserAll();
     };
     $scope.locationBool = function () {
         getLocation();

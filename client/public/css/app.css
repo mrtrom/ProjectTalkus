@@ -202,3 +202,9 @@ div.icon.useri{
 .ui-datepicker-prev.ui-corner-all , .ui-datepicker-next.ui-corner-all{
     display:none;
 }
+.uploadimgtrue{
+    position: absolute;
+    right: 0;
+    top: -80px;
+    opacity: 0;
+}
