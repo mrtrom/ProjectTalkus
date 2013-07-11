@@ -1,10 +1,6 @@
 /* app css stylesheet */
 
-body {
-
-    background:#e3e3e3;
-}
-body.home{
+body{
     background:url('../img/bkg.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -13,10 +9,10 @@ body.home{
     background-color:#17181a;
 }
 ::selection {
-    background: rgba(0,0,0,0.2); /* Safari */
+    background: none repeat scroll 0 0 rgb(0, 95, 143); /* Safari */
     }
 ::-moz-selection {
-    background: rgba(0,0,0,0.2); /* Firefox */
+    background: none repeat scroll 0 0 rgb(0, 95, 143); /* Firefox */
 }
 .navbar-inner {
   border-radius: 0 0 0 0;
@@ -131,7 +127,7 @@ p.muted.text-center.copyright{
     top: 0;
     height: 100%;
     width: 0%;
-    background: rgba(255,255,255,0.9);
+    background: rgba(23, 24, 26,0.9);
     overflow-y:scroll;
     z-index:2;
 }
@@ -141,25 +137,27 @@ p.muted.text-center.copyright{
     top: 0;
     height: 100%;
     width: 0%;
-    background: rgba(255,255,255,0.9);
+    background: rgba(23, 24, 26,0.9);
     overflow-y:scroll;
     z-index:2;
 }
-.user .span12 .well , .profile .span12 .well{
-    background:none;
+.user .span12 .well, .profile .span12 .well {
+  background: none repeat scroll 0 0 transparent;
+  border: medium none;
+  margin: 0;
 }
-div.icon.useri{
-    background: #fff;
-    padding: 10px 5px;
-    border-radius: 0px 0px 17px 0px;
-    position: fixed;
-    left: 0px;
-    top:0%;
-    cursor:pointer;
-    z-index:2;
+div.icon.useri {
+  background: none repeat scroll 0 0 rgb(0, 95, 143);
+  border-radius: 0 0 17px 0;
+  cursor: pointer;
+  left: 0;
+  padding: 10px 5px;
+  position: fixed;
+  top: 0;
+  z-index: 2;
 }
 .icon.profilei{
-    background: #fff;
+    background: none repeat scroll 0 0 rgb(0, 95, 143);
     padding: 10px 5px;
     border-radius: 0px 0px 0px 17px;
     position: fixed;
@@ -168,11 +166,18 @@ div.icon.useri{
     cursor:pointer;
     z-index:2;
 }
+.icon.profilei [class^="icon-"],.icon.profilei [class*=" icon-"] ,
+div.icon.useri  [class^="icon-"],div.icon.useri  [class*=" icon-"]{
+  background-image: url("../img/glyphicons-halflings-white.png");
+}
 .wrapuser{
     position: fixed;
     left: 0;
     top: 0;
     width: 0%;
+}
+.text-info {
+  color: rgb(0, 95, 143);
 }
 .shadow {
     -webkit-box-shadow: 0px 0px 4px 2px #fff;
@@ -217,4 +222,7 @@ div.icon.useri{
 }
 .span12 > textarea#data {
   height: 35px;
+}
+.profile .well label,legend{
+    color:rgb(158, 158, 158);
 }
