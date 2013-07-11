@@ -5,11 +5,12 @@ body {
     background:#e3e3e3;
 }
 body.home{
-    background:url('../img/bkg.png') no-repeat center center fixed;
+    background:url('../img/bkg.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-color:#17181a;
 }
 ::selection {
     background: rgba(0,0,0,0.2); /* Safari */
@@ -59,11 +60,10 @@ div.middle{
     height:411px;
     display:table-cell;
     width:100%;
-    text-shadow: 0px 0px 8px #000;
     vertical-align: middle;
 }
-div.middle h1.muted , div.middle p{
-    color:#fff;
+div.middle h1.muted, div.middle p {
+  color: rgb(158, 158, 158);
 }
 .alert.alert-error p{
     margin:0;
@@ -79,14 +79,15 @@ div.middle h1.muted , div.middle p{
 }
 
 div.centerform {
-    float: left;
-    clear: both;
-    background: rgba(0,0,0,0.2);
-    padding: 0 16px;
-    box-shadow: 0 0 9px -2px rgb(0, 0, 0) inset;
-    width: 247px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+  background: none repeat scroll 0 0 rgba(38, 38, 38, 0.8);
+  border: medium none;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 0 0 0 3px rgba(62, 67, 68, 0.2) inset;
+  clear: both;
+  float: left;
+  margin-bottom: 10px;
+  padding: 0 16px;
+  width: 247px;
 }
 div.centerform.chatnow{
     padding:0;
@@ -98,8 +99,8 @@ div.row-fluid.home{
 div.middle p{
     font-size:20px;
 }
-h3.in{
-    color:#fff;
+h3.in {
+  color: rgb(158, 158, 158);
 }
 .home .btn.btn-primary.log{
     background: rgba(53, 106, 160, 1);
@@ -117,8 +118,8 @@ p.muted.text-center.copyright{
 .home .btn.btn-primary.log:hover{
     background: rgba(0,0,0,0.5);
 }
-.home .btn.btn-primary.log{
-    background: rgba(0,0,0,0.2);
+.home .btn.btn-primary.log {
+  background: none repeat scroll 0 0 rgb(0, 95, 143);
 }
 .well-large{
     border-radius:0px 0px 6px 6px;
@@ -207,4 +208,13 @@ div.icon.useri{
     right: 0;
     top: -80px;
     opacity: 0;
+}
+.span12 > input#datasend {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  visibility: hidden;
+}
+.span12 > textarea#data {
+  height: 35px;
 }
