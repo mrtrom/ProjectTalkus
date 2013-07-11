@@ -64,21 +64,18 @@ script
               .row-fluid.profilepic
                 .span2
                   img.img-rounded(ng-src='{{userInformation.avatar}}')
+                  ul
+                    li#deleteclick(ng-click="deletePhoto()")
+                      i.icon-remove
+                    li#uploadclick(ng-click="uploadClick()")
+                      i.icon-upload
                 .span10
                   .btn-group.uploadimgtrue(ng-hide='validations.anonymUser')
                       p
                         input#fileimg(type='file', name='file')
                       p
                         input.btn#imgbtn(upload-submit='uploadImage(content)', type='submit', value='Submit')
-                  .btn-group.lookimg
-                    a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
-                        | Profile photo 
-                        span.caret
-                    ul.dropdown-menu
-                      li#uploadclick(ng-click="uploadClick()")
-                        a Upload photo
-                      li#deleteclick(ng-click="deletePhoto()")
-                        a Delete Photo
+                  
               div(ng-hide='validations.anonymUser')
                 label Name
                 input.FocusAccion#inputUsername(name='name', id='name', ng-model='userInformation.name', type='text', placeholder = "Name")

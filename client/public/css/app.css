@@ -226,3 +226,30 @@ div.icon.useri  [class^="icon-"],div.icon.useri  [class*=" icon-"]{
 .profile .well label,legend{
     color:rgb(158, 158, 158);
 }
+.row-fluid.profilepic .span2{
+    position:relative;
+}
+.row-fluid.profilepic .span2:hover ul{
+    display:block;
+}
+.row-fluid.profilepic .span2 ul {
+  display: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.row-fluid.profilepic .span2 ul li {
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 4px;
+  margin-right: 2px;
+  margin-top: 3px;
+  padding: 0 3px;
+}
+.row-fluid.profilepic .span2 ul li:hover{
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 1);
+}
