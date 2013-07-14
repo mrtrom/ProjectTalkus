@@ -142,4 +142,10 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === ''){$scope.otherUserInfo.birth = "";}
         }
     };
+    //logout
+    $scope.logout = function(){
+        Session.delete(function(response) {
+            $location.path("/");
+        });
+    }
 }]);

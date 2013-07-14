@@ -2,6 +2,7 @@ script(src='js/lib/chat.js')
 script(src='js/lib/location.js')
 script(src='js/datepicker.js')
 script
+    
     var socket = io.connect('http://talkus.mrtrom.c9.io/#/chatbeta');
     
     socket.on('connect', function(){
@@ -56,6 +57,7 @@ script
 .profile
   .row-fluid
     .span12
+        button.btn.btn-danger.logout(ng-click="logout()" , ng-hide='validations.anonymUser') Logout
         .well(ng-init='loadInfo()')
           form(name='registerForm', ng-upload='ng-upload', method='POST', action='/API/upload')
             fieldset
