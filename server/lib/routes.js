@@ -105,7 +105,7 @@ responds
   400 
     error: Object - validation error if any
 */
-app.post('/API/mails', mails.send);
+app.post('/API/mails', mails.setmail);
 /*--------------------------*/
 
 /*--------chat-------------*/

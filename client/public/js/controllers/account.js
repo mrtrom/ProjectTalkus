@@ -1,5 +1,5 @@
-Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location',  'Session', 'User', 'ChatUser',
-    function($routeParams, $rootScope, $scope, $http, $location, Session, User, ChatUser) {
+Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location','$filter',  'Session', 'User', 'ChatUser',
+    function($routeParams, $rootScope, $scope, $http, $location,$filter, Session, User, ChatUser) {
     
     $scope.userInformation = {}; //Personal information from session / for update
     $scope.otherUserInfo = {}; //Anonym user info
@@ -27,6 +27,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             if ((response !== null ? response._id : void 0) !== null) {
                 if (response._id !== null && response._id !== undefined){
                     $scope.userInformation = response;
+                    $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
                     $scope.validations.anonymUser = false;
                 }
             }

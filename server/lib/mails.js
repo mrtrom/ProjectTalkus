@@ -7,6 +7,7 @@ var emailTemplates = require('email-templates'),
     path = require('path'), 
     templatesDir = path.resolve(__dirname, '..', 'templates'),
     utils = require('./utilities'),
+    mailsall,
     locals;
 
 //Mail service configuration
@@ -20,17 +21,24 @@ mails.smtpTransport = nodemailer.createTransport('SMTP', {
 
 //JSON object list of mails
 locals = {
-    email: 'sergiorobledo2k5@gmail.com',
+    email: null,
     name: {
-        first: 'Sergio',
-        last: 'Robledo'
+        first: null,
+        id: null
     }
 };
-
+//sets variables like email and username, also the SEND function is called
+mails.setmail = function(getinfo){
+    locals.name.first = getinfo.query.username;
+    locals.name.id = getinfo.query._id;
+    locals.email = getinfo.query.email;
+    mails.send();
+}
 
 //Send email to 1 user
 mails.send = function(req, res) {
     return emailTemplates(templatesDir, function(err, template) {
+        console.log(mailsall);
     if (err) {
         res.statusCode = 400;
         return res.end(utils.parseError(err));
@@ -43,7 +51,7 @@ mails.send = function(req, res) {
                 return mails.smtpTransport.sendMail({
                     from: "Talkus Team <proyecttalkus@gmail.com>",
                     to: locals.email,
-                    subject: 'Test template mail',
+                    subject: 'Welcome to talkus!',
                     html: html,
                     text: text
                 }, function(err, responseStatus) {
@@ -52,8 +60,8 @@ mails.send = function(req, res) {
                         console.log('error 3');
                         return res.end(utils.parseError(err));
                     } else {
-                        res.statusCode = 200;
-                        return res.end();
+                       // res.statusCode = 200;
+                       // return res.end();
                     }
                 });
             }

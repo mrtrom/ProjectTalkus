@@ -83,7 +83,7 @@ script
                 input.FocusAccion#inputUsername(name='name', id='name', ng-model='userInformation.name', type='text', placeholder = "Name")
               div(ng-hide='validations.anonymUser')
                 label Birthday
-                input#datepicker(name='datepicker', type='text')
+                input#datepicker(name='datepicker', type='text' , ng-model='userInformation.birth')
               div(ng-hide='validations.anonymUser')
                 label(ng-hide='validations.anonymUser') Email
                 input.FocusAccion#inputUsername(name='email', id='email', ng-model='userInformation.email', type='text', placeholder = "Email contact")

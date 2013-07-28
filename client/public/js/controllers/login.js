@@ -1,5 +1,5 @@
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session', 'User', 
-    function($rootScope, $scope, $http, $location, Session , User) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session','Mails', 'User', 
+    function($rootScope, $scope, $http, $location, Session, Mails , User) {
 
     //Validations
     $scope.permissions = {
@@ -25,7 +25,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.session = new Session();
     //User
     $scope.userObject = new User();
-    
+    //Mail
+    $scope.Mails = new Mails();
     //Redireccion si ya está logueado
     Session.get(function(response) {
         if ((response !== null ? response._id : void 0) !== null) {
@@ -57,7 +58,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     //Register action button
     $scope.submitRegister = function () {
-        $scope.userObject.$save(function(res){
+       $scope.userObject.$save(function(res){
+            $scope.Mails.$save(res);
             $scope.permissions.invalidUserInfo = false;
             $scope.validations.invalidEmailFormat = false;
             $scope.validations.invalidUsername = false;
@@ -80,6 +82,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
                     break;
             }
         });
+        
     };
     
     

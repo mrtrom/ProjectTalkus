@@ -25,13 +25,16 @@ User.schema.path('email').validate(function(v) {
 //Create new user
 users.create = function(req, res) {
     var user = new User(req.body.user);
+    
     //Entries validations
     if (user.username === undefined){user.username = "";}
     if (user.password === undefined){user.password = "";}
     
     user.password = utils.crypt(user.password);
-    
+    user.valid = 'false';
+    user.created = new Date();
     return user.save(function(error) {
+        
         if (error !== null) {
             res.statusCode = 400;
             return res.end(utils.parseError(error));

@@ -12,6 +12,13 @@ angular.module('myApp.services', [])
   }
 ])
 
+.factory('Mails', ['$resource', function($resource) {
+    var _url = '/API/mails',
+        Mails = $resource(_url);
+    return Mails;
+  }
+])
+
 .factory('ChatUser', ['$resource', function($resource) {
     var _url = '/API/chat/:username',
         _usernameUrl = '/API/chat/chatUsername/:username/get',
