@@ -20,7 +20,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         birth: ''
     };
     var googleBool = false;
-    var imgurl;
     //get user session
     $scope.loadInfo = function () {
         Session.get(function(response) {
