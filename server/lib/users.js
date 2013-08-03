@@ -44,10 +44,8 @@ users.create = function(req, res) {
         }
     });
 };
-
 //Update users info
 users.update = function(req, res) {
-    console.log(req.body);
     var user = new User(req.body);
     
     //Entries validations
@@ -59,6 +57,7 @@ users.update = function(req, res) {
     if (user.gender === undefined || user.gender === ''){user.gender = "";}
     if (user.location === undefined || user.location === ''){user.location = "";}
     if (user.description === undefined || user.description === ''){user.description = "";}
+    console.log(user._id);
     return User.findByIdAndUpdate({
         _id: user._id
     }, {$set: {email: user.email, name: user.name,birth: user.birth, avatar: user.avatar, gender: user.gender,location: user.location, description: user.description}}, function(error) {
@@ -72,7 +71,15 @@ users.update = function(req, res) {
         }
     });
 };
-
+//update mail
+users.update_id = function(getinfo) {
+    console.log("getit"+getinfo.query);
+    /*console.log(getinfo.query);
+    return User.findByIdAndUpdate({
+        _id: getinfo.query.id
+    }, {$set: {valid: "True"}});*/
+    
+};
 //Get user info by username
 users.getByUsername = function(username, fields, callback) {
     return User.findOne({

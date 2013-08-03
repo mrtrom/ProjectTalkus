@@ -24,7 +24,8 @@ locals = {
     email: null,
     name: {
         first: null,
-        id: null
+        id: null,
+        url: null
     }
 };
 //sets variables like email and username, also the SEND function is called
@@ -32,6 +33,8 @@ mails.setmail = function(getinfo){
     locals.name.first = getinfo.query.username;
     locals.name.id = getinfo.query._id;
     locals.email = getinfo.query.email;
+    locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
+    console.log(locals.name.url);
     mails.send();
 }
 

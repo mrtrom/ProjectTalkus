@@ -7,6 +7,7 @@ var users = require('./users'),
     chat = require('./chat'),
     sessions = require('./sessions'),
     upload = require('./upload'),
+    valid = require('./valid'),
     clientRoutes = require('../../client/routes/index');
 
 //Define resources and routes for server 
@@ -63,6 +64,8 @@ responds
 */
 app.post('/API/users', users.create);
 
+app.post('/API/valid', valid.validate);
+
 /*
 
 /*
@@ -77,7 +80,6 @@ responds
     error: Object - validation error if any
 */
 app.put('/API/users/:username', users.update);
-
 /*
 GET
 params

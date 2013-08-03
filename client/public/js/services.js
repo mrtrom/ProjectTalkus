@@ -41,4 +41,11 @@ angular.module('myApp.services', [])
             {update: {method: 'PUT'}});
     return User;
   }
+])
+
+.factory('Valid', ['$resource', function($resource) {
+    var _url = '/API/valid',
+        Valid = $resource(_url);
+    return Valid;
+  }
 ]);
