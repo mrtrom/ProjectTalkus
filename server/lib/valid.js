@@ -13,6 +13,5 @@ valid.validate = function(getinfo) {
     return User.findByIdAndUpdate({
         _id: user._id
     }, {$set: {valid: 'true'}}, function(error) {
-        //console.log(error);
     });
 };

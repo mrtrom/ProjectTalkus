@@ -34,7 +34,6 @@ mails.setmail = function(getinfo){
     locals.name.id = getinfo.query._id;
     locals.email = getinfo.query.email;
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
-    console.log(locals.name.url);
     mails.send();
 }
 
