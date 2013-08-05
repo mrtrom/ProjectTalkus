@@ -1,3 +1,4 @@
+//User account gets validated.
 //Export module
 var valid = module.exports;
 

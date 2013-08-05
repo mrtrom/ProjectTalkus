@@ -29,6 +29,7 @@ locals = {
     }
 };
 //sets variables like email and username, also the SEND function is called
+//the user id is also being send on email so the account can be validated
 mails.setmail = function(getinfo){
     locals.name.first = getinfo.query.username;
     locals.name.id = getinfo.query._id;

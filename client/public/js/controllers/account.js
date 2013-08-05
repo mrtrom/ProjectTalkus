@@ -33,7 +33,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 }
             }
             
-            //validacion de información
+            //User validation
             if ($scope.userInformation.username === undefined || $scope.userInformation.username === ''){
                 ChatUser.getUsername({username: 'get'},
                 function(response) {
@@ -58,7 +58,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         });
     };
     
-    //upload images
+    /*upload images*/
     $('#fileimg').change(function(){
         $('#imgbtn').click();
     });
@@ -66,12 +66,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.uploadClick = function(){
         $('#fileimg').click();
     };
-    
+    /*End images*/
     $scope.deletePhoto = function(){
         $scope.userInformation.avatar = "/uploads/images/avatars/default.jpg";
         updateUserAll();
     };
-    
+    //user image is shown
     $scope.uploadImage = function(content){
         if(content.path === undefined || content.path === ""){
         }else{
@@ -83,11 +83,11 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         }
     };
     
-    
+    //general update function
     $scope.updateUsers = function () {
         updateUserAll();
     };
-    
+    //When GPS is enable, it will get users location
     $scope.locationBool = function () {
         getLocation();
         if(googleBool == false){
@@ -136,7 +136,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     
     /*Javascript section*/
     
-    //datePicker
+    //datePicker for users b-day
     $(function() {
         $( "#datepicker" ).datepicker({
            onSelect: function(dateText, inst) { 
@@ -153,7 +153,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $(".FocusAccion").focusout(function() {
         updateUserAll();
     });
-    //aqui esta la funcion como tal para el update, recomendado mejor en una funcion ya que se usa varias veces
+    //Here is where the users update function is called when needed
     function updateUserAll(){
     User.update($scope.userInformation,
         function (data) {
