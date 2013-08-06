@@ -33,8 +33,20 @@ utils.parseError = function(error) {
     }
     return JSON.stringify(parsedError);
 };
-
-
+//User ID encrypt
+utils.encrypt = function(text){
+  var cipher = crypto.createCipher('aes-256-cbc', CONF.app.secret)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+//User ID decript
+utils.UIdecrypt = function(text){
+  var decipher = crypto.createDecipher('aes-256-cbc',CONF.app.secret)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
 //Encrypt
 utils.crypt = function(str) {
     var cipher = crypto.createCipher('aes-256-cbc', CONF.app.secret),

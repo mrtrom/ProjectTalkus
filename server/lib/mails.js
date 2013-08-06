@@ -32,7 +32,7 @@ locals = {
 //the user id is also being send on email so the account can be validated
 mails.setmail = function(getinfo){
     locals.name.first = getinfo.query.username;
-    locals.name.id = getinfo.query._id;
+    locals.name.id = utils.encrypt(getinfo.query._id);
     locals.email = getinfo.query.email;
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
