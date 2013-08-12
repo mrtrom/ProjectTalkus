@@ -31,7 +31,7 @@ users.create = function(req, res) {
     if (user.password === undefined){user.password = "";}
     
     user.password = utils.encrypt(user.password);
-    user.valid = 'false';
+    user.confirmed = 'false';
     user.created = new Date();
     return user.save(function(error) {
         
