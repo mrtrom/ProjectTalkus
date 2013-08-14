@@ -59,6 +59,14 @@ script.
     .span12
         button.btn.btn-danger.logout(ng-click="logout()" , ng-hide='validations.anonymUser') Logout
         .well(ng-init='loadInfo()')
+          .daysleftwrap(ng-hide='validations.anonymUser')
+            .daysleft(ng-show='newpermit.days')
+              label
+                strong
+                    | You have 
+                    span.text-error
+                      {{days}} 
+                    | days left to confirm your account via email
           form(name='registerForm', ng-upload='ng-upload', method='POST', action='/API/upload')
             fieldset
               legend Profile {{userInformation.username}}

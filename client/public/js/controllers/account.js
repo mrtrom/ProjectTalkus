@@ -3,7 +3,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     
     $scope.userInformation = {}; //Personal information from session / for update
     $scope.otherUserInfo = {}; //Anonym user info
-    
+    $scope.newpermit = {
+        days: false
+    };
     $scope.validations = {
         anonymUser: true,
         anonymOtherUser: true
@@ -30,6 +32,24 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                     $scope.userInformation = response;
                     $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
                     $scope.validations.anonymUser = false;
+                    
+                    //Calculate how many days left before profile delete
+                    
+                    if($scope.userInformation.confirmed !== "true"){
+                        $scope.newpermit.days = true;
+                        Date.prototype.DaysBetween = function(){  
+                            var intMilDay = 24 * 60 * 60 * 1000;  
+                            var intMilDif = arguments[0] - this;  
+                            var intDays = Math.floor(intMilDif/intMilDay);  
+                            return intDays;  
+                        }
+                        var d1 = new Date($scope.userInformation.created);
+                        var today = new Date();
+                        var rest = new Date(today.setDate(d1.getDate()+15));
+                        $scope.days = new Date().DaysBetween(rest);
+                    }
+                    
+                    //End of profile Calculation
                 }
             }
             
@@ -135,7 +155,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     };
     
     /*Javascript section*/
-    
+        
     //datePicker for users b-day
     $(function() {
         $( "#datepicker" ).datepicker({
