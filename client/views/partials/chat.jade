@@ -57,7 +57,12 @@ script.
 .profile
   .row-fluid
     .span12
-        button.btn.btn-danger.logout(ng-click="logout()" , ng-hide='validations.anonymUser') Logout
+        .btn-group.logout(ng-hide='validations.anonymUser')
+            button.btn.btn-danger(ng-click="logout()") Logout
+              button.btn.btn-danger.dropdown-toggle(data-toggle='dropdown')
+                span.caret
+              ul.dropdown-menu.pull-right
+               li(ng-click="deleteAccount()") Delete Account
         .well(ng-init='loadInfo()')
           .daysleftwrap(ng-hide='validations.anonymUser')
             .daysleft(ng-show='newpermit.days')
@@ -66,7 +71,12 @@ script.
                     | You have 
                     span.text-error
                       {{days}} 
-                    | days left to confirm your account via email
+                    | days left to confirm your account via email. Click 
+                    span.text-error.hereclick(ng-click="resend()") here 
+                    | to resend it to your email
+            .daysleft(ng-show='newpermit.email') 
+              p.text-success 
+                strong Email has been send
           form(name='registerForm', ng-upload='ng-upload', method='POST', action='/API/upload')
             fieldset
               legend Profile {{userInformation.username}}

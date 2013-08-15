@@ -64,6 +64,8 @@ responds
 */
 app.post('/API/users', users.create);
 
+app.delete('/API/users', users.delete);
+
 app.post('/API/valid', valid.validate);
 
 /*
@@ -108,6 +110,7 @@ responds
     error: Object - validation error if any
 */
 app.post('/API/mails', mails.setmail);
+app.delete('/API/mails', mails.delete);
 /*--------------------------*/
 
 /*--------chat-------------*/

@@ -44,6 +44,16 @@ users.create = function(req, res) {
         }
     });
 };
+//delete user if not valid
+users.delete = function (req, res) {
+    User.remove(
+        { _id: req.session.user._id },
+            function(error){
+                if (error !== null){
+                  return error;  
+                }
+        });
+}
 //Update users info
 users.update = function(req, res) {
     var user = new User(req.body);
