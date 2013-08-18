@@ -1,9 +1,12 @@
-Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location','$filter',  'Session', 'User', 'ChatUser',
-    function($routeParams, $rootScope, $scope, $http, $location,$filter, Session, User, ChatUser) {
+Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location','$filter',  'Session', 'User','Mails' , 'ChatUser',
+    function($routeParams, $rootScope, $scope, $http, $location,$filter, Session, User,Mails, ChatUser) {
     
     $scope.userInformation = {}; //Personal information from session / for update
     $scope.otherUserInfo = {}; //Anonym user info
-    
+    $scope.newpermit = {
+        days: false ,
+        email: false
+    };
     $scope.validations = {
         anonymUser: true,
         anonymOtherUser: true
@@ -30,6 +33,36 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                     $scope.userInformation = response;
                     $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
                     $scope.validations.anonymUser = false;
+                    
+                    //Calculate how many days left before profile delete
+                    
+                    if($scope.userInformation.confirmed !== "true"){
+                        $scope.newpermit.days = true;
+                        Date.prototype.DaysBetween = function(){  
+                            var intMilDay = 24 * 60 * 60 * 1000;  
+                            var intMilDif = arguments[0] - this;  
+                            var intDays = Math.floor(intMilDif/intMilDay);  
+                            return intDays;  
+                        }
+                        var d1 = new Date($scope.userInformation.created);
+                        var today = new Date();
+                        var rest = new Date(today.setDate(d1.getDate()+15));
+                        var realRest = new Date().DaysBetween(rest);
+                        if(realRest <= 0){
+                            var userDeletion = $scope.userInformation;
+                            User.delete(function(userDeletion) {
+                               $scope.logout();
+                            });
+                        }else{
+                            $scope.days = realRest;
+                            if(realRest == 8 || realRest == 1){
+                                Mails.delete(function(userDeletion) {
+                                });
+                            }
+                        }
+                    }
+                    
+                    //End of profile Calculation
                 }
             }
             
@@ -57,7 +90,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             //error
         });
     };
-    
+    //user delete account
+    $scope.deleteAccount = function(){
+        var userDelete = $scope.userInformation;
+        User.delete(function(userDelete) {
+           
+        });
+        $scope.logout();
+    }
+    //email resend
+    $scope.resend = function(){
+        var resendInfo = $scope.userInformation;
+        Mails.delete(function(resendInfo) {
+            
+        });
+        $scope.newpermit.email = true;
+    }
     /*upload images*/
     $('#fileimg').change(function(){
         $('#imgbtn').click();
@@ -135,7 +183,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     };
     
     /*Javascript section*/
-    
+        
     //datePicker for users b-day
     $(function() {
         $( "#datepicker" ).datepicker({

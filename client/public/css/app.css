@@ -253,8 +253,17 @@ div.icon.useri  [class^="icon-"],div.icon.useri  [class*=" icon-"]{
 .row-fluid.profilepic .span2 ul li:hover{
     background: none repeat scroll 0 0 rgba(255, 255, 255, 1);
 }
-.btn.logout{
+.logout{
     position: absolute;
-    right: 17px;
-    top: 21px;
+    right: 19px;
+    top: 12px;
+}
+.logout .dropdown-menu>li {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
 }

@@ -30,8 +30,8 @@ users.create = function(req, res) {
     if (user.username === undefined){user.username = "";}
     if (user.password === undefined){user.password = "";}
     
-    user.password = utils.encrypt(user.password);
-    user.valid = 'false';
+    user.password = utils.crypt(user.password);
+    user.confirmed = 'false';
     user.created = new Date();
     return user.save(function(error) {
         
@@ -44,6 +44,16 @@ users.create = function(req, res) {
         }
     });
 };
+//delete user if not valid
+users.delete = function (req, res) {
+    User.remove(
+        { _id: req.session.user._id },
+            function(error){
+                if (error !== null){
+                  return error;  
+                }
+        });
+}
 //Update users info
 users.update = function(req, res) {
     var user = new User(req.body);

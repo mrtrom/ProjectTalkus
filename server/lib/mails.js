@@ -37,11 +37,17 @@ mails.setmail = function(getinfo){
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
 }
+mails.delete = function(getinfo){
+    locals.name.first = getinfo.session.user.username;
+    locals.name.id = utils.encrypt(getinfo.session.user._id);
+    locals.email = getinfo.session.user.email;
+    locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
+    mails.send();
+}
 
 //Send email to 1 user
 mails.send = function(req, res) {
     return emailTemplates(templatesDir, function(err, template) {
-        console.log(mailsall);
     if (err) {
         res.statusCode = 400;
         return res.end(utils.parseError(err));

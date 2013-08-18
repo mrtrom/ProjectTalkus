@@ -13,6 +13,6 @@ valid.validate = function(getinfo) {
     user._id = utils.UIdecrypt(getinfo.query.id_valid);
     return User.findByIdAndUpdate({
         _id: user._id
-    }, {$set: {valid: 'true'}}, function(error) {
+    }, {$set: {confirmed: 'true'}}, function(error) {
     });
 };
