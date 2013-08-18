@@ -19,9 +19,15 @@ script.
     });
     
     $('#datasend').on('click', function() {
-        var message = $('#data').val();
+        var cadenaAEliminar = /(<([^>]+)>)/gi;
+        var elementoEtiquetas = $('#data');
+        var etiquetas = elementoEtiquetas.val();
+        etiquetas = etiquetas.replace(cadenaAEliminar, '');
+        elementoEtiquetas.val(etiquetas);
+        mensaje = elementoEtiquetas.val();
+        
         $('#data').val('');
-        socket.emit('sendchat', message);
+        socket.emit('sendchat', mensaje);
     });
     
     $('#data').keypress(function(e) {
