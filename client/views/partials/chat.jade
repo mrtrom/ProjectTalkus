@@ -3,7 +3,7 @@ script(src='js/lib/location.js')
 script(src='js/datepicker.js')
 script.
     
-    var socket = io.connect('http://talkus.mrtrom.c9.io/#/chatbeta');
+    var socket = io.connect(document.URL);
     
     socket.on('connect', function(){
         var username = $('#username').val();
