@@ -44,7 +44,9 @@ mails.delete = function(getinfo){
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
 }
-
+mails.usermailcheck = function(){
+    console.log("mail checked");
+}
 //Send email to 1 user
 mails.send = function(req, res) {
     return emailTemplates(templatesDir, function(err, template) {

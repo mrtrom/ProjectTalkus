@@ -4,6 +4,7 @@ var util = require('util'),
     cluster = require('cluster'),
     CONF = require('config'),
     mongoose = require('mongoose'),
+    cronJob = require('cron').CronJob,
     path = require('path'), 
     _ = require('underscore'),
     viewsDir = path.resolve(__dirname, '..', 'client/views'),
@@ -23,6 +24,13 @@ if (pub_dir[0] != '/') {
 } // humans are forgetful
 
 pub_dir = __dirname + pub_dir;
+
+//cron config for email confirm
+new cronJob('* * * * * *', function(){
+    var mail = require('./lib/mails');
+    mail.usermailcheck();
+}, null, true);
+
 
 //App config
 app.configure(function() {
