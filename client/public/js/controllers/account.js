@@ -55,10 +55,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                             });
                         }else{
                             $scope.days = realRest;
-                            if(realRest == 8 || realRest == 1){
-                                Mails.delete(function(userDeletion) {
-                                });
-                            }
                         }
                     }
                     

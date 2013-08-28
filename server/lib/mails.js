@@ -4,10 +4,12 @@ var mails = module.exports;
 //Require modules
 var emailTemplates = require('email-templates'), 
     nodemailer = require('nodemailer'), 
-    path = require('path'), 
+    path = require('path'),
+    generalParcer = require('util'),
     templatesDir = path.resolve(__dirname, '..', 'templates'),
     utils = require('./utilities'),
-    mailsall,
+    schemas = require('./schemas'),
+    User = schemas.User,
     locals;
 
 //Mail service configuration
@@ -45,7 +47,23 @@ mails.delete = function(getinfo){
     mails.send();
 }
 mails.usermailcheck = function(){
-    console.log("mail checked");
+    User.find({ confirmed: 'false' }, function(err, userleft) {
+      if (err) return console.error(err);
+      if(userleft.length > 0){
+          for (var i = 0; i < userleft.length; i++) {
+            locals.email = userleft[i].email;
+            locals.name.first = userleft[i].username;
+            var stringID = generalParcer.format(userleft[i]._id);
+            locals.name.id = utils.encrypt(stringID);
+            locals.name.url = 'http://sergio.srobledo.c9.io/#/welcome/?id_valid=';
+            mails.send();
+        }
+      }else{
+          console.log('All users confirmed their email');
+      }
+      
+    });
+    //console.log(UsersLeft);
 }
 //Send email to 1 user
 mails.send = function(req, res) {

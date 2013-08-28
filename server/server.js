@@ -27,9 +27,11 @@ pub_dir = __dirname + pub_dir;
 
 //cron config for email confirm
 new cronJob('* * * * * *', function(){
-    //var mail = require('./lib/mails');
+    
     //mail.usermailcheck();
 }, null, true);
+var mail = require('./lib/mails');
+mail.usermailcheck();
 
 
 //App config
