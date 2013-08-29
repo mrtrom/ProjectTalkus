@@ -26,12 +26,11 @@ if (pub_dir[0] != '/') {
 pub_dir = __dirname + pub_dir;
 
 //cron config for email confirm
-new cronJob('* * * * * *', function(){
-    
-    //mail.usermailcheck();
+new cronJob('00 30 11 * * 1-7', function(){
+    var mail = require('./lib/mails');
+    mail.usermailcheck();
 }, null, true);
-var mail = require('./lib/mails');
-mail.usermailcheck();
+
 
 
 //App config
