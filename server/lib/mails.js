@@ -46,24 +46,53 @@ mails.delete = function(getinfo){
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
 }
+//checks to see what users have not confirmed their account and sends an email to each and one of them, 
+//if 15 days have passed and not valid, then deletion
 mails.usermailcheck = function(){
-    User.find({ confirmed: 'false' }, function(err, userleft) {
-      if (err) return console.error(err);
-      if(userleft.length > 0){
-          for (var i = 0; i < userleft.length; i++) {
-            locals.email = userleft[i].email;
-            locals.name.first = userleft[i].username;
-            var stringID = generalParcer.format(userleft[i]._id);
-            locals.name.id = utils.encrypt(stringID);
-            locals.name.url = 'http://sergio.srobledo.c9.io/#/welcome/?id_valid=';
-            mails.send();
+    try{
+        function deleteUser(id){
+            User.remove(
+            { _id: id },
+                function(error){
+                    if (error !== null){
+                      return error;  
+                    }
+            });
         }
-      }else{
-          console.log('All users confirmed their email');
-      }
-      
-    });
-    //console.log(UsersLeft);
+        User.find({ confirmed: 'false' }, function(err, userleft) {
+          if (err) return console.error(err);
+          if(userleft.length > 0){
+              Date.prototype.DaysBetween = function(){  
+                    var intMilDay = 24 * 60 * 60 * 1000;  
+                    var intMilDif = arguments[0] - this;  
+                    var intDays = Math.floor(intMilDif/intMilDay);  
+                    return intDays;  
+                };
+              for (var i = 0; i < userleft.length; i++) {
+                var d1 = new Date(userleft[i].created);
+                var today = new Date();
+                var rest = new Date(today.setDate(d1.getDate()+15));
+                var realRest = new Date().DaysBetween(rest);
+                if(realRest <= 0){
+                    deleteUser(userleft[i]._id);
+                }else if(realRest == 7 || realRest == 1){
+                    locals.email = userleft[i].email;
+                    locals.name.first = userleft[i].username;
+                    var stringID = generalParcer.format(userleft[i]._id);
+                    locals.name.id = utils.encrypt(stringID);
+                    locals.name.url = 'http://sergio.srobledo.c9.io/#/welcome/?id_valid=';
+                    mails.send();
+                }
+            }
+          }else{
+              console.log('All users confirmed their email');
+          }
+          
+        });
+    }
+    catch(e){
+        console.log("Error " + e);
+    }
 }
 //Send email to 1 user
 mails.send = function(req, res) {
