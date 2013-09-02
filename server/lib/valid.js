@@ -7,7 +7,7 @@ var schemas = require('./schemas'),
     utils = require('./utilities'),
     User = schemas.User;
     
-//update mail
+//update mail sets confirmed to true in DB
 valid.validate = function(getinfo) {
     var user = new User();
     user._id = utils.UIdecrypt(getinfo.query.id_valid);
