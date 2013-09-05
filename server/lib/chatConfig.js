@@ -53,8 +53,8 @@ io.sockets.on('connection', function (socket) {
         
         socket.userObject = userObject; //se asigna el objeto usuario al socket
         socket.join(socket.userObject.room); //el usuario actual entra a la sala
-		socket.emit('updatechat', 'SERVER', 'you have connected to: ' + socket.userObject.room); //mensaje de servidor "usted entró a la sala"
-		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', username + ' has connected to this room'); //mensaje de servidor "usuario entró a la sala"
+		socket.emit('updatechat', 'SERVER', '<span class="muted">you have connected to: ' + socket.userObject.room + '</span>'); //mensaje de servidor "usted entró a la sala"
+		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', +'<span class="muted">'+ username + ' has connected to this room</span>'); //mensaje de servidor "usuario entró a la sala"
         
         console.log('GLOBAL.globalChatUsers: ' + JSON.stringify(GLOBAL.globalChatUsers));
         

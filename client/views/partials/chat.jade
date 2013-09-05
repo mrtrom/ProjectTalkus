@@ -11,7 +11,7 @@ script.
     });
     
     socket.on('updatechat', function (username, data) {
-        $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+        $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
     });
     
     socket.on('updateAnonymInfo', function (username, user) {
@@ -140,15 +140,10 @@ script.
     .span12
         .well.well-large
           p.muted Connecting to server...
-          p.muted
-            strong Connected!
           #conversation
-            div
-              i.icon-user
-              span.text-info Tromboy:
-              | Hi!
+            
         form.form-inline
           .row-fluid
             .span12
-              textarea#data(placeholder='Press enter to send')
+              input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text")
               input#datasend(type='button', value='send')

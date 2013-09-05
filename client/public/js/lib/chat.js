@@ -2,13 +2,21 @@
 function resizeChat(){
     var winHeight = jQuery(window).height();
     jQuery('.well.well-large').css('height',winHeight-140 + 'px');
-    jQuery('.well.well-large').scrollTop(jQuery('.well.well-large')[0].scrollHeight);
     var txtarea = jQuery('.container.trs').width();
-    jQuery('.chatwrap .span12 textarea').css('width',txtarea-12 + 'px');
+    jQuery('.chatwrap .span12 input[type="text"]').css('width',txtarea-12 + 'px');
 }
 jQuery(window).ready(function() {resizeChat();});
 jQuery(window).resize(function() {resizeChat();});
-
+//Keep the chat scroll on the bottom
+var object = jQuery('.well.well-large').get();
+var string = object[0].innerHTML;
+window.setInterval(function(){
+    var objectNew = jQuery('.well.well-large').get();
+    if(string != objectNew[0].innerHTML){
+        jQuery('.well.well-large').scrollTop(jQuery('.well.well-large')[0].scrollHeight);
+        string = objectNew[0].innerHTML;
+    }
+}, 100);
 /* FIN 100% */
 
 /*QUERY PARA EL DESPLIEGUE DEL PERFIL DEL USUARIO*/

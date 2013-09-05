@@ -131,6 +131,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.updateUsers = function () {
         updateUserAll();
     };
+    $scope.pullDown = function(){
+        console.log("push down");
+    };
     //When GPS is enable, it will get users location
     $scope.locationBool = function () {
         getLocation();
