@@ -9,14 +9,13 @@ var path = require('path'),
     User = schemas.User;
 
 
-remember.inirem = function(getinfo , res){
-    User.find({ email: getinfo.query.email }, function(err, userleft) {
+remember.inirem = function(req , res){
+    User.find({ email: req.body.forgotemail }, function(err, userleft) {
         if (typeof userleft[0] !== 'undefined' && userleft[0] !== null) {
             mails.forgot(userleft);
-            return "true";
         }
         else{
-            return "false";
+            
         }
         
     });

@@ -37,18 +37,21 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         if ((response !== null ? response._id : void 0) !== null) {
             if (response._id !== null && response._id !== undefined){
                 $scope.loginValidations.userSessionExist = true;
-                //lo desabilite temporalmente men
-                //$location.path("/welcome");
+                $location.path("/welcome");
             }
         }
     }, function(response) {
         //error
     });
     $scope.forgotpass = function(){
-        if($scope.forgot.email !== null || $scope.forgot.email !== ""){
-            $scope.Remember.$save($scope.forgot);
+        $scope.Remember.$save(function(res){
+            console.log(res);
             $scope.password.remember = true;
-        }
+        },
+        function(res){
+            console.log(res);
+        });
+        
     };     
     //Login action button
     $scope.submitLogin = function () {

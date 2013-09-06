@@ -45,10 +45,10 @@ script.
                     .input-prepend
                         span.add-on 
                           i.icon-envelope
-                        input#prependedInput.span12(type='email', placeholder='Email' , ng-model = 'forgot.email' , required)
+                        input#prependedInput.span12(type='email', placeholder='Email' ,id="forgotemail",name = "forgotemail", ng-model = 'Remember.forgotemail' , required)
     
                   .modal-footer
-                    button.btn.btn-primary Send
+                    button.btn.btn-primary(type="submit") Send
         .centerform
           h3.in Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")

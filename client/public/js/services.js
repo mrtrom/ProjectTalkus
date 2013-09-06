@@ -20,7 +20,7 @@ angular.module('myApp.services', [])
 ])
 
 .factory('Remember', ['$resource', function($resource) {
-    var _url = '/API/Remember',
+    var _url = '/API/remember',
         Remember = $resource(_url);
     return Remember;
   }
@@ -44,7 +44,6 @@ angular.module('myApp.services', [])
 .factory('User', ['$resource', function($resource) {
     var _url = '/API/users/:username',
         User = $resource(_url, {username: '@username'}, 
-            //{update: {method: 'PUT', params:{username: '@username'}}});
             {update: {method: 'PUT'}});
     return User;
   }
