@@ -38,10 +38,11 @@ script.
                     h3 Please enter your email.
                   .modal-body
                     .alert.alert-success(ng-show='password.remember')
-                      button.close(type='button', data-dismiss='alert') ×
                       strong Success! 
                       | an email has been send, please check your inbox
-
+                    .alert.alert-error(ng-show='password.remembererror')
+                      strong Oops! 
+                      | looks like that email does not exist on out servers.
                     .input-prepend
                         span.add-on 
                           i.icon-envelope

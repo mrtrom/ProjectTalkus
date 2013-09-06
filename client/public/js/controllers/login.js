@@ -17,7 +17,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         userSessionExist: false
     };
     $scope.password = {
-        remember: false
+        remember: false,
+        remembererror: false
     };
     
     $scope.succesMesages = {
@@ -44,14 +45,15 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         //error
     });
     $scope.forgotpass = function(){
-        $scope.Remember.$save(function(res){
-            console.log(res);
-            $scope.password.remember = true;
-        },
-        function(res){
-            console.log(res);
+        $scope.Remember.$save(function(res) {
+            if(res[0] == "t"){
+                $scope.password.remember = true;
+                $scope.password.remembererror = false;
+            }else{
+                $scope.password.remembererror = true;
+                $scope.password.remember = false;
+            }
         });
-        
     };     
     //Login action button
     $scope.submitLogin = function () {
