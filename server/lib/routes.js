@@ -8,6 +8,7 @@ var users = require('./users'),
     sessions = require('./sessions'),
     upload = require('./upload'),
     valid = require('./valid'),
+    remember = require('./remember'),
     clientRoutes = require('../../client/routes/index');
 
 //Define resources and routes for server 
@@ -146,7 +147,7 @@ responds
 app.get('/API/chat/chatUsername/:username/get', chat.getUsername);
 
 /*--------------------------*/
-
+app.post('/API/remember', remember.inirem);
 /*--------upload-------------*/
 
 /*

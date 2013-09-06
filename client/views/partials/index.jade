@@ -30,6 +30,25 @@ script.
             .control-group
               .controls
                 button.btn.btn-primary.log(type='submit') Sign in
+          a.text-info(href='#myModal', role='button', data-toggle='modal') Forgot password?
+          #myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            form(ng-submit="forgotpass()")
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h3 Please enter your email.
+                  .modal-body
+                    .alert.alert-success(ng-show='password.remember')
+                      button.close(type='button', data-dismiss='alert') ×
+                      strong Success! 
+                      | an email has been send, please check your inbox
+
+                    .input-prepend
+                        span.add-on 
+                          i.icon-envelope
+                        input#prependedInput.span12(type='email', placeholder='Email' , ng-model = 'forgot.email' , required)
+    
+                  .modal-footer
+                    button.btn.btn-primary Send
         .centerform
           h3.in Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")

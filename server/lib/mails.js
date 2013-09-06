@@ -30,6 +30,13 @@ locals = {
         url: null
     }
 };
+var dataforgot = {
+    email: null,
+    name: {
+        first: null,
+        pass: null
+    }
+};
 //sets variables like email and username, also the SEND function is called
 //the user id is also being send on email so the account can be validated
 mails.setmail = function(getinfo){
@@ -110,6 +117,42 @@ mails.send = function(req, res) {
                     from: "Talkus Team <proyecttalkus@gmail.com>",
                     to: locals.email,
                     subject: 'Welcome to talkus!',
+                    html: html,
+                    text: text
+                }, function(err, responseStatus) {
+                    if (err) {
+                        res.statusCode = 400;
+                        console.log('error 3');
+                        return res.end(utils.parseError(err));
+                    } else {
+                       // res.statusCode = 200;
+                       // return res.end();
+                    }
+                });
+            }
+        });
+    }
+    });
+};
+//forgot password
+mails.forgot = function(getall, res) {
+    dataforgot.email = generalParcer.format(getall[0].email);
+    dataforgot.name.first = generalParcer.format(getall[0].username);
+    dataforgot.name.pass = utils.decrypt(getall[0].password);
+    return emailTemplates(templatesDir, function(err, template) {
+    if (err) {
+        res.statusCode = 400;
+        return res.end(utils.parseError(err));
+    } else {
+        return template('forgot', dataforgot, function(err, html, text) {
+            if (err) {
+            res.statusCode = 400;
+            return res.end(utils.parseError(err));
+            } else {
+                return mails.smtpTransport.sendMail({
+                    from: "Talkus Team <proyecttalkus@gmail.com>",
+                    to: dataforgot.email,
+                    subject: 'Talkus User and Password',
                     html: html,
                     text: text
                 }, function(err, responseStatus) {

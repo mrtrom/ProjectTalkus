@@ -84,6 +84,7 @@ div.centerform {
   margin-bottom: 10px;
   padding: 0 16px;
   width: 247px;
+  position:relative;
 }
 div.centerform.chatnow{
     padding:0;
@@ -266,4 +267,12 @@ div.icon.useri  [class^="icon-"],div.icon.useri  [class*=" icon-"]{
     line-height: 20px;
     color: #333;
     white-space: nowrap;
+}
+.hero-unit.center.ng-scope{
+    margin-top:40px;
+}
+.home a.text-info {
+position: absolute;
+right: 46px;
+bottom: 23px;
 }

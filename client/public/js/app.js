@@ -18,6 +18,6 @@ App.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $routeProvider.when('/', {templateUrl: 'partials/index',controller: 'LoginController'});
     $routeProvider.when('/chat/', {templateUrl: 'partials/chat',controller: 'AccountController'});
     $routeProvider.when('/welcome/', {templateUrl: 'partials/welcome',controller: 'WelcomeController'});
-    $routeProvider.otherwise({redirectTo: '/'});
+    $routeProvider.otherwise({redirectTo: '/404',templateUrl: 'partials/404'});
   }
 ]);

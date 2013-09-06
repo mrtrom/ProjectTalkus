@@ -1,5 +1,5 @@
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session','Mails', 'User', 
-    function($rootScope, $scope, $http, $location, Session, Mails , User) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session','Mails','Remember', 'User', 
+    function($rootScope, $scope, $http, $location, Session, Mails ,Remember, User) {
 
     //Validations
     $scope.permissions = {
@@ -16,6 +16,9 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.loginValidations = {
         userSessionExist: false
     };
+    $scope.password = {
+        remember: false
+    };
     
     $scope.succesMesages = {
         creationSucces: false
@@ -27,6 +30,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.userObject = new User();
     //Mail
     $scope.Mails = new Mails();
+    //Remember password
+    $scope.Remember = new Remember();
     //Redireccion si ya está logueado
     Session.get(function(response) {
         if ((response !== null ? response._id : void 0) !== null) {
@@ -39,7 +44,12 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     }, function(response) {
         //error
     });
-            
+    $scope.forgotpass = function(){
+        if($scope.forgot.email !== null || $scope.forgot.email !== ""){
+            $scope.Remember.$save($scope.forgot);
+            $scope.password.remember = true;
+        }
+    };     
     //Login action button
     $scope.submitLogin = function () {
         

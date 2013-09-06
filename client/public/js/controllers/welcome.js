@@ -17,5 +17,6 @@ Modules.controllers.controller('WelcomeController', ['$routeParams', '$rootScope
             //Update to valid
             $scope.Valid.$save(id_object);
         }
+        jQuery(".container.trs , .view , html , body ").addClass("fullHeight");
         
 }]);
