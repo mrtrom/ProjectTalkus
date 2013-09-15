@@ -30,12 +30,15 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         Session.get(function(response) {
             if ((response !== null ? response._id : void 0) !== null) {
                 if (response._id !== null && response._id !== undefined){
+                    
+                    //User info
                     $scope.userInformation = response;
                     $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
+                    
+                    //Not a anoym user
                     $scope.validations.anonymUser = false;
                     
                     //Calculate how many days left before profile delete
-                    
                     if($scope.userInformation.confirmed !== "true"){
                         $scope.newpermit.days = true;
                         Date.prototype.DaysBetween = function(){  
@@ -43,7 +46,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                             var intMilDif = arguments[0] - this;  
                             var intDays = Math.floor(intMilDif/intMilDay);  
                             return intDays;  
-                        }
+                        };
                         var d1 = new Date($scope.userInformation.created);
                         var today = new Date();
                         var rest = new Date(today.setDate(d1.getDate()+15));
@@ -57,8 +60,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                             $scope.days = realRest;
                         }
                     }
-                    
-                    //End of profile Calculation
                 }
             }
             
@@ -72,8 +73,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 });
             }
             
-            console.log('$location: ' + JSON.stringify($location.$$host));
-            
             if ($scope.userInformation.email === undefined || $scope.userInformation.email === ''){$scope.userInformation.email = "";}
             if ($scope.userInformation.name === undefined || $scope.userInformation.name === ''){$scope.userInformation.name = $scope.userInformation.username;}
             if ($scope.userInformation.gender === undefined || $scope.userInformation.gender === ''){$scope.userInformation.gender = "";}
@@ -86,6 +85,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             //error
         });
     };
+    
     //user delete account
     $scope.deleteAccount = function(){
         var userDelete = $scope.userInformation;
@@ -93,7 +93,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
            
         });
         $scope.logout();
-    }
+    };
+    
     //email resend
     $scope.resend = function(){
         var resendInfo = $scope.userInformation;
@@ -101,7 +102,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             
         });
         $scope.newpermit.email = true;
-    }
+    };
+    
     /*upload images*/
     $('#fileimg').change(function(){
         $('#imgbtn').click();
@@ -110,11 +112,13 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.uploadClick = function(){
         $('#fileimg').click();
     };
+    
     /*End images*/
     $scope.deletePhoto = function(){
         $scope.userInformation.avatar = "/uploads/images/avatars/default.jpg";
         updateUserAll();
     };
+    
     //user image is shown
     $scope.uploadImage = function(content){
         if(content.path === undefined || content.path === ""){
@@ -131,9 +135,11 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.updateUsers = function () {
         updateUserAll();
     };
+    
     $scope.pullDown = function(){
         console.log("push down");
     };
+    
     //When GPS is enable, it will get users location
     $scope.locationBool = function () {
         getLocation();
@@ -186,20 +192,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     //datePicker for users b-day
     $(function() {
         $( "#datepicker" ).datepicker({
-           onSelect: function(dateText, inst) { 
+            onSelect: function(dateText, inst) { 
                $scope.userInformation.birth = dateText;
                updateUserAll();
-           },
-          changeMonth: true,
-          changeYear: true,
-          yearRange: "-80:+0",
-          dateFormat: 'dd/mm/yy'
+            },
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-80:+0",
+            dateFormat: 'dd/mm/yy'
         });
-      });
+    });
+      
     //update user info
     $(".FocusAccion").focusout(function() {
         updateUserAll();
     });
+    
     //Here is where the users update function is called when needed
     function updateUserAll(){
     User.update($scope.userInformation,

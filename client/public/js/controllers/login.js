@@ -44,6 +44,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     }, function(response) {
         //error
     });
+    
+    
     $scope.forgotpass = function(){
         $scope.Remember.$save(function(res) {
             if(res[0] == "t"){
@@ -55,6 +57,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             }
         });
     };     
+    
     //Login action button
     $scope.submitLogin = function () {
         
@@ -73,7 +76,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     //Register action button
     $scope.submitRegister = function () {
-       $scope.userObject.$save(function(res){
+        $scope.userObject.$save(function(res){
             $scope.Mails.$save(res);
             $scope.permissions.invalidUserInfo = false;
             $scope.validations.invalidEmailFormat = false;

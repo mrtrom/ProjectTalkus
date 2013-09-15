@@ -1,6 +1,7 @@
 Modules.controllers.controller('WelcomeController', ['$routeParams', '$rootScope', '$scope', '$http', '$location','Valid',
     function($routeParams, $rootScope, $scope, $http, $location, Valid) {
-        //checks to see if any string was send via url
+        
+        //Checks if any string was send via url
         if(($location.search()).id_valid == null || ($location.search()).id_valid == ""){
             //Error message
             console.log("No url");
