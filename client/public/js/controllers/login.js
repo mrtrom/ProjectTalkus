@@ -76,12 +76,19 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     //Register action button
     $scope.submitRegister = function () {
+        var locaUser = $scope.userObject.user.username;
+        var localPass = $scope.userObject.user.password;
+        
         $scope.userObject.$save(function(res){
+           
             $scope.Mails.$save(res);
             $scope.permissions.invalidUserInfo = false;
             $scope.validations.invalidEmailFormat = false;
             $scope.validations.invalidUsername = false;
             $scope.succesMesages.creationSucces = true;
+            $scope.session.username = locaUser;
+            $scope.session.password = localPass;
+            $scope.submitLogin();
         },
         function(res){
             switch (res.status) {

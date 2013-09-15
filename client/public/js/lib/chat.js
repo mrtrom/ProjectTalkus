@@ -8,7 +8,7 @@ function resizeChat(){
 jQuery(window).ready(function() {resizeChat();});
 jQuery(window).resize(function() {resizeChat();});
 //Keep the chat scroll on the bottom
-var object = jQuery('.well.well-large').get();
+/*var object = jQuery('.well.well-large').get();
 var string = object[0].innerHTML;
 window.setInterval(function(){
     var objectNew = jQuery('.well.well-large').get();
@@ -16,7 +16,7 @@ window.setInterval(function(){
         jQuery('.well.well-large').scrollTop(jQuery('.well.well-large')[0].scrollHeight);
         string = objectNew[0].innerHTML;
     }
-}, 100);
+}, 100);*/
 /* FIN 100% */
 
 /*QUERY PARA EL DESPLIEGUE DEL PERFIL DEL USUARIO*/
