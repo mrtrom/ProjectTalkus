@@ -65,11 +65,7 @@ responds
 */
 app.post('/API/users', users.create);
 
-app.delete('/API/users', users.delete);
-
-app.post('/API/valid', valid.validate);
-
-/*
+app.delete('/API/users/:id', users.delete);
 
 /*
 PUT
@@ -148,21 +144,7 @@ app.get('/API/chat/chatUsername/:username/get', chat.getUsername);
 
 /*--------------------------*/
 app.post('/API/remember', remember.inirem);
-/*--------upload-------------*/
-
-/*
-GET
-params
-  user: Object
-    username: String
-    email: String
-    password: String - Minimun length: 6 chars
-responds
-  200 
-    - if created successfully
-  400 
-    error: Object - validation error if any
-*/
+app.post('/API/valid', valid.validate);
 app.post('/API/upload', upload.post);
 /*--------------------------*/
 

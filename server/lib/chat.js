@@ -33,8 +33,8 @@ chat.getUser = function(req, res) {
     return users.getByUsername(username, fields, function(error, user) {
         var _user;
         if (error !== null) {
-            //return errors.handle(error, res);
-            console.log(JSON.stringify(error));
+            res.statusCode = 404;
+            res.end();
         } else if (user !== null) {
             _user = user.toObject();
             res.statusCode = 200;

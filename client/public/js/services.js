@@ -12,17 +12,12 @@ angular.module('myApp.services', [])
   }
 ])
 
-.factory('Mails', ['$resource', function($resource) {
-    var _url = '/API/mails',
-        Mails = $resource(_url);
-    return Mails;
-  }
-])
-
-.factory('Remember', ['$resource', function($resource) {
-    var _url = '/API/remember',
-        Remember = $resource(_url);
-    return Remember;
+.factory('User', ['$resource', function($resource) {
+    var _url = '/API/users/:username',
+        User = $resource(_url, {username: '@username'}, 
+            {update: {method: 'PUT'}});
+    
+    return User;
   }
 ])
 
@@ -41,17 +36,23 @@ angular.module('myApp.services', [])
   }
 ])
 
-.factory('User', ['$resource', function($resource) {
-    var _url = '/API/users/:username',
-        User = $resource(_url, {username: '@username'}, 
-            {update: {method: 'PUT'}});
-    return User;
-  }
-])
-
 .factory('Valid', ['$resource', function($resource) {
     var _url = '/API/valid',
         Valid = $resource(_url);
     return Valid;
+  }
+])
+
+.factory('Remember', ['$resource', function($resource) {
+    var _url = '/API/remember',
+        Remember = $resource(_url);
+    return Remember;
+  }
+])
+
+.factory('Mails', ['$resource', function($resource) {
+    var _url = '/API/mails',
+        Mails = $resource(_url);
+    return Mails;
   }
 ]);

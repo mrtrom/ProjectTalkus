@@ -9,6 +9,7 @@ var emailTemplates = require('email-templates'),
     templatesDir = path.resolve(__dirname, '..', 'templates'),
     utils = require('./utilities'),
     schemas = require('./schemas'),
+    users = require("./users"),
     User = schemas.User,
     locals;
 
@@ -37,6 +38,7 @@ var dataforgot = {
         pass: null
     }
 };
+
 //sets variables like email and username, also the SEND function is called
 //the user id is also being send on email so the account can be validated
 mails.setmail = function(getinfo){
@@ -46,6 +48,7 @@ mails.setmail = function(getinfo){
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
 };
+
 mails.delete = function(getinfo){
     locals.name.first = getinfo.session.user.username;
     locals.name.id = utils.encrypt(getinfo.session.user._id);
@@ -53,54 +56,60 @@ mails.delete = function(getinfo){
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
 };
+
 //checks to see what users have not confirmed their account and sends an email to each and one of them, 
 //if 15 days have passed and not valid, then deletion
-mails.usermailcheck = function(){
-    try{
-        function deleteUser(id){
-            User.remove(
-            { _id: id },
-                function(error){
-                    if (error !== null){
-                      return error;  
-                    }
-            });
-        }
-        User.find({ confirmed: 'false' }, function(err, userleft) {
-          if (err) return console.error(err);
-          if(userleft.length > 0){
-              Date.prototype.DaysBetween = function(){  
-                    var intMilDay = 24 * 60 * 60 * 1000;  
-                    var intMilDif = arguments[0] - this;  
-                    var intDays = Math.floor(intMilDif/intMilDay);  
-                    return intDays;  
-                };
-              for (var i = 0; i < userleft.length; i++) {
-                var d1 = new Date(userleft[i].created);
-                var today = new Date();
-                var rest = new Date(today.setDate(d1.getDate()+15));
-                var realRest = new Date().DaysBetween(rest);
-                if(realRest <= 0){
-                    deleteUser(userleft[i]._id);
-                }else if(realRest == 7 || realRest == 1){
-                    locals.email = userleft[i].email;
-                    locals.name.first = userleft[i].username;
-                    var stringID = generalParcer.format(userleft[i]._id);
-                    locals.name.id = utils.encrypt(stringID);
-                    locals.name.url = 'http://sergio.srobledo.c9.io/#/welcome/?id_valid=';
-                    mails.send();
-                }
+mails.usermailcheck = function(res){
+    function deleteUser(id){
+        users.delete({username : id},
+            function(response){
+                res.statusCode = 200;
+                return res.end();
+            },
+            function(error){
+                res.statusCode = 400;
+                return res.end(utils.parseError(error));
             }
-          }else{
-              console.log('All users confirmed their email');
-          }
-          
-        });
+        );
     }
-    catch(e){
-        console.log("Error " + e);
-    }
-}
+    User.find({ confirmed: 'false' }, 
+        function(err, userleft) {
+            if (err){
+                res.statusCode = 400;
+                return res.end(utils.parseError(err));
+            }
+            
+            if(userleft.length > 0){
+                for (var i = 0; i < userleft.length; i++) {
+                    
+                    var createdDate = new Date(userleft[i]), //Account created date
+                        realRest = Math.floor((new Date() - createdDate) / 86400000); //days diff between dates
+                    
+                    if(realRest >= 15){
+                        deleteUser(userleft[i]._id);
+                    }
+                    else 
+                        if(realRest == 7 || realRest == 14){
+                            locals.email = userleft[i].email;
+                            locals.name.first = userleft[i].username;
+                            var stringID = generalParcer.format(userleft[i]._id);
+                            locals.name.id = utils.encrypt(stringID);
+                            locals.name.url = 'http://sergio.srobledo.c9.io/#/welcome/?id_valid=';
+                            mails.send();
+                    }
+                }
+                res.statusCode = 200;
+                return res.end();
+            }else{
+                console.log('All users confirmed their email');
+                res.statusCode = 200;
+                return res.end();
+            }
+        }
+    );
+};
+
+
 //Send email to 1 user
 mails.send = function(req, res) {
     return emailTemplates(templatesDir, function(err, template) {
@@ -125,8 +134,8 @@ mails.send = function(req, res) {
                         console.log('error 3');
                         return res.end(utils.parseError(err));
                     } else {
-                       // res.statusCode = 200;
-                       // return res.end();
+                       res.statusCode = 200;
+                       return res.end();
                     }
                 });
             }
@@ -134,6 +143,7 @@ mails.send = function(req, res) {
     }
     });
 };
+
 //forgot password
 mails.forgot = function(getall, res) {
     dataforgot.email = generalParcer.format(getall[0].email);
@@ -161,8 +171,8 @@ mails.forgot = function(getall, res) {
                         console.log('error 3');
                         return res.end(utils.parseError(err));
                     } else {
-                       // res.statusCode = 200;
-                       // return res.end();
+                       res.statusCode = 200;
+                       return res.end();
                     }
                 });
             }

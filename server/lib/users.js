@@ -4,6 +4,7 @@ var users = module.exports;
 //Require modules
 var schemas = require('./schemas'),
     utils = require('./utilities'),
+    mongoose = require('mongoose'),
     User = schemas.User;
     
     
@@ -44,16 +45,21 @@ users.create = function(req, res) {
         }
     });
 };
-//delete user if not valid
+
+//Delete user by id
 users.delete = function (req, res) {
-    User.remove(
-        { _id: req.session.user._id },
-            function(error){
-                if (error !== null){
-                  return error;  
-                }
+    User.findByIdAndRemove({_id: mongoose.Types.ObjectId(req.params.id)},
+        function(error, userDoc){
+            if (error !== null) {
+                res.statusCode = 400;
+                return res.end(utils.parseError(error));
+            } else {
+                res.statusCode = 200;
+                return res.end();
+            }
         });
-}
+};
+
 //Update users info
 users.update = function(req, res) {
     var user = new User(req.body);

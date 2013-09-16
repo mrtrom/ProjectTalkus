@@ -1,8 +1,6 @@
-Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location','$filter',  'Session', 'User','Mails' , 'ChatUser',
-    function($routeParams, $rootScope, $scope, $http, $location,$filter, Session, User,Mails, ChatUser) {
+Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
+    function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
     
-    $scope.userInformation = {}; //Personal information from session / for update
-    $scope.otherUserInfo = {}; //Anonym user info
     $scope.newpermit = {
         days: false ,
         email: false
@@ -12,53 +10,50 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         anonymOtherUser: true
     };
     
-    $scope.userInformation = {
-        username: '',
-        email: '',
-        name: '',
-        gender: '',
-        avatar: '',
-        description: '',
-        location: '',
-        birth: ''
-    };
+    $scope.userInformation = new User();
+    $scope.otherUserInfo = new User();
     
     var googleBool = false;
     
     //get user session
     $scope.loadInfo = function () {
+        //Get the user info by the session
         Session.get(function(response) {
             if ((response !== null ? response._id : void 0) !== null) {
                 if (response._id !== null && response._id !== undefined){
                     
-                    //User info
+                    //User info and User birth in format (dd/MM/yyyy)
                     $scope.userInformation = response;
                     $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
                     
-                    //Not a anoym user
-                    $scope.validations.anonymUser = false;
+                    //Validations
+                        //-Not a anonym user, just a loged user.
+                        $scope.validations.anonymUser = false;
                     
                     //Calculate how many days left before profile delete
                     if($scope.userInformation.confirmed !== "true"){
+                        
+                        //Show days left in account
                         $scope.newpermit.days = true;
-                        Date.prototype.DaysBetween = function(){  
-                            var intMilDay = 24 * 60 * 60 * 1000;  
-                            var intMilDif = arguments[0] - this;  
-                            var intDays = Math.floor(intMilDif/intMilDay);  
-                            return intDays;  
-                        };
-                        var d1 = new Date($scope.userInformation.created);
-                        var today = new Date();
-                        var rest = new Date(today.setDate(d1.getDate()+15));
-                        var realRest = new Date().DaysBetween(rest);
-                        if(realRest <= 0){
-                            var userDeletion = $scope.userInformation;
-                            User.delete(function(userDeletion) {
-                               $scope.logout();
+                        
+                        var createdDate = new Date($scope.userInformation.created), //Account created date
+                            realRest = Math.floor((new Date() - createdDate) / 86400000); //days diff between dates
+                        
+                        if(realRest >= 15){
+                            User.delete({username : $scope.userInformation._id},
+                            function(response){
+                                $scope.logout();
+                            },
+                            function(error){
+                                //Error
                             });
                         }else{
-                            $scope.days = realRest;
+                            //Show adv days left
+                            $scope.days = 15 - realRest;
                         }
+                    }
+                    else{
+                        //It's a confirmed account, and dont need any action.
                     }
                 }
             }
@@ -88,18 +83,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     
     //user delete account
     $scope.deleteAccount = function(){
-        var userDelete = $scope.userInformation;
-        User.delete(function(userDelete) {
-           
+        User.delete({username : $scope.userInformation._id},
+        function(response){
+            //Exito
+        },
+        function(error){
+            //Error
         });
-        $scope.logout();
     };
     
     //email resend
     $scope.resend = function(){
-        var resendInfo = $scope.userInformation;
-        Mails.delete(function(resendInfo) {
-            
+        Mails.delete(function(res) {
+            //exito
+        },
+        function () {
+            //error
         });
         $scope.newpermit.email = true;
     };
