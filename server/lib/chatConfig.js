@@ -81,7 +81,7 @@ io.sockets.on('connection', function (socket) {
             //Eliminar sala sin usuarios
             utils.removeObjectArray(rooms, socket.userObject.room);
         }
-        socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', socket.userObject.username + ' has disconnected');
+        socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', socket.userObject.username + ' has disconnected', 'leave');
 		socket.leave(socket.userObject.room);
 	});
 });

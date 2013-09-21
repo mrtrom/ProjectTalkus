@@ -11,8 +11,13 @@ script.
         socket.emit('adduser', username);
     });
     
-    socket.on('updatechat', function (username, data) {
+    socket.on('updatechat', function (username, data, type) {
         $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
+        if (type != 'undefined'){
+            if (type == 'leave'){
+                ShowLoading();
+            }
+        }
     });
     
     socket.on('updateAnonymInfo', function (username, user) {
@@ -141,7 +146,6 @@ script.
 .row-fluid.chatwrap
     .span12
         .well.well-large
-          p.muted Connecting to server...
           #conversation
             
         form.form-inline
