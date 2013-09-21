@@ -31,8 +31,6 @@ new cronJob('00 00 12 * * 1-7', function(){
     mail.usermailcheck();
 }, null, true);
 
-
-
 //App config
 app.configure(function() {
   app.set('views', viewsDir);

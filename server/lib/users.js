@@ -18,11 +18,6 @@ User.schema.path('email').validate(function(v) {
     return ((/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/).test(v));
 }, 'invalid email format');
 
-/*User.schema.path('password').validate(function(v) {
-    return ((v !== null) && (typeof v === 'string') && (v.length >= 6));
-}, 'invalid password length');*/
-
-
 //Create new user
 users.create = function(req, res) {
     var user = new User(req.body.user);

@@ -6,6 +6,7 @@ script.
     var socket = io.connect(document.URL);
     
     socket.on('connect', function(){
+        ShowLoading();
         var username = $('#username').val();
         socket.emit('adduser', username);
     });
@@ -16,6 +17,7 @@ script.
     
     socket.on('updateAnonymInfo', function (username, user) {
         $('#confirm').click();
+        HideLoading();
     });
     
     $('#datasend').on('click', function() {
