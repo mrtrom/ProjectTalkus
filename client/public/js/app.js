@@ -13,11 +13,20 @@ var App = angular.module('myApp', [
     'myApp.filters',
     'myApp.services'
 ]);
-
-App.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {    
-    $routeProvider.when('/', {templateUrl: 'partials/index',controller: 'LoginController'});
-    $routeProvider.when('/chat/', {templateUrl: 'partials/chat',controller: 'AccountController'});
-    $routeProvider.when('/welcome/', {templateUrl: 'partials/welcome',controller: 'WelcomeController'});
-    $routeProvider.otherwise({redirectTo: '/404',templateUrl: 'partials/404'});
-  }
-]);
+App.config(function($locationProvider, $routeProvider) {
+  //$locationProvider.html5Mode(true);
+  $routeProvider
+    .when('/', {
+      templateUrl: '/partials/index', 
+      controller: 'LoginController'
+    })
+    .when('/chat', {
+      templateUrl: '/partials/chat', 
+      controller:  'AccountController'
+    })
+    .when('/welcome', {
+      templateUrl: '/partials/welcome', 
+      controller:  'WelcomeController'
+    })
+    .otherwise({ redirectTo: '/' });
+});
