@@ -182,6 +182,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     //logout
     $scope.logout = function(){
         Session.delete(function(response) {
+            $('.preview-loading').hide();
             $location.path("/");
         });
     };
