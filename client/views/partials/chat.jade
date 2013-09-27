@@ -1,5 +1,4 @@
 script(src='js/lib/chat.js')
-//script(src='js/lib/location.js')
 script(src='js/datepicker.js')
 script.
     
@@ -120,7 +119,7 @@ script.
                 input.FocusAccion#inputUsername(name='email', id='email', ng-model='userInformation.email', type='text', placeholder = "Email contact")
               div(ng-hide='validations.anonymUser')
                 label(ng-hide='validations.anonymUser') Location
-                input.FocusAccion#locationapi(type='text', placeholder='Where are you?' , ng-model='userInformation.location' , disabled)
+                input.FocusAccion#locationapi(type='text', placeholder='Where are you?' , ng-model='userInformation.location')
                 .share
                   label Would you like to share your location?
                     input#checklocation(type="checkbox" , ng-model="confirmed" , ng-change="locationBool(); updateUsers();")

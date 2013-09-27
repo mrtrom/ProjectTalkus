@@ -107,7 +107,6 @@ responds
     error: Object - validation error if any
 */
 app.post('/API/mails', mails.setmail);
-app.delete('/API/mails', mails.delete);
 /*--------------------------*/
 
 /*--------chat-------------*/

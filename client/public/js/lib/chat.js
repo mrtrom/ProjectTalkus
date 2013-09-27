@@ -55,6 +55,9 @@ jQuery('.icon.profilei').click(function(){
       ctrlP = 0;
   }
 });
+
+//Autofill city name
+$("#locationapi").geocomplete();
 /*FIN DESPLIEGUE USUERIO*/
 /*FOCUSOUT FORM SUBMIT*/
 

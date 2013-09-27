@@ -48,15 +48,6 @@ mails.setmail = function(getinfo){
     locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
     mails.send();
 };
-
-mails.delete = function(getinfo){
-    locals.name.first = getinfo.session.user.username;
-    locals.name.id = utils.encrypt(getinfo.session.user._id);
-    locals.email = getinfo.session.user.email;
-    locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
-    mails.send();
-};
-
 //checks to see what users have not confirmed their account and sends an email to each and one of them, 
 //if 15 days have passed and not valid, then deletion
 mails.usermailcheck = function(res){

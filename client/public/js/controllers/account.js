@@ -39,15 +39,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                         var createdDate = new Date($scope.userInformation.created), //Account created date
                             realRest = Math.floor((new Date() - createdDate) / 86400000); //days diff between dates
                         
-                        if(realRest >= 15){
-                            User.delete({username : $scope.userInformation._id},
-                            function(response){
-                                $scope.logout();
-                            },
-                            function(error){
-                                //Error
-                            });
-                        }else{
+                        if(realRest >= 15){}else{
                             //Show adv days left
                             $scope.days = 15 - realRest;
                         }
@@ -141,15 +133,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     
     //When GPS is enable, it will get users location
     $scope.locationBool = function () {
-        getLocation();
-        if(googleBool == false){
+        if(googleBool === false){
             googleBool = true;
             $scope.userInformation.location = document.getElementById('locationapi').value;
-            $("#locationapi").prop('disabled', false);
         }else{
             $scope.userInformation.location = '';
             googleBool = false;
-            $("#locationapi").prop('disabled', true);
         }
     };
     
