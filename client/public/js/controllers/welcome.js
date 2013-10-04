@@ -14,9 +14,9 @@ Modules.controllers.controller('WelcomeController', ['$routeParams', '$rootScope
             var id_object = {
                 id_valid: ($location.search()).id_valid
             };
-            
+            console.log(id_object);
             //Update to valid
-            $scope.Valid.$save(id_object);
+            //$scope.Valid.$save(id_object);
         }
         angular.element(".container.trs , .view , html , body ").addClass("fullHeight");
         
