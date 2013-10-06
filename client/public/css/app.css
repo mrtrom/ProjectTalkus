@@ -1,424 +1,444 @@
-body{
-    background:url('../img/bkg.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-color:#17181a;
-}
-::selection {
-    background: none repeat scroll 0 0 rgb(0, 95, 143); /* Safari */
-}
-::-moz-selection {
-    background: none repeat scroll 0 0 rgb(0, 95, 143); /* Firefox */
-}
-.navbar-inner {
-  border-radius: 0 0 0 0;
-}
-.well.format {
-  background: none repeat scroll 0 0 transparent;
-  border: medium none;
-  padding: 0;
-}
-textarea {
-  height: auto;
-  width:inherit;
-}
-.span2.right {
-  text-align: right;
-}
-.row-fluid.profilepic img {
-  margin-bottom: 10px;
-}
-.control-group.password{
-    margin-bottom:8px;
-}
-.form-horizontal .controls{
-    margin:0;
-}
-.form-horizontal .control-group{
-    margin-bottom: 8px;
-}
-div.or {
-    clear: both;
-    border: 1px solid rgba(250, 250, 250, 0.9);
-    width: 274px;
-    margin-bottom: 10px;
-    float:left;
-}
-.moveicon{
-    margin-left:10px;
-    background-image:url("../img/glyphicons-halflings-white.png");
-}
-div.middle{
-    height:411px;
-    display:table-cell;
-    width:100%;
-    vertical-align: middle;
-}
-div.middle h1.muted, div.middle p {
-    color: rgb(158, 158, 158);
-}
-.alert.alert-error p{
-    margin:0;
-}
-.carousel,.item,.active{
-    height:100%;
-}
-.carousel-inner{
-    height:100%;
-}
-.fill{
-    width:100%;height:100%;background-position:center;background-size:cover;
-}
-div.centerform {
-    background: none repeat scroll 0 0 rgba(38, 38, 38, 0.8);
-    border: medium none;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow: 0 0 0 3px rgba(62, 67, 68, 0.2) inset;
-    clear: both;
-    float: left;
-    margin-bottom: 10px;
-    padding: 0 16px;
-    width: 247px;
-    position:relative;
-}
-div.centerform.chatnow{
-    padding:0;
-    width:278px;
-}
-div.row-fluid.home{
-    padding-top:50px;
-}
-div.middle p{
-    font-size:20px;
-}
-h3.in {
-    color: rgb(158, 158, 158);
-}
-.home .btn.btn-primary.log{
-    background: rgba(53, 106, 160, 1);
-    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2) inset;
-    border: none;
-}
-.home .btn.btn-primary.random{
-    background: rgba(0,0,0,0.2);
-    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2) inset;
-    border: none;
-}
-p.muted.text-center.copyright{
-    color:#fff;
-}
-.home .btn.btn-primary.log:hover{
-    background: rgba(0,0,0,0.5);
-}
-.home .btn.btn-primary.log {
-    background: none repeat scroll 0 0 rgb(0, 95, 143);
-}
-.well-large{
-    border-radius:0px 0px 6px 6px;
-    overflow-y:scroll;
-}
-.user{
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0%;
-    background: rgba(23, 24, 26,0.9);
-    overflow-y:scroll;
-    z-index:2;
-}
-.profile{
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 0%;
-    background: rgba(23, 24, 26,0.9);
-    overflow-y:scroll;
-    z-index:2;
-}
-.user .span12 .well, .profile .span12 .well {
-    background: none repeat scroll 0 0 transparent;
-     order: medium none;
-    margin: 0;
-}
-div.icon.useri {
-    background: none repeat scroll 0 0 rgb(0, 95, 143);
-    border-radius: 0 0 17px 0;
-    cursor: pointer;
-    left: 0;
-    padding: 10px 5px;
-    position: fixed;
-    top: 0;
-    z-index: 2;
-}
-.icon.profilei{
-    background: none repeat scroll 0 0 rgb(0, 95, 143);
-    padding: 10px 5px;
-    border-radius: 0px 0px 0px 17px;
-    position: fixed;
-    right: 0;
-    top:0;
-    cursor:pointer;
-    z-index:2;
-}
-.icon.profilei [class^="icon-"],.icon.profilei [class*=" icon-"] ,
-div.icon.useri  [class^="icon-"],div.icon.useri  [class*=" icon-"]{
-    background-image: url("../img/glyphicons-halflings-white.png");
-}
-.wrapuser{
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 0%;
-}
-.text-info {
-    color: rgb(0, 95, 143);
-}
-.shadow {
-    -webkit-box-shadow: 0px 0px 4px 2px #fff;
-    -moz-box-shadow: 0px 0px 4px 2px #fff;
-    box-shadow: 0px 0px 4px 2px #fff;
-    -webkit-transition: all 1s linear;
-    -o-transition: all 1s linear;
-    -moz-transition: all 1s linear;
-    -ms-transition: all 1s linear;
-    -kthtml-transition: all 1s linear;
-    transition: all 1s linear;
-}
-.fullHeight{
-    height:100%;
-    margin:0;
-    width:100%;
-}
-.carousel-caption{
-    color:#fff;
-}
-#about{
-    width:205px;
-}
-#checklocation{
-    margin-top: -2px;
-    margin-left: 6px;
-}
-.ui-datepicker-prev.ui-corner-all , .ui-datepicker-next.ui-corner-all{
-    display:none;
-}
-.uploadimgtrue{
-    position: absolute;
-    right: 0;
-    top: -80px;
-    opacity: 0;
-}
-.span12 > input#datasend {
-    bottom: 0;
-    position: absolute;
-    right: 0;
-    visibility: hidden;
-}
-.span12 > textarea#data {
-    height: 35px;
-}
-.profile .well label,legend{
-    color:rgb(158, 158, 158);
-}
-.row-fluid.profilepic .span2{
-    position:relative;
-}
-.row-fluid.profilepic .span2:hover ul{
-    display:block;
-}
-.row-fluid.profilepic .span2 ul {
-    display: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-.row-fluid.profilepic .span2 ul li {
-    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
-    border-radius: 10px 10px 10px 10px;
-    cursor: pointer;
-    display: inline-block;
-    margin-left: 4px;
-    margin-right: 2px;
-    margin-top: 3px;
-    padding: 0 3px;
-}
-.row-fluid.profilepic .span2 ul li:hover{
-    background: none repeat scroll 0 0 rgba(255, 255, 255, 1);
-}
-.logout{
-    position: absolute;
-    right: 19px;
-    top: 12px;
-}
-.logout .dropdown-menu>li {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: 20px;
-    color: #333;
-    white-space: nowrap;
-}
-.hero-unit.center.ng-scope{
-    margin-top:40px;
-}
-.home a.text-info {
-    position    : absolute;
-    right: 46px;
-    bottom: 23px;
+body {
+background:url(../img/bkg.jpg) no-repeat center center fixed #17181a;
+background-size:cover;
+background-color:transparent
 }
 
-/*loading gif*/
+::selection {
+background:#005f8f
+}
+
+::-moz-selection {
+background:#005f8f
+}
+
+.navbar-inner {
+border-radius:0
+}
+
+.well.format {
+background:none;
+border:medium none;
+padding:0
+}
+
+textarea {
+height:auto;
+width:inherit
+}
+
+.span2.right {
+text-align:right
+}
+
+.row-fluid.profilepic img {
+margin-bottom:10px
+}
+
+.control-group.password {
+margin-bottom:8px
+}
+
+.form-horizontal .controls {
+margin:0
+}
+
+.form-horizontal .control-group {
+margin-bottom:8px
+}
+
+div.or {
+clear:both;
+border:1px solid rgba(250,250,250,.9);
+width:274px;
+margin-bottom:10px;
+float:left
+}
+
+.moveicon {
+margin-left:10px;
+background:url(../img/glyphicons-halflings-white.png)
+}
+
+div.middle {
+height:411px;
+display:table-cell;
+width:100%;
+vertical-align:middle
+}
+
+div.middle h1.muted,div.middle p {
+color:#9e9e9e
+}
+
+.alert.alert-error p {
+margin:0
+}
+
+.carousel,.item,.active {
+height:100%
+}
+
+.carousel-inner {
+height:100%
+}
+
+.fill {
+width:100%;
+height:100%;
+background:cover center
+}
+
+div.centerform {
+background:rgba(38,38,38,.8);
+border:medium none;
+border-radius:10px;
+box-shadow:0 0 0 3px rgba(62,67,68,.2) inset;
+clear:both;
+float:left;
+margin-bottom:10px;
+padding:0 16px;
+width:247px;
+position:relative
+}
+
+div.centerform.chatnow {
+padding:0;
+width:278px
+}
+
+div.row-fluid.home {
+padding-top:50px
+}
+
+div.middle p {
+font-size:20px
+}
+
+h3.in {
+color:#9e9e9e
+}
+
+.home .btn.btn-primary.log {
+background:#356aa0;
+box-shadow:0 0 5px 0 rgba(0,0,0,.2) inset;
+border:none;
+background:none repeat scroll 0 0 #005f8f
+}
+
+.home .btn.btn-primary.random {
+background:rgba(0,0,0,.2);
+box-shadow:0 0 5px 0 rgba(0,0,0,.2) inset;
+border:none
+}
+
+p.muted.text-center.copyright {
+color:#fff
+}
+
+.home .btn.btn-primary.log:hover {
+background:rgba(0,0,0,.5)
+}
+
+.well-large {
+border-radius:0 0 6px 6px;
+overflow-y:scroll
+}
+
+.user {
+position:fixed;
+left:0;
+top:0;
+height:100%;
+width:0;
+background:rgba(23,24,26,.9);
+overflow-y:scroll;
+z-index:2
+}
+
+.profile {
+position:fixed;
+right:0;
+top:0;
+height:100%;
+width:0;
+background:rgba(23,24,26,.9);
+overflow-y:scroll;
+z-index:2
+}
+
+.user .span12 .well,.profile .span12 .well {
+background:none;
+border:medium none;
+margin:0
+}
+
+div.icon.useri {
+background:#005f8f;
+border-radius:0 0 17px;
+cursor:pointer;
+left:0;
+padding:10px 5px;
+position:fixed;
+top:0;
+z-index:2
+}
+
+.icon.profilei {
+background:#005f8f;
+padding:10px 5px;
+border-radius:0 0 0 17px;
+position:fixed;
+right:0;
+top:0;
+cursor:pointer;
+z-index:2
+}
+
+.icon.profilei [class^="icon-"],.icon.profilei [class*=" icon-"],div.icon.useri [class^="icon-"],div.icon.useri [class*=" icon-"] {
+background:url(../img/glyphicons-halflings-white.png)
+}
+
+.wrapuser {
+position:fixed;
+left:0;
+top:0;
+width:0
+}
+
+.text-info {
+color:#005f8f
+}
+
+.shadow {
+-webkit-box-shadow:0 0 4px 2px #fff;
+-moz-box-shadow:0 0 4px 2px #fff;
+box-shadow:0 0 4px 2px #fff;
+transition:all 1s linear
+}
+
+.fullHeight {
+height:100%;
+margin:0;
+width:100%
+}
+
+.carousel-caption {
+color:#fff
+}
+
+#about {
+width:205px
+}
+
+#checklocation {
+margin-top:-2px;
+margin-left:6px
+}
+
+.ui-datepicker-prev.ui-corner-all,.ui-datepicker-next.ui-corner-all {
+display:none
+}
+
+.uploadimgtrue {
+position:absolute;
+right:0;
+top:-80px;
+opacity:0
+}
+
+.span12>input#datasend {
+bottom:0;
+position:absolute;
+right:0;
+visibility:hidden
+}
+
+.span12>textarea#data {
+height:35px
+}
+
+.profile .well label,legend {
+color:#9e9e9e
+}
+
+.row-fluid.profilepic .span2 {
+position:relative
+}
+
+.row-fluid.profilepic .span2:hover ul {
+display:block
+}
+
+.row-fluid.profilepic .span2 ul {
+display:none;
+margin:0;
+padding:0;
+position:absolute;
+right:0;
+top:0
+}
+
+.row-fluid.profilepic .span2 ul li {
+background:hsla(0,0,100%,.8);
+border-radius:10px;
+cursor:pointer;
+display:inline-block;
+margin-left:4px;
+margin-right:2px;
+margin-top:3px;
+padding:0 3px
+}
+
+.row-fluid.profilepic .span2 ul li:hover {
+background:#fff
+}
+
+.logout {
+position:absolute;
+right:19px;
+top:12px
+}
+
+.logout .dropdown-menu>li {
+display:block;
+padding:3px 20px;
+clear:both;
+font-weight:400;
+line-height:20px;
+color:#333;
+white-space:nowrap
+}
+
+.hero-unit.center.ng-scope {
+margin-top:40px
+}
+
+.home a.text-info {
+position:absolute;
+right:46px;
+bottom:23px
+}
+
 .bubblingG {
-text-align: center;
-width: 200px;
-height: 125px;
-margin: 0 auto;
-position: relative;
-top: 25%;
+text-align:center;
+width:200px;
+height:125px;
+margin:0 auto;
+position:relative;
+top:25%
 }
 
 .bubblingG span {
-display: inline-block;
-vertical-align: middle;
-width: 25px;
-height: 25px;
-margin: 63px auto;
-background: #3742B3;
--moz-border-radius: 125px;
--moz-animation: bubblingG 1.7s infinite alternate;
--webkit-border-radius: 125px;
--webkit-animation: bubblingG 1.7s infinite alternate;
--ms-border-radius: 125px;
--ms-animation: bubblingG 1.7s infinite alternate;
--o-border-radius: 125px;
--o-animation: bubblingG 1.7s infinite alternate;
-border-radius: 125px;
-animation: bubblingG 1.7s infinite alternate;
+display:inline-block;
+vertical-align:middle;
+width:25px;
+height:25px;
+margin:63px auto;
+background:#3742b3;
+border-radius:125px;
+animation:bubblingG 1.7s infinite alternate
 }
 
 #bubblingG_1 {
--moz-animation-delay: 0s;
--webkit-animation-delay: 0s;
--ms-animation-delay: 0s;
--o-animation-delay: 0s;
-animation-delay: 0s;
+animation-delay:0
 }
 
 #bubblingG_2 {
--moz-animation-delay: 0.51s;
--webkit-animation-delay: 0.51s;
--ms-animation-delay: 0.51s;
--o-animation-delay: 0.51s;
-animation-delay: 0.51s;
+animation-delay:.51s
 }
 
 #bubblingG_3 {
--moz-animation-delay: 1.02s;
--webkit-animation-delay: 1.02s;
--ms-animation-delay: 1.02s;
--o-animation-delay: 1.02s;
-animation-delay: 1.02s;
+animation-delay:1.02s
 }
 
 @-moz-keyframes bubblingG {
-0% {
-width: 25px;
-height: 25px;
-background-color:#3742B3;
--moz-transform: translateY(0);
-}
-
-100% {
-width: 60px;
-height: 60px;
-background-color:#FFFFFF;
--moz-transform: translateY(-53px);
-}
-
+    0% {
+    width:25px;
+    height:25px;
+    -moz-transform:translateY(0);
+    background:#3742b3
+    }
+    
+    100% {
+    width:60px;
+    height:60px;
+    -moz-transform:translateY(-53px);
+    background:#fff
+    }
 }
 
 @-webkit-keyframes bubblingG {
-0% {
-width: 25px;
-height: 25px;
-background-color:#3742B3;
--webkit-transform: translateY(0);
-}
-
-100% {
-width: 60px;
-height: 60px;
-background-color:#FFFFFF;
--webkit-transform: translateY(-53px);
-}
-
+    0% {
+    width:25px;
+    height:25px;
+    -webkit-transform:translateY(0);
+    background:#3742b3
+    }
+    
+    100% {
+    width:60px;
+    height:60px;
+    -webkit-transform:translateY(-53px);
+    background:#fff
+    }
 }
 
 @-ms-keyframes bubblingG {
-0% {
-width: 25px;
-height: 25px;
-background-color:#3742B3;
--ms-transform: translateY(0);
-}
-
-100% {
-width: 60px;
-height: 60px;
-background-color:#FFFFFF;
--ms-transform: translateY(-53px);
-}
-
+    0% {
+    width:25px;
+    height:25px;
+    -ms-transform:translateY(0);
+    background:#3742b3
+    }
+    
+    100% {
+    width:60px;
+    height:60px;
+    -ms-transform:translateY(-53px);
+    background:#fff
+    }
 }
 
 @-o-keyframes bubblingG {
-0% {
-width: 25px;
-height: 25px;
-background-color:#3742B3;
--o-transform: translateY(0);
-}
-
-100% {
-width: 60px;
-height: 60px;
-background-color:#FFFFFF;
--o-transform: translateY(-53px);
-}
-
+    0% {
+    width:25px;
+    height:25px;
+    -o-transform:translateY(0);
+    background:#3742b3
+    }
+    
+    100% {
+    width:60px;
+    height:60px;
+    -o-transform:translateY(-53px);
+    background:#fff
+    }
 }
 
 @keyframes bubblingG {
-0% {
-width: 25px;
-height: 25px;
-background-color:#3742B3;
-transform: translateY(0);
+    0% {
+    width:25px;
+    height:25px;
+    transform:translateY(0);
+    background:#3742b3
+    }
+    
+    100% {
+    width:60px;
+    height:60px;
+    transform:translateY(-53px);
+    background:#fff
+    }
 }
 
-100% {
-width: 60px;
-height: 60px;
-background-color:#FFFFFF;
-transform: translateY(-53px);
-}
-
-}
-
-.preview-loading{
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    background: rgba(0,0,0,0.8);
-    z-index: 1;
+.preview-loading {
+display:none;
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background:rgba(0,0,0,.8);
+z-index:1
 }
