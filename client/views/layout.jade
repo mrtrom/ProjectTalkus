@@ -1,62 +1,33 @@
 !!! 5
 html(lang='en', ng-app='myApp')
-head
-    meta(charset='utf-8')
-    meta(name='fragment', content='!')
-    base(href='/')
-    title Proyecto talk
-    link(rel='stylesheet', href='css/bootstrap.min.css')
-    link(rel='stylesheet', href='css/bootstrap-responsive.min.css')
-    link(rel='stylesheet', href='css/custom-theme/jquery-ui-1.9.2.custom.css')
-    link(rel='stylesheet', href='css/custom-theme/jquery.ui.1.9.2.ie.css')
-    link(rel='stylesheet', href='css/app.css')
-    link(rel='stylesheet', href='css/app-responsive.css')
-    script(src='js/lib/jquery-1.9.1.min.js')
-    script(type = "text/javascript", src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDKJmyaz07K3RpG1LAMXnKbUYJ4creTA&libraries=places&sensor=false')
-    script(src='js/lib/location.js')
-    script(src='js/lib/bootstrap.min.js')
-    script(src='js/lib/angular.min.js')
-    script(src='js/lib/angular-resource.js')
-    script(src='js/lib/ng-upload.js')
-    script(src='js/lib/general.js')
-    script(src='js/app.js')
-    script(src='js/resources.js')
-    script(src='js/controllers/login.js')
-    script(src='js/controllers/account.js')
-    script(src='js/controllers/welcome.js')
-    script(src='js/filters.js')
-    script(src='js/directives.js')
-    script(src='js/lib/socket.io.js')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    script.
-        $(document).ready(function() {
-            $("#home a").click(function(event){
-                $("#home").addClass("active");
-                $("#chat").removeClass("active");
-                $("#account").removeClass("active");
-            });
-            $("#chat a").click(function(event){
-                $("#chat").addClass("active");
-                $("#home").removeClass("active");
-                $("#account").removeClass("active");
-            });
-            $("#account a").click(function(event){
-                $("#account").addClass("active");
-                $("#home").removeClass("active");
-                $("#chat").removeClass("active");
-            });
-            $("a.transition").click(function(event){
-                $(".container.trs").css("display", "none");
-                event.preventDefault();
-                linkLocation = this.href;
-                $(".container.trs").fadeOut(0, redirectPage);
-            });
-
-            function redirectPage() {
-                window.location = linkLocation;
-                $(".container.trs").fadeIn(500);
-            }
-        });
+    head
+        meta(charset='utf-8')
+        meta(name='fragment', content='!')
+        base(href='/')
+        title Proyecto talk
+        link(rel='stylesheet', href='css/bootstrap.min.css')
+        link(rel='stylesheet', href='css/bootstrap-responsive.min.css')
+        link(rel='stylesheet', href='css/custom-theme/jquery-ui-1.9.2.custom.css')
+        link(rel='stylesheet', href='css/custom-theme/jquery.ui.1.9.2.ie.css')
+        link(rel='stylesheet', href='css/app.css')
+        link(rel='stylesheet', href='css/app-responsive.css')
+        script(src='js/lib/jquery-1.9.1.min.js')
+        script(type = "text/javascript", src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDKJmyaz07K3RpG1LAMXnKbUYJ4creTA&libraries=places&sensor=false')
+        script(src='js/lib/location.js')
+        script(src='js/lib/bootstrap.min.js')
+        script(src='js/lib/angular.min.js')
+        script(src='js/lib/angular-resource.js')
+        script(src='js/lib/ng-upload.js')
+        script(src='js/lib/general.js')
+        script(src='js/app.js')
+        script(src='js/resources.js')
+        script(src='js/controllers/login.js')
+        script(src='js/controllers/account.js')
+        script(src='js/controllers/welcome.js')
+        script(src='js/filters.js')
+        script(src='js/directives.js')
+        script(src='js/lib/socket.io.js')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
 
     body
         block body
