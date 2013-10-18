@@ -4,6 +4,9 @@ background-size:cover;
 background-color:transparent
 }
 
+h1, h2, h3{
+    line-height:normal;
+}
 ::selection {
 background:#005f8f
 }
@@ -431,7 +434,6 @@ animation-delay:1.02s
     background:#fff
     }
 }
-
 .preview-loading {
 display:none;
 position:absolute;
