@@ -46,9 +46,36 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     });
     
     $scope.fullscreen = function(){
-      var pepe = $.fn.fullpage({
-        slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE']
-      });
+        $.fn.fullpage({
+            slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE'],
+            afterRender: function(){
+                $('span.welcome').addClass('active');
+            },
+            afterLoad: function(anchorLink, index){
+                //after leaving section 2
+                if(index == '3'){
+                    $('span.welcome').removeClass('active');
+                    $('span.signin').removeClass('active');
+                    $('span.signup').addClass('active');
+                }
+                if(index == '2'){
+                    $('span.welcome').removeClass('active');
+                    $('span.signin').addClass('active');
+                    $('span.signup').removeClass('active');
+                }
+                if(index == '1'){
+                    $('span.welcome').addClass('active');
+                    $('span.signin').removeClass('active');
+                    $('span.signup').removeClass('active');
+                }
+            }
+        });
+        $( "#signup" ).click(function() {
+            $.fn.fullpage.moveToSlide(3); 
+        });
+        $( "#signin" ).click(function() {
+            $.fn.fullpage.moveToSlide(2); 
+        });
     }
     $scope.forgotpass = function(){
         $scope.Remember.$save(function(res) {

@@ -428,3 +428,55 @@ left:0;
 background:rgba(0,0,0,.8);
 z-index:1
 }
+#menumain {
+position: fixed;
+right: 32px;
+top: 15%;
+margin-top: auto;
+z-index: 1;
+}
+#menumain span {
+display: block;
+background: rgba(255,255,255,0.8);
+width: 20px;
+height: 20px;
+margin-bottom: 8px;
+padding: 0px;
+border-radius: 13px;
+cursor:pointer;
+-webkit-transition: all 0.2s linear;
+-o-transition: all 0.2s linear;
+-moz-transition: all 0.2s linear;
+-ms-transition: all 0.2s linear;
+-kthtml-transition: all 0.2s linear;
+transition: all 0.2s linear;
+}
+#menumain span:hover , #menumain span.active{
+    box-shadow: 0px 0px 10px 1px #fff;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+#signup , #signin {
+font-weight: bold;
+color: #fff;
+cursor:pointer;
+-webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+#signup:hover , #signin:hover{
+    opacity:0.5;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
