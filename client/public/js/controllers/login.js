@@ -70,10 +70,13 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
                 }
             }
         });
-        $( "#signup" ).click(function() {
+        $( "span.welcome" ).click(function() {
+            $.fn.fullpage.moveToSlide(1); 
+        });
+        $( "#signup , span.signup" ).click(function() {
             $.fn.fullpage.moveToSlide(3); 
         });
-        $( "#signin" ).click(function() {
+        $( "#signin , span.signin" ).click(function() {
             $.fn.fullpage.moveToSlide(2); 
         });
     }
