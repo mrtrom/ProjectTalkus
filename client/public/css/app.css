@@ -480,3 +480,9 @@ cursor:pointer;
     -kthtml-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
+#data {
+    width: 98%;
+width: calc(100% - 8px);
+height: 26px;
+background-color: #f5f5f5;
+}

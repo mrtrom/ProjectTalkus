@@ -2,8 +2,6 @@
 function resizeChat(){
     var winHeight = jQuery(window).height();
     jQuery('.well.well-large').css('height',winHeight-140 + 'px');
-    var txtarea = jQuery('.container.trs').width();
-    jQuery('.chatwrap .span12 input[type="text"]').css('width',txtarea-12 + 'px');
 }
 jQuery(window).ready(function() {resizeChat();});
 jQuery(window).resize(function() {resizeChat();});
