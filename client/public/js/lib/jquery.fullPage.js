@@ -381,9 +381,9 @@
 			isMoving = true;
 			
 			if(typeof element.data('anchor') !== 'undefined'){
-				location.hash = '#/welcome#' + element.data('anchor');
+				location.hash = '#/' + element.data('anchor');
 			}else{
-				location.hash = '#/welcome';
+				location.hash = '#/';
 			}
 	
 			if(options.autoScrolling){
@@ -431,7 +431,7 @@
 		
 		function scrollToAnchor(){
 			//getting the anchor link in the URL and deleting the `#`
-			var value =  window.location.hash.replace('#/welcome', '');
+			var value =  window.location.hash.replace('#/', '');
 			value = value.replace('#', '');
 			if(value){  //if theres any #
 			
@@ -445,7 +445,7 @@
 		//detecting any change on the URL to scroll to the given anchor link
 		//(a way to detect back history button as we play with the hashes on the URL)
 		$(window).on('hashchange',function(){
-			var value =  window.location.hash.replace('#/welcome', '');
+			var value =  window.location.hash.replace('#/', '');
             value = value.replace('#', '');
 			/*in order to call scrollpage() only once for each destination at a time
 			It is called twice for each scroll otherwise, as in case of using anchorlinks `hashChange` 

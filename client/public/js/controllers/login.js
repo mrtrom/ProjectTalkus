@@ -45,7 +45,11 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         //error
     });
     
-    
+    $scope.fullscreen = function(){
+      var pepe = $.fn.fullpage({
+        slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE']
+      });
+    }
     $scope.forgotpass = function(){
         $scope.Remember.$save(function(res) {
             if(res[0] == "t"){
