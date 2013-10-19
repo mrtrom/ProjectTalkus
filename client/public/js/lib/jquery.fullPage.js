@@ -49,7 +49,7 @@
 				});
 				
 				//deleting the possible negative top
-				$('#superContainer').css('top', '0px');
+				$('.superContainer').css('top', '0px');
 			}
 		};
 		
@@ -70,7 +70,7 @@
 			$('.section').addClass('table').wrapInner('<div class="tableCell" style="height:' + windowsHeight + 'px" />');
 		}
 
-		$('body').wrapInner('<div id="superContainer" />');
+		$('body').wrapInner('<div class="superContainer" />');
 
 		//creating the navigation dots 
 		if (options.navigation) {
@@ -388,7 +388,7 @@
 	
 			if(options.autoScrolling){
 				scrollOptions['top'] = -dtop;
-				scrolledElement = '#superContainer';
+				scrolledElement = '.superContainer';
 			}else{
 				scrollOptions['scrollTop'] = dtop;
 				scrolledElement = 'html, body';
@@ -398,7 +398,7 @@
 						
 			if(options.css3 && options.autoScrolling){
 				var translate3d = 'translate3d(0px, -' + dtop + 'px, 0px)';
-				$('#superContainer').addClass('easing').css({
+				$('.superContainer').addClass('easing').css({
 					'-webkit-transform': translate3d,
 					'-moz-transform': translate3d,
 					'-ms-transform':translate3d,

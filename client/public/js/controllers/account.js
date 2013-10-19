@@ -1,6 +1,48 @@
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
     function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-    
+    var socket = io.connect(document.URL);
+    $scope.initchat = function(){
+        socket.on('connect', function(){
+            ShowLoading();
+            var username = $('#username').val();
+            socket.emit('adduser', username);
+        });
+        
+        socket.on('updatechat', function (username, data, type) {
+            $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
+            if (type != 'undefined'){
+                if (type == 'leave'){
+                    ShowLoading();
+                }
+            }
+        });
+        
+        socket.on('updateAnonymInfo', function (username, user) {
+            $('#confirm').click();
+            HideLoading();
+        });
+        
+        $('#datasend').on('click', function() {
+            var cadenaAEliminar = /(<([^>]+)>)/gi;
+            var elementoEtiquetas = $('#data');
+            var etiquetas = elementoEtiquetas.val();
+            etiquetas = etiquetas.replace(cadenaAEliminar, '');
+            elementoEtiquetas.val(etiquetas);
+            mensaje = elementoEtiquetas.val();
+            
+            $('#data').val('');
+            socket.emit('sendchat', mensaje);
+        });
+        
+        $('#data').keypress(function(e) {
+            if(e.which == 13) {
+                $(this).blur();
+                $('#datasend').focus().click();
+                $('#data').focus();
+            }
+        });
+        $('.superContainer').css('top','0');
+    }
     $scope.newpermit = {
         days: false ,
         email: false
@@ -170,7 +212,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     
     //logout
     $scope.logout = function(){
+        
         Session.delete(function(response) {
+            console.log(socket);
             $('.preview-loading').hide();
             $location.path("/");
         });

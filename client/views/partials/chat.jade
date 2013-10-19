@@ -1,49 +1,5 @@
 script(src='js/lib/chat.js')
 script(src='js/datepicker.js')
-script.
-    
-    var socket = io.connect(document.URL);
-    
-    socket.on('connect', function(){
-        ShowLoading();
-        var username = $('#username').val();
-        socket.emit('adduser', username);
-    });
-    
-    socket.on('updatechat', function (username, data, type) {
-        $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
-        if (type != 'undefined'){
-            if (type == 'leave'){
-                ShowLoading();
-            }
-        }
-    });
-    
-    socket.on('updateAnonymInfo', function (username, user) {
-        $('#confirm').click();
-        HideLoading();
-    });
-    
-    $('#datasend').on('click', function() {
-        var cadenaAEliminar = /(<([^>]+)>)/gi;
-        var elementoEtiquetas = $('#data');
-        var etiquetas = elementoEtiquetas.val();
-        etiquetas = etiquetas.replace(cadenaAEliminar, '');
-        elementoEtiquetas.val(etiquetas);
-        mensaje = elementoEtiquetas.val();
-        
-        $('#data').val('');
-        socket.emit('sendchat', mensaje);
-    });
-    
-    $('#data').keypress(function(e) {
-        if(e.which == 13) {
-            $(this).blur();
-            $('#datasend').focus().click();
-            $('#data').focus();
-        }
-    });
-    
 .icon.useri
   i.icon-user
 .user
@@ -152,3 +108,4 @@ script.
             .span12
               input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text")
               input#datasend(type='button', value='send')
+div(ng-init="initchat()")
