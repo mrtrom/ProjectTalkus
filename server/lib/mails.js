@@ -10,6 +10,7 @@ var emailTemplates = require('email-templates'),
     utils = require('./utilities'),
     schemas = require('./schemas'),
     users = require("./users"),
+    url = require('url'),
     User = schemas.User,
     locals;
 
@@ -45,7 +46,7 @@ mails.setmail = function(getinfo){
     locals.name.first = getinfo.query.username;
     locals.name.id = utils.encrypt(getinfo.query._id);
     locals.email = getinfo.query.email;
-    locals.name.url = getinfo.headers.origin + "/#/welcome/?id_valid=";
+    locals.name.url = getinfo.headers.origin + "/#/?id_valid=";
     mails.send();
 };
 //checks to see what users have not confirmed their account and sends an email to each and one of them, 
@@ -85,7 +86,7 @@ mails.usermailcheck = function(res){
                             locals.name.first = userleft[i].username;
                             var stringID = generalParcer.format(userleft[i]._id);
                             locals.name.id = utils.encrypt(stringID);
-                            locals.name.url = 'http://sergio.srobledo.c9.io/#/welcome/?id_valid=';
+                            locals.name.url = res.headers.origin + "/#/?id_valid=";
                             mails.send();
                     }
                 }

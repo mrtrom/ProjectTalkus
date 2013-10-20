@@ -3,8 +3,11 @@ function resizeChat(){
     var winHeight = jQuery(window).height();
     jQuery('.well.well-large').css('height',winHeight-140 + 'px');
 }
+
 jQuery(window).ready(function() {resizeChat();});
+
 jQuery(window).resize(function() {resizeChat();});
+
 //Keep the chat scroll on the bottom
 if($('.well.well-large').length === 0){}
 else{
@@ -39,6 +42,7 @@ jQuery('.icon.useri').click(function(){
   }
 });
 /*FIN DESPLIEGUE USUERIO*/
+
 /*QUERY PARA EL DESPLIEGUE DEL PERFIL DEL USUARIO*/
 var ctrlP = 0;
 jQuery('.icon.profilei').click(function(){
@@ -53,9 +57,8 @@ jQuery('.icon.profilei').click(function(){
       ctrlP = 0;
   }
 });
+/*FIN DESPLIEGUE USUERIO*/
 
 //Autofill city name
 $("#locationapi").geocomplete();
-/*FIN DESPLIEGUE USUERIO*/
-/*FOCUSOUT FORM SUBMIT*/
 

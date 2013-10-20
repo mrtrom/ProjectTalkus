@@ -2,8 +2,9 @@
 
 //Resources
 
-angular.module('myApp.services', [])
+angular.module('myApp.resources', [])
 
+//Session's resource
 .factory('Session', ['$resource', function($resource) {
     var _url = '/API/sessions',
         Session = $resource(_url);
@@ -12,6 +13,7 @@ angular.module('myApp.services', [])
   }
 ])
 
+//Users's resource
 .factory('User', ['$resource', function($resource) {
     var _url = '/API/users/:username',
         User = $resource(_url, {username: '@username'}, 
@@ -21,6 +23,7 @@ angular.module('myApp.services', [])
   }
 ])
 
+//Anonym user's resource
 .factory('ChatUser', ['$resource', function($resource) {
     var _url = '/API/chat/:username',
         _usernameUrl = '/API/chat/chatUsername/:username/get',
@@ -36,6 +39,7 @@ angular.module('myApp.services', [])
   }
 ])
 
+//Check valid email resource
 .factory('Valid', ['$resource', function($resource) {
     var _url = '/API/valid',
         Valid = $resource(_url);
@@ -43,6 +47,7 @@ angular.module('myApp.services', [])
   }
 ])
 
+//Remember account resource
 .factory('Remember', ['$resource', function($resource) {
     var _url = '/API/remember',
         Remember = $resource(_url);
@@ -50,6 +55,7 @@ angular.module('myApp.services', [])
   }
 ])
 
+//Mail's resource
 .factory('Mails', ['$resource', function($resource) {
     var _url = '/API/mails',
         Mails = $resource(_url);

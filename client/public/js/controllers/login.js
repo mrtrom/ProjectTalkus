@@ -1,5 +1,25 @@
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session','Mails','Remember', 'User', 
-    function($rootScope, $scope, $http, $location, Session, Mails ,Remember, User) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session','Mails','Remember', 'User', 'Valid',
+    function($rootScope, $scope, $http, $location, Session, Mails ,Remember, User, Valid) {
+
+    //Checks if any string was send via url
+    if(($location.search()).id_valid == null || ($location.search()).id_valid == ""){
+        console.log("No url");
+    }
+    else{
+        $scope.Valid = new Valid();
+        $scope.Valid.id_valid = $location.search().id_valid;
+        
+        //Update to valid
+        $scope.Valid.$save(function(res) {
+            $rootScope.user = res;
+            $scope.permissions.invalidUserInfo = false;
+            $location.path("/chat");
+        },
+        function(res){
+            //Error
+        });
+    }
+    angular.element(".container.trs , .view , html , body ").addClass("fullHeight");
 
     //Validations
     $scope.permissions = {
@@ -79,7 +99,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         $( "#signin , span.signin" ).click(function() {
             $.fn.fullpage.moveToSlide(2); 
         });
-    }
+    };
+    
     $scope.forgotpass = function(){
         $scope.Remember.$save(function(res) {
             if(res[0] == "t"){

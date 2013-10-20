@@ -1,32 +1,23 @@
 'use strict';
 
+//Modules var and resources route
 var Modules = {
-  controllers: angular.module('myApp.controllers', ['myApp.services'])
+  controllers: angular.module('myApp.controllers', ['myApp.resources'])
 };
 
-// Declare app level module which depends on filters, and services
+// Declare app level module which depends on filters, controllers, directives, and resources
 var App = angular.module('myApp', [
     'ngUpload',
     'ngResource',
     'myApp.controllers',
     'myApp.directives',
     'myApp.filters',
-    'myApp.services'
+    'myApp.resources'
 ]);
+
 App.config(function($locationProvider, $routeProvider) {
-  //$locationProvider.html5Mode(true);
   $routeProvider
-    .when('/', {
-      templateUrl: '/partials/index', 
-      controller: 'LoginController'
-    })
-    .when('/chat', {
-      templateUrl: '/partials/chat', 
-      controller:  'AccountController'
-    })
-    .when('/welcome', {
-      templateUrl: '/partials/welcome', 
-      controller:  'WelcomeController'
-    })
+    .when('/', {templateUrl: '/partials/index', controller: 'LoginController'})
+    .when('/chat', {templateUrl: '/partials/chat', controller:  'AccountController'})
     .otherwise({ redirectTo: '/' });
 });

@@ -8,11 +8,18 @@ var schemas = require('./schemas'),
     User = schemas.User;
     
 //update mail sets confirmed to true in DB
-valid.validate = function(getinfo) {
+valid.validate = function(req, res) {
     var user = new User();
-    user._id = utils.UIdecrypt(getinfo.query.id_valid);
-    return User.findByIdAndUpdate({
-        _id: user._id
-    }, {$set: {confirmed: 'true'}}, function(error) {
+    user._id = utils.UIdecrypt(req.body.id_valid);
+    
+    return User.findByIdAndUpdate({_id: user._id}, {$set: {confirmed: 'true'}}, 
+    function(error) {
+         if (error !== null) {
+            res.statusCode = 400;
+            return res.end(utils.parseError(error));
+        } else {
+            res.statusCode = 200;
+            return res.end(JSON.stringify(user));
+        }
     });
 };

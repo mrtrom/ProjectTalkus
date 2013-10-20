@@ -31,8 +31,7 @@
 			'afterLoad': null,
 			'onLeave': null,
 			'afterRender': null
-		}, options);		
-		
+		}, options);
 		
 		$.fn.fullpage.setAutoScrolling = function(value){
 			options.autoScrolling = value;
@@ -52,16 +51,12 @@
 				$('.superContainer').css('top', '0px');
 			}
 		};
-		
 			
 		//flag to avoid very fast sliding for landscape sliders
 		var slideLapse = true;
-
 		var isTablet = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|Windows Phone)/);
-
 		var windowsHeight = $(window).height();
 		var isMoving = false;
-		
 		var lastScrolledDestiny;
 		
 		$.fn.fullpage.setAutoScrolling(options.autoScrolling);
@@ -76,9 +71,7 @@
 		if (options.navigation) {
 			$('body').append('<div id="fullPage-nav"><ul></ul></div>');
 			var nav = $('#fullPage-nav');
-
 			nav.css('color', options.navigationColor);
-
 
 			if (options.navigationPosition === 'right') {
 				nav.css('right', '17px');
@@ -121,19 +114,14 @@
 				$(this).find('.slides').after('<div class="controlArrow prev"></div><div class="controlArrow next"></div>');
 				$('.controlArrow.next').css('border-color', 'transparent transparent transparent '+options.controlArrowColor);
 				$('.controlArrow.prev').css('border-color', 'transparent '+ options.controlArrowColor + ' transparent transparent');
-
 				
 				slides.each(function(index) {
 					if(!index){
 						$(this).addClass('active');
 					}
-					
 					$(this).css('width', slideWidth + '%');
 				});
 			}
-			
-
-			
 		}).promise().done(function(){
 			$.isFunction( options.afterRender ) && options.afterRender.call( this);
 			
@@ -171,7 +159,6 @@
 		
 			scrollToAnchor();			
 		});
-	
 		
 		//when scrolling...
 		$(window).scroll(function(e){
@@ -201,9 +188,6 @@
 				}
 			}					
 		});	
-	
-
-		
 	
 		var touchStartY = 0;
 		var touchEndY = 0;
@@ -263,8 +247,6 @@
 				touchStartY = e.touches[0].pageY;
 			}
 		});
-		
-
 
 		/**
 		 * Detecting mousewheel scrolling
@@ -319,7 +301,6 @@
 				};
 			}
 		}
-
 		
 		if (sq.addEventListener) {
 			sq.addEventListener("mousewheel", MouseWheelHandler(), false);
