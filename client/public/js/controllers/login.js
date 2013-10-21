@@ -53,6 +53,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.Mails = new Mails();
     //Remember password
     $scope.Remember = new Remember();
+    
+    
     //Redireccion si ya está logueado
     Session.get(function(response) {
         if ((response !== null ? response._id : void 0) !== null) {
@@ -103,13 +105,12 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     $scope.forgotpass = function(){
         $scope.Remember.$save(function(res) {
-            if(res[0] == "t"){
-                $scope.password.remember = true;
-                $scope.password.remembererror = false;
-            }else{
-                $scope.password.remembererror = true;
-                $scope.password.remember = false;
-            }
+            $scope.password.remember = true;
+            $scope.password.remembererror = false;
+        },
+        function(res){
+            $scope.password.remember = false;
+            $scope.password.remembererror = true;
         });
     };     
     
@@ -117,7 +118,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     $scope.submitLogin = function () {
         
         $scope.session.$save(function(res) {
-            $rootScope.user = res;
+            $rootScope.user = res.user;
             $scope.permissions.invalidUserInfo = false;
             $location.path("/chat");
         },
@@ -135,8 +136,14 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         var localPass = $scope.userObject.user.password;
         
         $scope.userObject.$save(function(res){
-           
-            $scope.Mails.$save(res);
+            $scope.Mails.user = res.user;
+            $scope.Mails.$save(function(resMails){
+                console.log('exito');
+            }, 
+            function(error) {
+                console.log('error');
+            });
+            
             $scope.permissions.invalidUserInfo = false;
             $scope.validations.invalidEmailFormat = false;
             $scope.validations.invalidUsername = false;

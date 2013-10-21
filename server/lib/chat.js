@@ -2,7 +2,8 @@
 var chat = module.exports;
 
 //Require modules
-var users = require('./users');
+var users = require('./users'),
+    utils = require('./utilities');
     
 
 chat.getUser = function(req, res) {
@@ -33,18 +34,17 @@ chat.getUser = function(req, res) {
     return users.getByUsername(username, fields, function(error, user) {
         var _user;
         if (error !== null) {
-            res.statusCode = 404;
-            res.end();
+            res.statusCode = 500;
+            res.end(utils.parseError(error));
         } else if (user !== null) {
             _user = user.toObject();
             res.statusCode = 200;
             return res.end(JSON.stringify(_user));
         } else {
-            res.statusCode = 404;
+            res.statusCode = 204;
             return res.end(username);
         }
     });
-    
 };
 
 chat.getUsername = function(req, res){

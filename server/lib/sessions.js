@@ -14,7 +14,7 @@ sessions.check = function(req, res, next) {
     } else {
         res.statusCode = 403;
         return res.end(JSON.stringify({
-        message: 'Please login in order to continue'
+            message: 'Please login in order to continue'
         }));
     }
 };
@@ -24,7 +24,6 @@ sessions.login = function(req, res) {
     //Entries validations
     if (req.body.username === undefined){req.body.username = "";}
     if (req.body.password === undefined){req.body.password = "";}
-    
     
     //Credentials
     var credentials = req.body, 
@@ -44,11 +43,14 @@ sessions.login = function(req, res) {
     }, function(error, user) {
         if (error !== null) {
             res.statusCode = 500;
-            return res.end(JSON.stringify(error));
+            return res.end(utils.parseError(err));
         } else if (user !== null) {
             req.session.user = user;
             res.statusCode = 200;
-            return res.end(JSON.stringify(user));
+            return res.end(JSON.stringify({
+                user: user,
+                message: 'user successfully logged'
+            }));
         } else {
             res.statusCode = 403;
             return res.end(JSON.stringify({
@@ -60,9 +62,9 @@ sessions.login = function(req, res) {
 
 //Logout
 sessions.logout = function(req, res) {
-  req.session.user = null;
-  res.statusCode = 200;
-  return res.end();
+    req.session.user = null;
+    res.statusCode = 200;
+    return res.end();
 };
 
 //Get session object

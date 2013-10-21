@@ -8,26 +8,23 @@ var users = require('./users'),
     sessions = require('./sessions'),
     upload = require('./upload'),
     valid = require('./valid'),
-    remember = require('./remember'),
     clientRoutes = require('../../client/routes/index');
-
-//Define resources and routes for server 
 
 /*--------sessions----------*/
 /*
 POST
 params
-  username: String - user-name or e-mail
-  password: String
+  +username: String - user-name or e-mail
+  +password: String
 responds
   200
-    user: Object - if logged-in successfully
+    user: Object - if logged-in successfully,
+    message: 'user successfully logged'
   403 
     message: String - 'Invalid username/email or password' if invalid credentials was provided
   500 
     error: Object - internal server error if any
 */
-
 app.post('/API/sessions', sessions.login);
 
 /*
@@ -43,8 +40,6 @@ app.get('/API/sessions', sessions.getSessionUser);
 DELETE
 responds
   200 - if logged-out successfully
-  403
-    message: String - 'Please login in order to continue' if no user is attached to session
 */
 app.delete('/API/sessions', sessions.check, sessions.logout);
 /*--------------------------*/
@@ -54,43 +49,61 @@ app.delete('/API/sessions', sessions.check, sessions.logout);
 POST
 params
   user: Object
-    username: String
-    email: String
-    password: String - Minimun length: 6 chars
+    +username: String
+    +email: String
+    +password: String - Minimun length: 6 chars
 responds
-  200 
-    - if created successfully
-  400 
+  201
+    user: user
+    message: 'user successfully created'
+  500
     error: Object - validation error if any
 */
 app.post('/API/users', users.create);
 
+/*
+DELETE
+params
+  +_id: ObjectID
+responds
+  200
+    message: 'user successfully deleted'
+  500
+    error: Object - validation error if any
+*/
 app.delete('/API/users/:id', users.delete);
 
 /*
 PUT
 params
   user: Object
-    email: String
+    +_id: ObjectID
+    -email: String
+    -username: String
+    -avatar: String
+    -birth: Date
+    -name: String
+    -gender: String
+    -location: String
+    -description: String
 responds
   200 
-    - if created successfully
-  400 
+    user: user,
+    message: 'user successfully updated'
+  500 
     error: Object - validation error if any
 */
 app.put('/API/users/:username', users.update);
+
 /*
 GET
 params
-  user: Object
-    username: String
-    email: String
-    password: String - Minimun length: 6 chars
+    +username: String
 responds
-  200 
-    - if created successfully
-  400 
-    error: Object - validation error if any
+  200
+    user: UserObject
+  404
+    error: Object - user doesn't exist
 */
 app.get('/API/users/:username', users.get);
 /*--------------------------*/
@@ -99,14 +112,36 @@ app.get('/API/users/:username', users.get);
 /*
 POST
 params
- 
+ user: Object
+    +_id: ObjectID
+    +username: String
+    +email: String
 responds
   200 
-    - if created successfully
-  400 
+    - if sen successfully
+  500 
     error: Object - validation error if any
+  404
+    err: Object - validation error if any,
+    message: 'template not found'
 */
 app.post('/API/mails', mails.setmail);
+
+/*
+POST
+params
+ user: Object
+    +forgotemail: String
+responds
+  200 
+    - if sent successfully
+  500 
+    error: Object - validation error if any
+  404
+    err: Object - validation error if any,
+    message: 'template not found'
+*/
+app.post('/API/remember', users.rememberAcces);
 /*--------------------------*/
 
 /*--------chat-------------*/
@@ -115,34 +150,35 @@ app.post('/API/mails', mails.setmail);
 GET
 params
   user: Object
-    username: String
-    email: String
-    password: String - Minimun length: 6 chars
+    +username: String
 responds
   200 
-    - if created successfully
-  400 
+    user: Object
+  500 
     error: Object - validation error if any
+  404 
+    username: String
+    cant find user
+    
 */
 app.get('/API/chat/:username', chat.getUser);
 
 /*
 GET
 params
-  user: Object
     username: String
-    email: String
-    password: String - Minimun length: 6 chars
 responds
   200 
-    - if created successfully
-  400 
+    user: Object
+  500 
     error: Object - validation error if any
+  204 
+    username
+    user not found (anonym user)
 */
 app.get('/API/chat/chatUsername/:username/get', chat.getUsername);
 
 /*--------------------------*/
-app.post('/API/remember', remember.inirem);
 app.post('/API/valid', valid.validate);
 app.post('/API/upload', upload.post);
 /*--------------------------*/

@@ -4,6 +4,7 @@ var users = module.exports;
 //Require modules
 var schemas = require('./schemas'),
     utils = require('./utilities'),
+    mails = require('./mails'),
     mongoose = require('mongoose'),
     User = schemas.User;
     
@@ -30,13 +31,15 @@ users.create = function(req, res) {
     user.confirmed = 'false';
     user.created = new Date();
     return user.save(function(error) {
-        
         if (error !== null) {
-            res.statusCode = 400;
+            res.statusCode = 500;
             return res.end(utils.parseError(error));
         } else {
-            res.statusCode = 200;
-            return res.end(JSON.stringify(user));
+            res.statusCode = 201;
+            return res.end(JSON.stringify({
+                user: user,
+                message: 'user successfully created'
+            }));
         }
     });
 };
@@ -46,11 +49,13 @@ users.delete = function (req, res) {
     User.findByIdAndRemove({_id: mongoose.Types.ObjectId(req.params.id)},
         function(error, userDoc){
             if (error !== null) {
-                res.statusCode = 400;
+                res.statusCode = 500;
                 return res.end(utils.parseError(error));
             } else {
                 res.statusCode = 200;
-                return res.end();
+                return res.end(JSON.stringify({
+                    message: 'user successfully deleted'
+                }));
             }
         });
 };
@@ -73,14 +78,18 @@ users.update = function(req, res) {
     }, {$set: {email: user.email, name: user.name,birth: user.birth, avatar: user.avatar, gender: user.gender,location: user.location, description: user.description}}, function(error) {
         
         if (error !== null) {
-            res.statusCode = 400;
+            res.statusCode = 500;
             return res.end(utils.parseError(error));
         } else {
             res.statusCode = 200;
-            return res.end(JSON.stringify(user));
+            return res.end(JSON.stringify({
+                user: user,
+                message: 'user successfully updated'
+            }));
         }
     });
 };
+
 //Get user info by username
 users.getByUsername = function(username, fields, callback) {
     return User.findOne({
@@ -113,8 +122,7 @@ users.get = function(req, res) {
     return users.getByUsername(username, fields, function(error, user) {
         var _user;
         if (error !== null) {
-            //return errors.handle(error, res);
-            console.log(JSON.stringify(error));
+            console.log(utils.parseError(err));
         } else if (user !== null) {
             _user = user.toObject();
             res.statusCode = 200;
@@ -122,6 +130,24 @@ users.get = function(req, res) {
         } else {
             res.statusCode = 404;
             return res.end();
+        }
+    });
+};
+
+users.rememberAcces = function(req , res){
+    return User.find({ email: req.body.forgotemail }, function(err, userleft) {
+        if (err){
+            res.statusCode = 500;
+            return res.end(utils.parseError(err));
+        }
+        else{
+            if (typeof userleft !== 'undefined' && userleft !== null && typeof userleft[0] !== 'undefined' && userleft[0] !== null) {
+                mails.forgot(userleft[0], res);
+            }
+            else{
+                res.statusCode = 404;
+                return res.end();   
+            }
         }
     });
 };
