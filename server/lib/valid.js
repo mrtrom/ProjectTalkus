@@ -15,7 +15,7 @@ valid.validate = function(req, res) {
     return User.findByIdAndUpdate({_id: user._id}, {$set: {confirmed: 'true'}}, 
     function(error) {
          if (error !== null) {
-            res.statusCode = 400;
+            res.statusCode = 500;
             return res.end(utils.parseError(error));
         } else {
             res.statusCode = 200;

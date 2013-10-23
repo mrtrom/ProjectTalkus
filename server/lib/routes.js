@@ -9,6 +9,11 @@ var users = require('./users'),
     upload = require('./upload'),
     valid = require('./valid'),
     clientRoutes = require('../../client/routes/index');
+    
+/*
+    +: required
+    -: optional
+*/
 
 /*--------sessions----------*/
 /*
@@ -106,6 +111,18 @@ responds
     error: Object - user doesn't exist
 */
 app.get('/API/users/:username', users.get);
+
+/*
+POST
+params
+    +files: file
+responds
+  200
+    file: Object
+  500
+    error: Object - user doesn't exist
+*/
+app.post('/API/upload', upload.post);
 /*--------------------------*/
 
 /*--------mails-------------*/
@@ -142,6 +159,22 @@ responds
     message: 'template not found'
 */
 app.post('/API/remember', users.rememberAcces);
+
+/*
+POST
+params
+ user: Object
+    +forgotemail: String
+responds
+  200 
+    - if sent successfully
+  500 
+    error: Object - validation error if any
+  404
+    err: Object - validation error if any,
+    message: 'template not found'
+*/
+app.post('/API/valid', valid.validate);
 /*--------------------------*/
 
 /*--------chat-------------*/
@@ -178,13 +211,8 @@ responds
 */
 app.get('/API/chat/chatUsername/:username/get', chat.getUsername);
 
-/*--------------------------*/
-app.post('/API/valid', valid.validate);
-app.post('/API/upload', upload.post);
-/*--------------------------*/
 
 //Define resources and routes for client
-
 app.get('/', clientRoutes.index);
 app.get('/partials/:name', clientRoutes.partials);
 
