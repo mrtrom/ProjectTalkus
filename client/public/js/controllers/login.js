@@ -105,6 +105,14 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         });
         $('.controlArrow.next').append('<p>&rsaquo;</p>');
         $('.controlArrow.prev').append('<p>&lsaquo;</p>');
+        $(".arrow-down").delay(500)
+        .animate({bottom: "13px"}, {duration: 400, queue: true})
+        .animate({bottom: "103px"}, {duration: 200, queue: true})
+        .animate({opacity: "0"}, {duration: 200, queue: true});
+        $(".arrow-right").delay(500)
+        .animate({right: "6px"}, {duration: 400, queue: true})
+        .animate({right: "96px"}, {duration: 200, queue: true})
+        .animate({opacity: "0"}, {duration: 200, queue: true});
     };
     
     $scope.forgotpass = function(){
