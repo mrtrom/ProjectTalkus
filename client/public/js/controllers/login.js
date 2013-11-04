@@ -73,16 +73,26 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE'],
             afterRender: function(){
                 $('span.welcome').addClass('active');
+                $( ".centerform" ).css( "position", "relative" );
+                $( ".centerform" ).css( "left", "100%" );
+            },
+            onLeave: function(index, direction){
+                //after leaving section 2
+                if(index == '2' || index == '3' || direction =='down' || direction =='up'){
+                    $( ".centerform" ).css( "left", "100%" );
+                }
             },
             afterLoad: function(anchorLink, index){
                 
                 //after leaving section 2
                 if(index == '3'){
+                    $( ".centerform" ).css( "left", "0" );
                     $('span.welcome').removeClass('active');
                     $('span.signin').removeClass('active');
                     $('span.signup').addClass('active');
                 }
                 if(index == '2'){
+                    $( ".centerform" ).css( "left", "0" );
                     $('span.welcome').removeClass('active');
                     $('span.signin').addClass('active');
                     $('span.signup').removeClass('active');

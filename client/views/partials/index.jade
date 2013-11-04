@@ -58,7 +58,8 @@
             .control-group
               .controls
                 button.btn.btn-primary.log(type='submit') Sign in
-          a.text-info(href='#myModal', role='button', data-toggle='modal') Forgot password?
+          a.text-info.forgotpassico(href='#myModal', role='button', data-toggle='modal')
+            i.icon-question-sign
           #myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
             form(ng-submit="forgotpass()")
                 .modal-header
