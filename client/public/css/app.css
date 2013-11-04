@@ -29,7 +29,8 @@ text-align:right
 }
 
 .row-fluid.profilepic img {
-margin-bottom:10px
+margin-bottom: 10px;
+width: 160px;
 }
 
 .control-group.password {
@@ -40,10 +41,18 @@ margin-bottom:8px
 margin:0
 }
 
-.form-horizontal .control-group {
-margin-bottom:8px
+.form-horizontal .control-group input[type="text"] {
+border-bottom: none;
+border-radius: 6px 6px 0px 0px;
 }
-
+.control-group.password input{
+    margin-bottom: 14px;
+border-top: none;
+border-radius: 0px 0px 6px 6px;
+}
+.form-horizontal .control-group{
+    margin-bottom:0;
+}
 div.or {
 clear:both;
 border:1px solid rgba(250,250,250,.9);
@@ -54,7 +63,7 @@ float:left
 
 .moveicon {
 margin-left:10px;
-background:url(../img/glyphicons-halflings-white.png)
+opacity:0.8;
 }
 
 div.middle {
@@ -132,56 +141,6 @@ border-radius:0 0 6px 6px;
 overflow-y:scroll
 }
 
-.user {
-position:fixed;
-left:0;
-top:0;
-height:100%;
-width:0;
-background:rgba(23,24,26,.9);
-overflow-y:scroll;
-z-index:2
-}
-
-.profile {
-position:fixed;
-right:0;
-top:0;
-height:100%;
-width:0;
-background:rgba(23,24,26,.9);
-overflow-y:scroll;
-z-index:2
-}
-
-.user .span12 .well,.profile .span12 .well {
-background:none;
-border:medium none;
-margin:0
-}
-
-div.icon.useri {
-background:#005f8f;
-border-radius:0 0 17px;
-cursor:pointer;
-left:0;
-padding:10px 5px;
-position:fixed;
-top:0;
-z-index:2
-}
-
-.icon.profilei {
-background:#005f8f;
-padding:10px 5px;
-border-radius:0 0 0 17px;
-position:fixed;
-right:0;
-top:0;
-cursor:pointer;
-z-index:2
-}
-
 .icon.profilei [class^="icon-"],.icon.profilei [class*=" icon-"],div.icon.useri [class^="icon-"],div.icon.useri [class*=" icon-"] {
 background:url(../img/glyphicons-halflings-white.png)
 }
@@ -215,7 +174,8 @@ color:#fff
 }
 
 #about {
-width:205px
+width: calc(100% - 8px);
+padding: 0px 4px;
 }
 
 #checklocation {
@@ -246,18 +206,20 @@ height:35px
 }
 
 .profile .well label,legend {
-color:#9e9e9e
+color:rgba(0,0,0,0.5);
+font-weight:bold;
+border:none;
 }
 
-.row-fluid.profilepic .span2 {
+.row-fluid.profilepic .span12 {
 position:relative
 }
 
-.row-fluid.profilepic .span2:hover ul {
+.row-fluid.profilepic .span12:hover ul {
 display:block
 }
 
-.row-fluid.profilepic .span2 ul {
+.row-fluid.profilepic .span12 ul {
 display:none;
 margin:0;
 padding:0;
@@ -266,7 +228,7 @@ right:0;
 top:0
 }
 
-.row-fluid.profilepic .span2 ul li {
+.row-fluid.profilepic .span12 ul li {
 background:hsla(0,0,100%,.8);
 border-radius:10px;
 cursor:pointer;
@@ -277,14 +239,8 @@ margin-top:3px;
 padding:0 3px
 }
 
-.row-fluid.profilepic .span2 ul li:hover {
+.row-fluid.profilepic .span12 ul li:hover {
 background:#fff
-}
-
-.logout {
-position:absolute;
-right:19px;
-top:12px
 }
 
 .logout .dropdown-menu>li {
@@ -430,7 +386,7 @@ z-index:1
 }
 #menumain {
 position: fixed;
-right: 32px;
+right: 12px;
 top: 15%;
 margin-top: auto;
 z-index: 1;
@@ -438,11 +394,10 @@ z-index: 1;
 #menumain span {
 display: block;
 background: rgba(255,255,255,0.8);
-width: 20px;
-height: 20px;
+width: 15px;
+height: 15px;
 margin-bottom: 8px;
 padding: 0px;
-border-radius: 13px;
 cursor:pointer;
 -webkit-transition: all 0.2s linear;
 -o-transition: all 0.2s linear;
@@ -485,4 +440,207 @@ cursor:pointer;
 width: calc(100% - 8px);
 height: 26px;
 background-color: #f5f5f5;
+}
+.btn.btn-large.btn-block.btn-primary.log {
+position: fixed;
+bottom: 0;
+left: 0;
+z-index: 10;
+border-radius: 0px 5px 0px 0px;
+width: 17%;
+background: rgba(0,0,0,0.3);
+-webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.btn-primary{
+    background: rgba(0,0,0,0.3);
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.btn.btn-large.btn-block.btn-primary.log:hover , .btn-primary:hover{
+    background: rgba(0,0,0,0.1);
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.tooltipmenu {
+background: rgba(0,0,0,0.5);
+position: absolute;
+padding: 5px 15px;
+right: 0px;
+color: #fff;
+opacity:0;
+width:100px;
+border-radius: 6px 0px 6px 6px;
+-webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+span.welcome.active .tooltipmenu ,
+span.signin.active .tooltipmenu ,
+span.signup.active .tooltipmenu{
+right: 27px;
+opacity:1;
+
+-webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+#section0 .controlArrow.prev {
+    left: 0;
+    background: #fff;
+    border-radius: 0px 20px 20px 0px;
+    opacity:0.5;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+#section0 .controlArrow.next{
+    right: 0;
+    background: #fff;
+    border-radius: 20px 0px 0px 20px;
+    opacity:0.5;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+#section0 .controlArrow.next:hover , #section0 .controlArrow.prev:hover , .controlArrow.next:hover p , .controlArrow.prev:hover p{
+    opacity:1;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.controlArrow.next p {
+color: #000;
+position: absolute;
+right: 4px;
+top: -13px;
+opacity: 0.5;
+font-weight: bold;
+font-size: 63px;
+-webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.controlArrow.prev p {
+color: #000;
+position: absolute;
+left: 4px;
+top: -13px;
+opacity: 0.5;
+font-weight: bold;
+font-size: 63px;
+-webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -kthtml-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+h1.inew{
+  margin-bottom: 15px; 
+  font-size: 60px;
+}
+#section2 input[type="text"]#email{
+    border-radius:0;
+    border-top:none;
+}
+#section1 .text-info {
+color: #005f8f;
+font-weight: bold;
+}
+.user {
+float: left;
+width: 15%;
+height: 100%;
+background: #4BBFC3;
+text-align:left;
+}
+.profile {
+float: right;
+width: 15%;
+height: 100%;
+background: #1bbc9b;
+text-align:left;
+}
+.chatwrap {
+float: left;
+text-align: start;
+width: 70%;
+height: 100%;
+box-shadow: 0px 0px 15px -3px #000;
+}
+#section3 {
+height: 100%;
+}
+div.info , form.ng-pristine.ng-valid{
+padding: 0 12px;
+}
+div.view{
+    height:100%;
+}
+html ,body{
+    height:100%;
+}
+#conversation {
+height: calc(100% - 70px);
+padding: 11px 10px;
+}
+.chat input, .chat textarea, .chat .uneditable-input{
+    width:auto;
+}
+html.chat , html.chat body{
+    overflow:hidden;
+}
+input#forgotemail{
+    width:236px;
+}
+.chat label {
+display: block;
+font-weight: bold;
+margin-bottom: 5px;
+font-size: 15px;
+}
+.inside {
+height:50%;
+float:left;
+width:100%;
+}
+.chat .jspVerticalBar ,.chat .jspTrack{
+    background: transparent;
+}
+.chat .jspDrag {
+background: rgba(0,0,0,0.2);
+}
+.chat .jspVerticalBar{
+    width:10px;
 }

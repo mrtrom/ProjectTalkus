@@ -1,38 +1,32 @@
 script(src='js/lib/chat.js')
 script(src='js/lib/datepicker.js')
-.container
-    .icon.useri
-      i.icon-user
+#section3.section 
     .user
-      .row-fluid
-        .span12
-            .well
-              form
-                fieldset
-                  legend Profile {{otherUserInfo.username}}
-                  input#confirm(type='button', ng-click='otherUser()', style='display: none;')
-                  .row-fluid.profilepic
-                    img.img-rounded(ng-src='{{otherUserInfo.avatar}}')
-                div(ng-hide='validations.anonymOtherUser')
-                  label Name
-                  label {{otherUserInfo.name}}
-                div(ng-hide='validations.anonymOtherUser')
-                  label About you
-                div(ng-hide='validations.anonymOtherUser')
-                  .well
-                    {{otherUserInfo.description}}
-    .icon.profilei
-      i.icon-edit
+        .inside
+          form
+            fieldset
+              legend Profile {{otherUserInfo.username}}
+              input#confirm(type='button', ng-click='otherUser()', style='display: none;')
+              .row-fluid.profilepic
+                img.img-rounded(ng-src='{{otherUserInfo.avatar}}')
+            div(ng-hide='validations.anonymOtherUser')
+              label Name
+              label {{otherUserInfo.name}}
+            div(ng-hide='validations.anonymOtherUser')
+              label About you
+            div(ng-hide='validations.anonymOtherUser')
+              .well
+                {{otherUserInfo.description}}
     .profile
-      .row-fluid
-        .span12
-            .btn-group.logout(ng-hide='validations.anonymUser')
-                button.btn.btn-danger(ng-click="logout()") Logout
-                  button.btn.btn-danger.dropdown-toggle(data-toggle='dropdown')
+        .inside
+            .btn-group.logout.pull-right(ng-hide='validations.anonymUser')
+                button.btn(ng-click="logout()") 
+                    i.icon-off
+                  button.btn.dropdown-toggle(data-toggle='dropdown')
                     span.caret
                   ul.dropdown-menu.pull-right
                    li(ng-click="deleteAccount()") Delete Account
-            .well(ng-init='loadInfo()')
+            .info(ng-init='loadInfo()')
               .daysleftwrap(ng-hide='validations.anonymUser')
                 .daysleft(ng-show='newpermit.days')
                   label
@@ -51,7 +45,7 @@ script(src='js/lib/datepicker.js')
                   legend Profile {{userInformation.username}}
                   input#username(type='hidden', value='{{userInformation.username}}')
                   .row-fluid.profilepic
-                    .span2
+                    .span12
                       img.img-rounded(ng-src='{{userInformation.avatar}}')
                       ul
                         li#deleteclick(ng-click="deletePhoto()")
@@ -99,14 +93,11 @@ script(src='js/lib/datepicker.js')
                   div
                     label.updateUser(ng-click="updateUsers()")
                     
-    .row-fluid.chatwrap
-        .span12
-            .well.well-large
-              #conversation
-                
-            form.form-inline
-              .row-fluid
-                .span12
-                  input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text")
-                  input#datasend(type='button', value='send')
-    div(ng-init="initchat()")
+    .chatwrap
+        #conversation
+        form.form-inline
+          .row-fluid
+            .span12
+              input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text")
+              input#datasend(type='button', value='send')
+        div(ng-init="initchat()")

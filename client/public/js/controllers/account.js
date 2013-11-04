@@ -2,6 +2,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
     var socket = io.connect(document.URL);
     $scope.initchat = function(){
+        $('html').addClass('chat');
+        $("#locationapi").geocomplete();
         socket.on('connect', function(){
             ShowLoading();
             var username = $('#username').val();
@@ -42,6 +44,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             }
         });
         $('.superContainer').css('top','0');
+        $('div.inside').jScrollPane();
     }
     $scope.newpermit = {
         days: false ,

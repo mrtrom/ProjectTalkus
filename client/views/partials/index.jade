@@ -1,7 +1,10 @@
 #menumain
     span.welcome
+        .tooltipmenu Welcome page
     span.signin
+        .tooltipmenu Sign in for talkus
     span.signup
+        .tooltipmenu Sign up for talkus
 #section0.section
   .slide
     .intro
@@ -33,7 +36,7 @@
 
 #section1.section
         .centerform
-          h3.in Sign in
+          h1.inew Sign in
           form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
             .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
               p
@@ -45,13 +48,11 @@
             .control-group
               .controls
                 input#inputUsername(name='username', id='username', ng-model='session.username', type='text', placeholder='Username or email', required)
-                a.thetool(ng-show='singInForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username or an email')
-                  i.icon-exclamation-sign.moveicon
+                
             .control-group.password
               .controls
                 input#inputPassword(name='password', id='password',ng-model='session.password', type='password', placeholder='Password' , required)
-                a.thetool(ng-show='singInForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
-                  i.icon-exclamation-sign.moveicon
+                
             .control-group
               .controls
                 button.btn.btn-primary.log(type='submit') Sign in
@@ -77,7 +78,7 @@
                     button.btn.btn-primary(type="submit") Send
 #section2.section                    
         .centerform
-          h3.in Sign up
+          h1.inew Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
             .alert.alert-error.error(ng-show='validations.invalidEmailFormat')
               p
@@ -92,18 +93,15 @@
             .control-group
               .controls
                 input#inputUsername(name='username', id='username', ng-model='userObject.user.username', type='text', placeholder='Username', required)
-                a.thetool(ng-show='registerForm.username.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a username')
-                  i.icon-exclamation-sign.moveicon
+                
             .control-group
               .controls
                 input#inputUsername(name='email', id='email', ng-model='userObject.user.email', type='text', placeholder='Email', required)
-                a.thetool(ng-show='registerForm.email.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter an email')
-                  i.icon-exclamation-sign.moveicon
+                
             .control-group.password
               .controls
                 input#inputPassword(name='password', id='password',ng-model='userObject.user.password', type='password', placeholder='Password' , required)
-                a.thetool(ng-show='registerForm.password.$error.required' , href='javascript:;', data-toggle='tooltip', data-trigger='hover', data-placement='right' , title='You must enter a password')
-                  i.icon-exclamation-sign.moveicon
+                
             .control-group
               .controls
                 button.btn.btn-primary.log(type='submit') Sign up

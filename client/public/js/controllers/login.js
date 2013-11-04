@@ -68,12 +68,14 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     });
     
     $scope.fullscreen = function(){
+        
         $.fn.fullpage({
             slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE'],
             afterRender: function(){
                 $('span.welcome').addClass('active');
             },
             afterLoad: function(anchorLink, index){
+                
                 //after leaving section 2
                 if(index == '3'){
                     $('span.welcome').removeClass('active');
@@ -101,6 +103,8 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
         $( "#signin , span.signin" ).click(function() {
             $.fn.fullpage.moveToSlide(2); 
         });
+        $('.controlArrow.next').append('<p>&rsaquo;</p>');
+        $('.controlArrow.prev').append('<p>&lsaquo;</p>');
     };
     
     $scope.forgotpass = function(){
