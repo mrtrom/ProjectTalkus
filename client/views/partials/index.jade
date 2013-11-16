@@ -38,6 +38,7 @@
 
 #section1.section
         .centerform
+          img.imgcenter(src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png")
           h1.inew Sign in
           form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
             .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
@@ -81,6 +82,7 @@
                     button.btn.btn-primary(type="submit") Send
 #section2.section                    
         .centerform
+          img.imgcenter(src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png")
           h1.inew Sign up
           form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
             .alert.alert-error.error(ng-show='validations.invalidEmailFormat')

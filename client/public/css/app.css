@@ -576,7 +576,7 @@ font-size: 63px;
 }
 h1.inew {
 margin-bottom: 15px;
-font-size: 49px;
+font-size: 30px;
 }
 #section2 input[type="text"]#email{
     border-radius:0;
@@ -585,6 +585,9 @@ font-size: 49px;
 #section1 .text-info {
 color: #005f8f;
 font-weight: bold;
+}
+.forgotpassico{
+    margin-top: 108px;
 }
 .user {
 float: left;
@@ -714,4 +717,18 @@ a.forgotpassico:hover {
 .centerform input[type="text"],.centerform input[type="password"],
 .centerform .ui-autocomplete-input,.centerform textarea,.centerform .uneditable-input{
     height: 27px;
+}
+.tableCell .centerform{
+    margin: 0px auto;
+    width: 322px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 31px 0px;
+    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 12px -1px;
+}
+.imgcenter {
+max-width: none;
+width: 100px;
+border-radius: 108px;
+height: 100px;
+opacity: 0.8;
 }
