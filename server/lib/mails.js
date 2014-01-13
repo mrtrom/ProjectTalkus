@@ -100,7 +100,6 @@ mails.usermailcheck = function(req, res){
                     res.statusCode = 200;
                     return res.end(JSON.stringify({message:'all messages sent'}));
                 }else{
-                    console.log('All users confirmed their email');
                     res.statusCode = 204;
                     return res.end(JSON.stringify({message:'no users without confirm'}));
                 }   

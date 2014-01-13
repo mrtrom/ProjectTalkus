@@ -1,7 +1,6 @@
 //Models
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema, 
-    ObjectId = Schema.ObjectId;
+    Schema = mongoose.Schema;
 
 //Useful functions for data cleaning before save
 var trim = function(value) {

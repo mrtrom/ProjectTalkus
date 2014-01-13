@@ -12,52 +12,50 @@ var userObject = {}; //objeto usuario que será guardado en globalChatUsers
 io.sockets.on('connection', function (socket) {
 
     socket.on('adduser', function(username){ 
-        userObject = {}; //Se reinicializa la variable
-        userObject.username = username; //Se asigna el nombre de usuario al objeto principal
-        
-        if (GLOBAL.globalChatUsers !== null){ //depués de la primera vez entra
-            if (Object.keys(GLOBAL.globalChatUsers).length % 2 === 0){ // cuándo es un usuario par
-                rooms.push(username + 'Room'); //se crea la sala
+        if (username !== null && username !== ""){
+            userObject = {}; //Se reinicializa la variable
+            userObject.username = username; //Se asigna el nombre de usuario al objeto principal
+            
+            if (GLOBAL.globalChatUsers !== null){ //depués de la primera vez entra
+                if (Object.keys(GLOBAL.globalChatUsers).length % 2 === 0){ // cuándo es un usuario par
+                    rooms.push(username + 'Room'); //se crea la sala
+                    userObject.room = username + 'Room'; //se le asigna al usuario la sala creada
+                    userObject.estado = 'online'; //primero el usuario tiene estado online
+                    GLOBAL.globalChatUsers[username] = userObject; //se guarda el objeto principal "userObject" en el global de usuarios
+                }
+                else{// cuándo es un usuario impar
+                    for (var userN in GLOBAL.globalChatUsers){ // se recorre la variable global de usuarios
+                        if (GLOBAL.globalChatUsers[userN].estado == 'online'){ //si el usuario que encuentra está disponible
+                            userObject.room = GLOBAL.globalChatUsers[userN].room; //se le asigna al usuario actual la sala del usuario encontrado
+                            userObject.estado = 'busy'; //el usuario actual pasa a estado ocupado
+                            GLOBAL.globalChatUsers[userN].estado = 'busy'; //el usuario encontrado pasa a estado ocupado
+                            
+                            var bothUsers = [];
+                            
+                            bothUsers.push(GLOBAL.globalChatUsers[userN].username);
+                            bothUsers.push(username);
+                            
+                            socket.emit('updateAnonymInfo', 'SERVER', bothUsers);
+                            socket.broadcast.to(userObject.room).emit('updateAnonymInfo', 'SERVER', bothUsers);
+                            
+                            break;//se sale del ciclo cuándo encuentra el primer usuario disponible
+                        }
+                    }
+                    GLOBAL.globalChatUsers[username] = userObject; //se guarda el objeto principal "userObject" en el global de usuarios
+                }
+            }
+            else{ //primera vez que se inicia la aplicación
+                GLOBAL.globalChatUsers = {}; // se inicializa la variable
+                rooms.push(username + 'Room'); //se crea la primera sala
                 userObject.room = username + 'Room'; //se le asigna al usuario la sala creada
                 userObject.estado = 'online'; //primero el usuario tiene estado online
                 GLOBAL.globalChatUsers[username] = userObject; //se guarda el objeto principal "userObject" en el global de usuarios
             }
-            else{// cuándo es un usuario impar
-                for (var userN in GLOBAL.globalChatUsers){ // se recorre la variable global de usuarios
-                    if (GLOBAL.globalChatUsers[userN].estado == 'online'){ //si el usuario que encuentra está disponible
-                        userObject.room = GLOBAL.globalChatUsers[userN].room; //se le asigna al usuario actual la sala del usuario encontrado
-                        userObject.estado = 'busy'; //el usuario actual pasa a estado ocupado
-                        GLOBAL.globalChatUsers[userN].estado = 'busy'; //el usuario encontrado pasa a estado ocupado
-                        
-                        var bothUsers = [];
-                        
-                        bothUsers.push(GLOBAL.globalChatUsers[userN].username);
-                        bothUsers.push(username);
-                        
-                        socket.emit('updateAnonymInfo', 'SERVER', bothUsers);
-                        socket.broadcast.to(userObject.room).emit('updateAnonymInfo', 'SERVER', bothUsers);
-                        
-                        break;//se sale del ciclo cuándo encuentra el primer usuario disponible
-                    }
-                }
-                GLOBAL.globalChatUsers[username] = userObject; //se guarda el objeto principal "userObject" en el global de usuarios
-            }
+            socket.userObject = userObject; //se asigna el objeto usuario al socket
+            socket.join(socket.userObject.room); //el usuario actual entra a la sala
+    		socket.emit('updatechat', 'SERVER', '<span class="muted">you have connected to: ' + socket.userObject.room + '</span>'); //mensaje de servidor "usted entró a la sala"
+    		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', '<span class="muted">'+ userObject.username + ' has connected to this room</span>'); //mensaje de servidor "usuario entró a la sala"
         }
-        else{ //primera vez que se inicia la aplicación
-            GLOBAL.globalChatUsers = {}; // se inicializa la variable
-            rooms.push(username + 'Room'); //se crea la primera sala
-            userObject.room = username + 'Room'; //se le asigna al usuario la sala creada
-            userObject.estado = 'online'; //primero el usuario tiene estado online
-            GLOBAL.globalChatUsers[username] = userObject; //se guarda el objeto principal "userObject" en el global de usuarios
-        }
-        
-        socket.userObject = userObject; //se asigna el objeto usuario al socket
-        socket.join(socket.userObject.room); //el usuario actual entra a la sala
-		socket.emit('updatechat', 'SERVER', '<span class="muted">you have connected to: ' + socket.userObject.room + '</span>'); //mensaje de servidor "usted entró a la sala"
-		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', +'<span class="muted">'+ username + ' has connected to this room</span>'); //mensaje de servidor "usuario entró a la sala"
-        
-        console.log('GLOBAL.globalChatUsers: ' + JSON.stringify(GLOBAL.globalChatUsers));
-        
 	});
 	
 	socket.on('sendchat', function (message) {

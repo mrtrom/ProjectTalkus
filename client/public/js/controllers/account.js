@@ -11,6 +11,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         });
         
         socket.on('updatechat', function (username, data, type) {
+            console.log('username: ' + data);
             $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
             if (type != 'undefined'){
                 if (type == 'leave'){

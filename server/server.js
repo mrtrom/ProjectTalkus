@@ -64,7 +64,10 @@ app.configure(function() {
 });
 
 //Connect database
-mongoose.connect(CONF.db.url);
+
+setTimeout(function() {
+    mongoose.connect(CONF.db.url);
+}, 2000);
 
 //Routes configuration is externalized in a different module (can be multiple) for cleaner code.
 module.exports.app = app;

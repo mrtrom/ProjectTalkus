@@ -122,7 +122,8 @@ users.get = function(req, res) {
     return users.getByUsername(username, fields, function(error, user) {
         var _user;
         if (error !== null) {
-            console.log(utils.parseError(err));
+            res.statusCode = 500;
+            return res.end(utils.parseError(error));
         } else if (user !== null) {
             _user = user.toObject();
             res.statusCode = 200;
