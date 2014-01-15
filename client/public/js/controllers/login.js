@@ -138,7 +138,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     
     //Login action button
     $scope.submitLogin = function () {
-        
         $scope.session.$save(function(res) {
             $rootScope.user = res.user;
             $scope.permissions.invalidUserInfo = false;

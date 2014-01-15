@@ -1,3 +1,11 @@
+script.
+    if(typeof(is_logged) !== 'undefined'){
+        is_logged = 0;
+        location.reload();
+    }
+    else{
+       window.is_logged = 0; 
+    }
 #menumain
     span.welcome
         .tooltipmenu Welcome page
