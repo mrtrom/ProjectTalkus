@@ -45,7 +45,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             }
         });
         $('.superContainer').css('top','0');
-        $('div.inside').jScrollPane();
     }
     $scope.newpermit = {
         days: false ,

@@ -31,6 +31,13 @@ script.
             div(ng-hide='validations.anonymOtherUser')
               .well
                 {{otherUserInfo.description}}
+    .chatwrap
+        #conversation
+        form.form-inline
+          .row-fluid
+            .span12
+              input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text")
+              input#datasend(type='button', value='send')
     .profile
         .inside
             .btn-group.logout.pull-right(ng-hide='validations.anonymUser')
@@ -106,12 +113,5 @@ script.
                     textarea.FocusAccion(name='about', id='about', ng-model='userInformation.description', type='text', placeholder = "Description")
                   div
                     label.updateUser(ng-click="updateUsers()")
-                    
-    .chatwrap
-        #conversation
-        form.form-inline
-          .row-fluid
-            .span12
-              input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text")
-              input#datasend(type='button', value='send')
+    
         div(ng-init="initchat()")

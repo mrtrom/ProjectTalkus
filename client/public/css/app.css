@@ -645,6 +645,7 @@ font-size: 15px;
 height:50%;
 float:left;
 width:100%;
+overflow:scroll;
 }
 .chat .jspVerticalBar ,.chat .jspTrack{
     background: transparent;
