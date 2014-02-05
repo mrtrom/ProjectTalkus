@@ -52,7 +52,15 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     };
     $scope.validations = {
         anonymUser: true,
-        anonymOtherUser: true
+        anonymOtherUser: true,
+        anonymOtherUserValidationFields: {
+            Name: false,
+            Birth: false,
+            Email: false,
+            Location: false,
+            Gender: false,
+            Description: false
+        }
     };
     
     $scope.userInformation = new User();
@@ -194,22 +202,36 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             function(response) {
                 $scope.validations.anonymOtherUser = false;
                 $scope.otherUserInfo = response;
-                console.log('response: ' + JSON.stringify(response));
+                
+                console.log('responseuser: ' + response);
+                console.log('responseuserjson: ' + JSON.stringify(response));
+                
+                if ($scope.otherUserInfo.username !== undefined){
+                    //Fields and Validation Fields
+                    if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
+                    if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
+                    if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
+                    if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
+                    if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
+                    if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
+                }
+                else{
+                    $scope.otherUserInfo.avatar = "uploads/images/avatars/default.jpg";
+                    $scope.validations.anonymOtherUserValidationFields.Email =
+                    $scope.validations.anonymOtherUserValidationFields.Name =
+                    $scope.validations.anonymOtherUserValidationFields.Gender =
+                    $scope.validations.anonymOtherUserValidationFields.Description =
+                    $scope.validations.anonymOtherUserValidationFields.Location =
+                    $scope.validations.anonymOtherUserValidationFields.Birth = true;
+                }
             }, function(response) {
+                console.log('no se encontró');
                 switch (response.status) {
-                case 404:
-                    $scope.otherUserInfo.username = response.data;
-                    break;
+                    case 204:
+                        $scope.otherUserInfo.username = response.data;
+                        break;
                 }
             });
-            
-            if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.otherUserInfo.email = "";}
-            if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.otherUserInfo.name = $scope.otherUserInfo.username;}
-            if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.otherUserInfo.gender = "";}
-            if ($scope.otherUserInfo.avatar === undefined || $scope.otherUserInfo.avatar === ''){$scope.otherUserInfo.avatar = "uploads/images/avatars/default.jpg";}
-            if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.otherUserInfo.description = "";}
-            if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.otherUserInfo.location = "";}
-            if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === ''){$scope.otherUserInfo.birth = "";}
         }
     };
     

@@ -11,24 +11,24 @@ script.
               input#confirm(type='button', ng-click='otherUser()', style='display: none;')
               .row-fluid.profilepic
                 img.img-rounded(ng-src='{{otherUserInfo.avatar}}')
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Name')
               label Name
               label {{otherUserInfo.name}}
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Birth')
               label Birth
               label {{otherUserInfo.birth}}
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Email')
               label Email
               label {{otherUserInfo.email}}
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Location')
               label Location
               label {{otherUserInfo.location}}
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Gender')
               label Gender
               label {{otherUserInfo.gender}}
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Description')
               label About you
-            div(ng-hide='validations.anonymOtherUser')
+            div(ng-hide='validations.anonymOtherUserValidationFields.Description')
               .well
                 {{otherUserInfo.description}}
     .chatwrap
