@@ -53,8 +53,8 @@ io.sockets.on('connection', function (socket) {
             }
             socket.userObject = userObject; //se asigna el objeto usuario al socket
             socket.join(socket.userObject.room); //el usuario actual entra a la sala
-    		socket.emit('updatechat', 'SERVER', '<span class="muted">you have connected to: ' + socket.userObject.room + '</span>'); //mensaje de servidor "usted entró a la sala"
-    		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', '<span class="muted">'+ userObject.username + ' has connected to this room</span>'); //mensaje de servidor "usuario entró a la sala"
+    		socket.emit('updatechat', 'SERVER', '<span class="muted">you have connected to: ' + socket.userObject.room + '</span>', 'connect'); //mensaje de servidor "usted entró a la sala"
+    		socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', '<span class="muted">'+ userObject.username + ' has connected to this room</span>', 'connect'); //mensaje de servidor "usuario entró a la sala"
         }
 	});
 	
@@ -63,12 +63,15 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.in(socket.userObject.room).emit('updatechat', socket.userObject.username, message); //se envía el mensaje a la sala del socket
 	});
 	
-	socket.on('disconnect', function(){ 
+	socket.on('disconnect', function(){
+	    console.log('socket principal user: ' + socket.userObject.username);
         //desconexión de usuarios
         var salaVacia = false;
 		delete GLOBAL.globalChatUsers[socket.userObject.username];
         for (var userN in GLOBAL.globalChatUsers){
             if (GLOBAL.globalChatUsers[userN].room == socket.userObject.room){
+                console.log('socket second user: ' + GLOBAL.globalChatUsers[userN].username);
+                console.log('socket room: ' + GLOBAL.globalChatUsers[userN].room);
                 GLOBAL.globalChatUsers[userN].estado = 'online';
                 salaVacia = false;
                 break;
@@ -79,7 +82,8 @@ io.sockets.on('connection', function (socket) {
             //Eliminar sala sin usuarios
             utils.removeObjectArray(rooms, socket.userObject.room);
         }
-        socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', socket.userObject.username + ' has disconnected', 'leave');
+        //socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', socket.userObject.username + ' has disconnected', 'leave');
+        socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', 'Anonym has disconnected', 'leave');
 		socket.leave(socket.userObject.room);
 		delete GLOBAL.globalChatUsers[socket.userObject];
 	});

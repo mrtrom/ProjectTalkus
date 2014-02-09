@@ -1,34 +1,20 @@
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
     function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
+        
     var socket = io.connect(document.URL);
+    
     $scope.initchat = function(){
+        
         $('html').addClass('chat');
         $("#locationapi").geocomplete();
-        socket.on('connect', function(){
-            ShowLoading();
-            var username = $('#username').val();
-            socket.emit('adduser', username);
-        });
         
-        socket.on('updatechat', function (username, data, type) {
-            console.log('username: ' + data);
-            $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
-            if (type != 'undefined'){
-                if (type == 'leave'){
-                    ShowLoading();
-                }
-            }
-        });
-        
-        socket.on('updateAnonymInfo', function (username, user) {
-            $('#confirm').click();
-            HideLoading();
-        });
-        
+        //Send text chat to room via click
         $('#datasend').on('click', function() {
-            var cadenaAEliminar = /(<([^>]+)>)/gi;
-            var elementoEtiquetas = $('#data');
-            var etiquetas = elementoEtiquetas.val();
+            var cadenaAEliminar = /(<([^>]+)>)/gi,
+                elementoEtiquetas = $('#data'),
+                etiquetas = elementoEtiquetas.val(),
+                mensaje = '';
+                
             etiquetas = etiquetas.replace(cadenaAEliminar, '');
             elementoEtiquetas.val(etiquetas);
             mensaje = elementoEtiquetas.val();
@@ -37,6 +23,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             socket.emit('sendchat', mensaje);
         });
         
+        //Send text chat to room via enter
         $('#data').keypress(function(e) {
             if(e.which == 13) {
                 $(this).blur();
@@ -44,13 +31,64 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 $('#data').focus();
             }
         });
+        
         $('.superContainer').css('top','0');
+        
+        //Connect to room
+        socket.on('connect', function(){
+            executeAnimateLoading();
+            var username = $('#username').val();
+            socket.emit('adduser', username);
+        });
+        
+        /*Update room with:
+        **-message
+        **-disconect (leave)*/
+        socket.on('updatechat', function (username, data, type) {
+            if (type != 'undefined'){
+                if (type == 'leave'){
+                    //Disconect
+                    $('#data').attr('disabled', true);
+                    
+                    $scope.validations.anonymOtherUserValidationFields.Email = true;
+                    $scope.validations.anonymOtherUserValidationFields.Name = true;
+                    $scope.validations.anonymOtherUserValidationFields.Gender = true;
+                    $scope.validations.anonymOtherUserValidationFields.Description = true;
+                    $scope.validations.anonymOtherUserValidationFields.Location = true;
+                    $scope.validations.anonymOtherUserValidationFields.Birth = true;
+                    
+                    if ($scope.otherUserInfo !== undefined){
+                        $scope.otherUserInfo.username = '';
+                    }
+                    
+                    $('.fieldsetProfile').hide();
+                    
+                    executeAnimateLoading();
+                }
+                if (type == 'connect'){
+                    $('#conversation').empty();
+                }
+            }
+            
+            //Message from SERVER
+            $('#conversation').append('<div><i class="icon-user"></i> <span class="text-info">'+username + ':</span> ' + data + '</div>');
+        });
+        
+        //Anonym user catched
+        socket.on('updateAnonymInfo', function (username, user) {
+            $('#confirm').click();
+            $('#data').attr('disabled', false);
+            $('.fieldsetProfile').show();
+            stopAnimateLoading();
+        });
     }
+    
     $scope.newpermit = {
         days: false ,
         email: false
     };
     $scope.validations = {
+        anonymUserExist: true,
         anonymUser: true,
         anonymOtherUser: true,
         anonymOtherUserValidationFields: {
@@ -108,6 +146,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 ChatUser.getUsername({username: 'get'},
                 function(response) {
                     $scope.userInformation.username = 'anonym' + response.count;
+                    $scope.userInformation.usernameToShow = 'Anonym';
                 }, function(response) {
                     //error
                 });
@@ -203,33 +242,19 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 $scope.validations.anonymOtherUser = false;
                 $scope.otherUserInfo = response;
                 
-                console.log('responseuser: ' + response);
-                console.log('responseuserjson: ' + JSON.stringify(response));
+                //Fields and Validation Fields
+                if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
+                if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
+                if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
+                if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
+                if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
+                if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
                 
-                if ($scope.otherUserInfo.username !== undefined){
-                    //Fields and Validation Fields
-                    if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
-                    if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
-                    if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
-                    if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
-                    if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
-                    if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
-                }
-                else{
-                    $scope.otherUserInfo.avatar = "uploads/images/avatars/default.jpg";
-                    $scope.validations.anonymOtherUserValidationFields.Email =
-                    $scope.validations.anonymOtherUserValidationFields.Name =
-                    $scope.validations.anonymOtherUserValidationFields.Gender =
-                    $scope.validations.anonymOtherUserValidationFields.Description =
-                    $scope.validations.anonymOtherUserValidationFields.Location =
-                    $scope.validations.anonymOtherUserValidationFields.Birth = true;
-                }
             }, function(response) {
-                console.log('no se encontró');
                 switch (response.status) {
-                    case 204:
-                        $scope.otherUserInfo.username = response.data;
-                        break;
+                    case 404:
+                        $scope.otherUserInfo.avatar = "uploads/images/avatars/default.jpg";
+                        $scope.otherUserInfo.username = "Anonym";
                 }
             });
         }
@@ -239,7 +264,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.logout = function(){
         
         Session.delete(function(response) {
-            console.log(socket);
             $('.preview-loading').hide();
             $location.path("/");
         });
@@ -270,10 +294,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     function updateUserAll(){
     User.update($scope.userInformation,
         function (data) {
-            console.log('modificó');
+            //succes
         }, function ($http) {
             //error
-            console.log("Couldn't save user.");
         });
     }
     

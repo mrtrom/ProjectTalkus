@@ -41,6 +41,10 @@ margin-bottom:8px
 margin:0
 }
 
+.fieldsetProfile{
+    display:none;
+}
+
 .form-horizontal .control-group input[type="text"] {
 border-bottom: none;
 border-radius: 6px 6px 0px 0px;
@@ -383,14 +387,24 @@ animation-delay:1.02s
     }
 }
 .preview-loading {
-display:none;
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-background:rgba(0,0,0,.8);
-z-index:1
+display: block;
+position: absolute;
+width: 15%;
+height: 0%;
+bottom: 0;
+left: 0;
+background: rgba(0,0,0,.6);
+z-index: 1;
+}
+.preview-loading-end {
+display: block;
+position: absolute;
+width: 15%;
+height: 0%;
+bottom: 0;
+left: 0;
+background: rgba(0,0,0,0);
+z-index: 1;
 }
 #menumain {
 position: fixed;
@@ -645,7 +659,7 @@ font-size: 15px;
 height:50%;
 float:left;
 width:100%;
-overflow:scroll;
+/*overflow:scroll;*/
 }
 .chat .jspVerticalBar ,.chat .jspTrack{
     background: transparent;

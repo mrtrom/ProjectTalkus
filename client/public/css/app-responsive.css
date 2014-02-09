@@ -32,7 +32,7 @@
         text-align:center;
     }
 }
-@media (max-width: 1340px) {
+/*@media (max-width: 1340px) {
     .user {
         width: 100%;
         height: calc(100% / 3);
@@ -55,4 +55,4 @@
     div.info, form.ng-pristine.ng-valid{
         text-align:center;
     }
-}
+}*/

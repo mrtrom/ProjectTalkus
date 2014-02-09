@@ -21,8 +21,6 @@ chat.getUser = function(req, res) {
         }
     }
     
-    console.log('username: ' + username);
-    
     var fields = {
         username: 1,
         name: 1,
@@ -41,13 +39,10 @@ chat.getUser = function(req, res) {
         } else if (user !== null) {
             _user = user.toObject();
             res.statusCode = 200;
-            console.log('usernameExito: ' + username);
             return res.end(JSON.stringify(_user));
         } else {
-            console.log('usernameNoExito: ' + username);
-            _user = {username: username};
-            res.statusCode = 204;
-            return res.end(_user);
+            res.statusCode = 404;
+            return res.end();
         }
     });
 };
