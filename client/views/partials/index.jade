@@ -4,7 +4,7 @@ script.
         location.reload();
     }
     else{
-       window.is_logged = 0; 
+        window.is_logged = 0; 
     }
 #menumain
     span.welcome
@@ -13,111 +13,108 @@ script.
         .tooltipmenu Sign in for talkus
     span.signup
         .tooltipmenu Sign up for talkus
+        
 #section0.section
-  .arrow-down
-  .arrow-right
-  .slide
-    .intro
-      h1 Welcome to talk us
-      p
-          | A place where u can chat with anyone, 
-          span#signup sign up 
-          | or 
-          span#signin sign in 
-          | to get started!
-
-      
-  .slide
-    .intro
-      
-      h1 Simple
-      p Easy to use. Configurable and customizable.
-  .slide
-    .intro
-      
-      h1 Cool
-      p It just looks cool. Impress everybody with a simple and modern web design!
-  .slide
-    .intro
-      
-      h1 Compatible
-      p
-        | Working in modern and old browsers too! IE 8 users don't have the fault of using that horrible browser! Lets give them a chance to see your site in a proper way!
-
+    .arrow-down
+    .arrow-right
+    .slide
+        .intro
+            h1 Welcome to talk us
+            p
+                | A place where u can chat with anyone, 
+                span#signup sign up 
+                | or 
+                span#signin sign in 
+                | to get started!
+                
+    .slide
+        .intro
+            h1 Simple
+            p Easy to use. Configurable and customizable.
+    .slide
+        .intro
+            h1 Cool
+            p It just looks cool. Impress everybody with a simple and modern web design!
+    .slide
+        .intro
+            h1 Compatible
+            p
+                | Working in modern and old browsers too! IE 8 users don't have the fault of using that horrible browser! Lets give them a chance to see your site in a proper way!
+                
 #section1.section
-        .centerform
-          img.imgcenter(src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png")
-          h1.inew Sign in
-          form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
+    .centerform
+        img.imgcenter(src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png")
+        h1.inew Sign in
+        form.form-horizontal.front-form(name='singInForm', ng-submit="submitLogin()")
             .alert.alert-error.error(ng-show='permissions.invalidUserInfo')
-              p
-                strong Username
-                |    or  
-                strong Password
-                |    incorrect
+                p
+                    strong Username
+                    |    or  
+                    strong Password
+                    |    incorrect
                 
             .control-group
-              .controls
-                input#inputUsername(name='username', id='username', ng-model='session.username', type='text', placeholder='Username or email', required)
+                .controls
+                    input#inputUsername(name='username', id='username', ng-model='session.username', type='text', placeholder='Username or email', required)
                 
             .control-group.password
-              .controls
-                input#inputPassword(name='password', id='password',ng-model='session.password', type='password', placeholder='Password' , required)
+                .controls
+                    input#inputPassword(name='password', id='password',ng-model='session.password', type='password', placeholder='Password' , required)
                 
             .control-group
-              .controls
-                button.btn.btn-primary.log(type='submit') Sign in
-          a.text-info.forgotpassico(href='#myModal', role='button', data-toggle='modal')
+                .controls
+                    button.btn.btn-primary.log(type='submit') Sign in
+        a.text-info.forgotpassico(href='#myModal', role='button', data-toggle='modal')
             i.icon-question-sign
-          #myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+        #myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
             form(ng-submit="forgotpass()")
                 .modal-header
                     button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
                     h3 Please enter your email.
-                  .modal-body
-                    .alert.alert-success(ng-show='password.remember')
-                      strong Success! 
-                      | an email has been send, please check your inbox
-                    .alert.alert-error(ng-show='password.remembererror')
-                      strong Oops! 
-                      | looks like that email does not exist on out servers.
-                    .input-prepend
-                        span.add-on 
-                          i.icon-envelope
-                        input#prependedInput.span12(type='email', placeholder='Email' ,id="forgotemail",name = "forgotemail", ng-model = 'Remember.forgotemail' , required)
-    
-                  .modal-footer
+                    .modal-body
+                        .alert.alert-success(ng-show='password.remember')
+                            strong Success! 
+                            | an email has been send, please check your inbox
+                        .alert.alert-error(ng-show='password.remembererror')
+                            strong Oops! 
+                            | looks like that email does not exist on out servers.
+                        .input-prepend
+                            span.add-on 
+                                i.icon-envelope
+                            input#prependedInput.span12(type='email', placeholder='Email' ,id="forgotemail",name = "forgotemail", ng-model = 'Remember.forgotemail' , required)
+                            
+                .modal-footer
                     button.btn.btn-primary(type="submit") Send
 #section2.section                    
-        .centerform
-          img.imgcenter(src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png")
-          h1.inew Sign up
-          form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
+    .centerform
+        img.imgcenter(src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png")
+        h1.inew Sign up
+        form.form-horizontal.front-form(name='registerForm', ng-submit="submitRegister()")
             .alert.alert-error.error(ng-show='validations.invalidEmailFormat')
-              p
-                strong Email
-                |    format is incorrect
+                p
+                    strong Email
+                    |    format is incorrect
             .alert.alert-error.error(ng-show='validations.invalidUsername')
-              p
-                strong Username
-                |    format is incorrect
+                p
+                    strong Username
+                    |    format is incorrect
             .alert.alert-success(ng-show='succesMesages.creationSucces')
-              p Succes!!
+                p Succes!!
             .control-group
-              .controls
-                input#inputUsername(name='username', id='username', ng-model='userObject.user.username', type='text', placeholder='Username', required)
-                
+                .controls
+                    input#inputUsername(name='username', id='username', ng-model='userObject.user.username', type='text', placeholder='Username', required)
+                    
             .control-group
-              .controls
-                input#inputUsername(name='email', id='email', ng-model='userObject.user.email', type='text', placeholder='Email', required)
-                
+                .controls
+                    input#inputUsername(name='email', id='email', ng-model='userObject.user.email', type='text', placeholder='Email', required)
+                    
             .control-group.password
-              .controls
-                input#inputPassword(name='password', id='password',ng-model='userObject.user.password', type='password', placeholder='Password' , required)
-                
+                .controls
+                    input#inputPassword(name='password', id='password',ng-model='userObject.user.password', type='password', placeholder='Password' , required)
+                    
             .control-group
-              .controls
-                button.btn.btn-primary.log(type='submit') Sign up
-        .centerform.chatnow
-          button.btn.btn-large.btn-block.btn-primary.log(type='submit') Or chat anonymously!
+                .controls
+                    button.btn.btn-primary.log(type='submit') Sign up
+    .centerform.chatnow
+        button.btn.btn-large.btn-block.btn-primary.log(type='submit') Or chat anonymously!
 div(ng-init='fullscreen();')

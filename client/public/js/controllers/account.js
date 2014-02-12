@@ -18,6 +18,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             etiquetas = etiquetas.replace(cadenaAEliminar, '');
             elementoEtiquetas.val(etiquetas);
             mensaje = elementoEtiquetas.val();
+            mensaje = emotify(mensaje);
             
             $('#data').val('');
             socket.emit('sendchat', mensaje);
