@@ -99,6 +99,7 @@ script.
             $('#emoticonContainer img').click(function() {
                 var text = $(this).attr('title');
                 $('#data').val( $('#data').val() + ' ' + text );
+                $('#data').focus();
             });
         }, 1000);
     });

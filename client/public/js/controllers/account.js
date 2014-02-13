@@ -37,9 +37,11 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         
         //Connect to room
         socket.on('connect', function(){
-            executeAnimateLoading();
-            var username = $('#username').val();
-            socket.emit('adduser', username);
+            setTimeout(function() {
+                //executeAnimateLoading();
+                var username = $('#username').val();
+                socket.emit('adduser', username);
+            }, 1500);
         });
         
         /*Update room with:
@@ -64,7 +66,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                     
                     $('.fieldsetProfile').hide();
                     
-                    executeAnimateLoading();
+                    //executeAnimateLoading();
                 }
                 if (type == 'connect'){
                     $('#conversation').empty();
@@ -80,7 +82,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             $('#confirm').click();
             $('#data').attr('disabled', false);
             $('.fieldsetProfile').show();
-            stopAnimateLoading();
+            //stopAnimateLoading();
         });
     }
     
