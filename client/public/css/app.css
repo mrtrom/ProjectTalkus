@@ -638,7 +638,7 @@ html ,body{
 height:100%;
 }
 #conversation {
-height: calc(100% - 70px);
+height: calc(100% - 95px);
 padding: 11px 10px;
 }
 .chat input, .chat textarea, .chat .uneditable-input{
@@ -789,4 +789,14 @@ position: absolute;
 bottom: 49px;
 right: 12px;
 display:none;
+}
+form.textChat{
+    padding-top:25px;
+}
+form.textChat #userTyping{
+    display:none;
+}
+form.textChat #userTyping p.text-info{
+    font-size: 15px;
+    padding-left: 2px;
 }

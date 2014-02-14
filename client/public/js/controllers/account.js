@@ -24,15 +24,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             socket.emit('sendchat', mensaje);
         });
         
-        //Send text chat to room via enter
-        $('#data').keypress(function(e) {
-            if(e.which == 13) {
-                $(this).blur();
-                $('#datasend').focus().click();
-                $('#data').focus();
-            }
-        });
-        
         $('.superContainer').css('top','0');
         
         //Connect to room
@@ -44,6 +35,46 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             }, 1500);
         });
         
+        //Send text chat to room via enter
+        $('#data').keydown(function(e) {
+            console.log('keyCodeDown: ' + e.keyCode);
+            
+            if(e.keyCode == 8 || e.keyCode == 46){
+                if ($(this).val().length <= 1){
+                    socket.emit('userNotWriting');
+                }
+            }
+            else{
+                if (e.keyCode != 13){
+                    socket.emit('userWriting');
+                }
+            }
+        });
+        
+        $('#data').keypress(function(e) {
+            console.log('keyPress: ' + e.keyCode);
+            if (e.keyCode == 13){
+                if ($(this).val().length !== 0){
+                    $(this).blur();
+                    $('#datasend').focus().click();
+                    $('#data').focus();
+                }
+                socket.emit('userNotWriting');
+            }
+        });
+        
+        socket.on('showWriting', function(){
+            if ($('#userTyping').css('display') == 'none'){
+                $('#userTyping').show();
+            }
+        });
+        
+        socket.on('hideWriting', function(){
+            if ($('#userTyping').css('display') == 'block'){
+                $('#userTyping').hide();
+            }
+        });
+        
         /*Update room with:
         **-message
         **-disconect (leave)*/
@@ -52,6 +83,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 if (type == 'leave'){
                     //Disconect
                     $('#data').attr('disabled', true);
+                    socket.emit('userNotWriting');
                     
                     $scope.validations.anonymOtherUserValidationFields.Email = true;
                     $scope.validations.anonymOtherUserValidationFields.Name = true;

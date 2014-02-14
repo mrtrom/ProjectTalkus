@@ -9,7 +9,7 @@ GLOBAL.globalChatUsers = null; //variable global de usuarios
 var rooms = []; //salas de chat de usuarios
 var userObject = {}; //objeto usuario que será guardado en globalChatUsers
 
-function getRandomNumber(max, callback){
+/*function getRandomNumber(max, callback){
     var randomNumber = Math.round(Math.random() * max);
     var booleanoad = false;
 
@@ -33,7 +33,7 @@ function returnNumber(exist, number){
     else{
         return number;
     }
-}
+}*/
 
 io.sockets.on('connection', function (socket) {
 
@@ -54,10 +54,11 @@ io.sockets.on('connection', function (socket) {
                 }
                 //console.log('cantidad de usuairos: ' + arrayOfKeys.length);
                 if (arrayOfKeys.length === 0){
-                    var newRoom = getRandomNumber(rooms.length, returnNumber);
+                    //var newRoom = getRandomNumber(rooms.length, returnNumber);
+                    var newRoomLarge = rooms.length + "Room";
                     //console.log('Crear sala: ' + newRoom);
-                    rooms.push(newRoom); //se crea la sala
-                    userObject.room = newRoom; //se le asigna al usuario la sala creada
+                    rooms.push(newRoomLarge); //se crea la sala
+                    userObject.room = newRoomLarge; //se le asigna al usuario la sala creada
                     userObject.estado = 'online'; //primero el usuario tiene estado online
                     GLOBAL.globalChatUsers[username] = userObject; //se guarda el objeto principal "userObject" en el global de usuarios
                 }
@@ -84,7 +85,8 @@ io.sockets.on('connection', function (socket) {
             }
             else{ //primera vez que se inicia la aplicación
                 GLOBAL.globalChatUsers = {}; // se inicializa la variable
-                var newRoom = getRandomNumber(rooms.length, returnNumber);
+                //var newRoom = getRandomNumber(rooms.length, returnNumber);
+                var newRoom = rooms.length + "Room";
                 //console.log('sala nueva: ' + newRoom);
                 rooms.push(newRoom); //se crea la primera sala
                 userObject.room = newRoom; //se le asigna al usuario la sala creada
@@ -94,15 +96,28 @@ io.sockets.on('connection', function (socket) {
             socket.userObject = userObject; //se asigna el objeto usuario al socket
             socket.join(socket.userObject.room); //el usuario actual entra a la sala
             socket.emit('updatechat', 'SERVER', '<span class="muted">you have connected to: ' + socket.userObject.room + '</span>', 'connect'); //mensaje de servidor "usted entró a la sala"
-            socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', '<span class="muted">'+ userObject.username + ' has connected to this room</span>', 'connect'); //mensaje de servidor "usuario entró a la sala"
+            socket.broadcast.to(socket.userObject.room).emit('updatechat', 'SERVER', '<span class="muted">'+ "Anonym" + ' has connected to this room</span>', 'connect'); //mensaje de servidor "usuario entró a la sala"
         }
 	});
 	
 	socket.on('sendchat', function (message) {
         //envío de mensajes
-		io.sockets.in(socket.userObject.room).emit('updatechat', socket.userObject.username, message); //se envía el mensaje a la sala del socket
+        //console.log('room send: ' + socket.userObject.room);
+		//io.sockets.in(socket.userObject.room).emit('updatechat', socket.userObject.username, message); //se envía el mensaje a la sala del socket
+		socket.emit('updatechat', socket.userObject.username, message); //mensaje de servidor "usted entró a la sala"
+        socket.broadcast.to(socket.userObject.room).emit('updatechat', socket.userObject.username, message); //mensaje de servidor "usuario entró a la sala"
 	});
 	
+    socket.on('userWriting', function(){
+        //Enviar mensaje de usuario copiando
+        socket.broadcast.to(socket.userObject.room).emit('showWriting');
+    });
+    
+    socket.on('userNotWriting', function(){
+        //Enviar mensaje de usuario copiando
+        socket.broadcast.to(socket.userObject.room).emit('hideWriting');
+    });
+    
 	//desconexión de usuarios
     socket.on('disconnect', function(){
         var salaVacia = false;
@@ -123,7 +138,7 @@ io.sockets.on('connection', function (socket) {
             }
         }
         
-        if(salaVacia == true){
+        if(salaVacia === true){
             utils.removeObjectArray(rooms, socket.userObject.room);    
         }
         
