@@ -174,6 +174,15 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                         //It's a confirmed account, and dont need any action.
                     }
                 }
+                else{
+                   $scope.validations.anonymUser = true; 
+                }
+                
+                if($scope.validations.anonymUser == true){
+                    $('body').addClass('not-login');
+                }else{
+                    $('body').addClass('login');
+                }
             }
             
             //User validation
@@ -290,10 +299,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                     case 404:
                         $scope.otherUserInfo.avatar = "uploads/images/avatars/default.jpg";
                         $scope.otherUserInfo.username = "Anonym";
+                        $('body').addClass('other-anonym');
                 }
             });
         }
     };
+    
     
     //logout
     $scope.logout = function(){

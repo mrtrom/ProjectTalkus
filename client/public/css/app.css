@@ -640,6 +640,7 @@ height:100%;
 #conversation {
 height: calc(100% - 95px);
 padding: 11px 10px;
+word-break:break-word;
 }
 .chat input, .chat textarea, .chat .uneditable-input{
 width:auto;
@@ -657,6 +658,7 @@ margin-bottom: 5px;
 font-size: 15px;
 }
 .inside {
+word-break: break-word;
 height:50%;
 float:left;
 width:100%;
@@ -799,4 +801,19 @@ form.textChat #userTyping{
 form.textChat #userTyping p.text-info{
     font-size: 15px;
     padding-left: 2px;
+}
+.not-login .chatwrap , .other-anonym .chatwrap{
+    width:85%;
+}
+.other-anonym .user , .not-login div.user{
+    display:none;
+}
+.not-login div.chatwrap{
+    width:100%;
+}
+.login.other-anonym .user{
+    display:block;
+}
+.login.other-anonym .chatwrap {
+    width:70%;
 }

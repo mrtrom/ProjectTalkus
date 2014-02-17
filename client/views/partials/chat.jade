@@ -145,7 +145,7 @@ script.
                     input#data(placeholder='Press enter to send' , ngChange="pullDown()" ,type="text", disabled='disabled')
                     input#datasend(type='button', value='send')
                     .btnEmoticon(id="btnEmoticon")
-    .profile
+    .profile(ng-hide='validations.anonymUser')
         .inside
             .btn-group.logout.pull-right(ng-hide='validations.anonymUser')
                 button.btn(ng-click="logout()") 
