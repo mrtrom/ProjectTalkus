@@ -1,0 +1,133 @@
+<script>
+  if(typeof(is_logged) !== 'undefined'){
+    is_logged = 0;
+    location.reload();
+  }
+  else{
+    window.is_logged = 0;
+  }
+</script>
+
+<div id="menumain">
+  <span class="welcome">
+    <div class="tooltipmenu">Welcome page</div>
+  </span>
+  <span class="signin">
+    <div class="tooltipmenu">Sign in for talkus</div>
+  </span>
+  <span class="signup">
+    <div class="tooltipmenu">Sign up for talkus</div>
+  </span>
+</div>
+<div id="section0" class="section">
+  <div class="arrow-down"></div>
+  <div class="arrow-right"></div>
+  <div class="slide">
+    <div class="intro">
+      <h1>Welcome to talk us</h1>
+      <p>A place where u can chat with anyone, <span id="signup">sign up </span>or <span id="signin">sign in </span>to get started!</p>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="intro">
+      <h1>Simple</h1>
+      <p>Easy to use. Configurable and customizable.</p>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="intro">
+      <h1>Cool</h1>
+      <p>It just looks cool. Impress everybody with a simple and modern web design!</p>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="intro">
+      <h1>Compatible</h1>
+      <p>Working in modern and old browsers too! IE 8 users don't have the fault of using that horrible browser! Lets give them a chance to see your site in a proper way!</p>
+    </div>
+  </div>
+</div>
+<div id="section1" class="section">
+  <div class="centerform">
+    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="imgcenter"/>
+    <h1 class="inew">Sign in</h1>
+    <form name="singInForm" ng-submit="submitLogin()" class="form-horizontal front-form">
+      <div ng-show="permissions.invalidUserInfo" class="alert alert-error error">
+        <p><strong>Username</strong>   or  <strong>Password</strong>   incorrect</p>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <input name="username" id="username" ng-model="session.username" type="text" placeholder="Username or email" required="required"/>
+        </div>
+      </div>
+      <div class="control-group password">
+        <div class="controls">
+          <input name="password" id="password" ng-model="session.password" type="password" placeholder="Password" required="required"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-primary log">Sign in</button>
+        </div>
+      </div>
+    </form><a href="#myModal" role="button" data-toggle="modal" class="text-info forgotpassico"><i class="icon-question-sign"></i></a>
+    <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal hide fade">
+      <form ng-submit="forgotpass()">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+          <h3>Please enter your email.</h3>
+          <div class="modal-body">
+            <div ng-show="password.remember" class="alert alert-success"><strong>Success! </strong>an email has been send, please check your inbox</div>
+            <div ng-show="password.remembererror" class="alert alert-error"><strong>Oops! </strong>looks like that email does not exist on out servers.</div>
+            <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
+              <input type="email" placeholder="Email" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required" class="span12"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="section2" class="section">
+  <div class="centerform"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="imgcenter"/>
+    <h1 class="inew">Sign up</h1>
+    <form name="registerForm" ng-submit="submitRegister()" class="form-horizontal front-form">
+      <div ng-show="validations.invalidEmailFormat" class="alert alert-error error">
+        <p><strong>Email</strong>   format is incorrect</p>
+      </div>
+      <div ng-show="validations.invalidUsername" class="alert alert-error error">
+        <p><strong>Username</strong>   format is incorrect</p>
+      </div>
+      <div ng-show="succesMesages.creationSucces" class="alert alert-success">
+        <p>Succes!!</p>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <input name="username" id="username" ng-model="userObject.user.username" type="text" placeholder="Username" required="required"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <input name="email" id="email" ng-model="userObject.user.email" type="text" placeholder="Email" required="required"/>
+        </div>
+      </div>
+      <div class="control-group password">
+        <div class="controls">
+          <input name="password" id="password" ng-model="userObject.user.password" type="password" placeholder="Password" required="required"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-primary log">Sign up</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="centerform chatnow">
+    <button type="submit" class="btn btn-large btn-block btn-primary log">Or chat anonymously!</button>
+  </div>
+</div>
+<div ng-init="fullscreen();"></div>

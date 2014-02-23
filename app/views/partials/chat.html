@@ -1,0 +1,248 @@
+<script src="scripts/personalScripts/datepicker.js"></script>
+<script src="scripts/personalScripts/ba-emotify.js"></script>
+<script>
+  window.is_logged = 1;
+
+  // Load an Adium Emoticonset.
+  function emo_set_load( emoticon_set, callback ) {
+    var emoticons_base = '../../images/emoticons/' + emoticon_set + '/',
+        obj = {};
+
+    // For some reason, jQuery's :contains doesn't seem to work when parsing XML in IE.
+    function contains( text ) {
+      return function() {
+        return ( this.textContent || this.text || '' ).indexOf( text ) !== -1;
+      }
+    };
+
+    //dataType: The web server must be configured to serve .plist files as text/xml
+    //url: The XML file that defines the Adium Emoticonset.
+    //success: Parse Adium Emoticonset .plist file.
+    $.ajax({
+      dataType: 'xml',
+      url: emoticons_base + 'Emoticons.plist',
+      success: function( data, textStatus ){
+        $(data).find( 'plist > dict > dict > key' ).each(function(){
+          var that = $(this),
+              image = that.text(),
+              equivalents = that.next().children().filter( contains('Equivalents') ).next().children(),
+              name = that.next().children( 'key' ).filter( contains('Name') ).next().text(),
+              text,
+              arr = [];
+
+          //console.log( image, equivalents.length, name );
+
+          equivalents.each(function(){
+            text = $(this).text();
+            text && arr.push( text );
+          });
+          obj[ arr.shift() ] = [ emoticons_base + image, name ].concat( arr );
+        });
+        // Overwrite all current emoticons with those in the Emoticonset.
+        callback( emotify.emoticons( true, obj ) );
+      },
+      // Oops?
+      error: function() {
+        callback( false );
+      }
+    });
+  };
+
+  // When an Adium Emoticonset is loaded, update the page.
+  function emo_set_onload( emoticons ) {
+    if ( !emoticons ) {
+      //console.log( 'Error loading emoticons!' );
+      return;
+    }
+
+    var html = '',
+        cols = 7,
+        i = 0;
+
+    $.each(emotify.emoticons(), function(key,val){
+      html += i % cols == 0 ? "<tr>" : "";
+      html += "<td> <img src='" + val[0] + "' alt='"  + val[1] + "' title='" + val[2] + "' />";
+      html += i % cols == cols -1 ? "</tr>" : "";
+      i++;
+    });
+
+    $(".chatwrap").append("<div id='emoticonContainer'><table id='emoticonTable'>" + html + "</table></div>");
+
+  };
+
+  $(function(){
+    emo_set_load('simple', emo_set_onload);
+
+    setTimeout(function(){
+      $('html').click(function() {
+        $( "#emoticonContainer" ).hide("slow");
+      });
+
+      $('#emoticonContainer').click(function(event){
+        event.stopPropagation();
+      });
+
+      $("#btnEmoticon").click(function(event) {
+        var disAttr = $('#data').attr('disabled');
+        if (disAttr != 'undefined' && disAttr != 'disabled'){
+          if($('#emoticonContainer').css('display') == 'none'){
+            $( "#emoticonContainer" ).show("slow");
+          }
+          else{
+            $( "#emoticonContainer" ).hide("slow");
+          }
+          event.stopPropagation();
+        }
+      });
+
+      $('#emoticonContainer img').click(function() {
+        var text = $(this).attr('title');
+        $('#data').val( $('#data').val() + ' ' + text );
+        $('#data').focus();
+      });
+    }, 1000);
+  });
+
+</script>
+<div id="section3" class="section">
+  <div class="user">
+    <div class="preview-loading"></div>
+    <div class="inside">
+      <form>
+        <fieldset class="fieldsetProfile">
+          <legend>{{otherUserInfo.username}} Profile</legend>
+          <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
+          <div class="row-fluid profilepic"><img ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/></div>
+          <div ng-hide="validations.anonymOtherUser">
+            <div ng-hide="validations.anonymOtherUserValidationFields.Name">
+              <label>Name</label>
+              <label>{{otherUserInfo.name}}</label>
+            </div>
+            <div ng-hide="validations.anonymOtherUserValidationFields.Birth">
+              <label>Birth</label>
+              <label>{{otherUserInfo.birth}}</label>
+            </div>
+            <div ng-hide="validations.anonymOtherUserValidationFields.Email">
+              <label>Email</label>
+              <label>{{otherUserInfo.email}}</label>
+            </div>
+            <div ng-hide="validations.anonymOtherUserValidationFields.Location">
+              <label>Location</label>
+              <label>{{otherUserInfo.location}}</label>
+            </div>
+            <div ng-hide="validations.anonymOtherUserValidationFields.Gender">
+              <label>Gender</label>
+              <label>{{otherUserInfo.gender}}</label>
+            </div>
+            <div ng-hide="validations.anonymOtherUserValidationFields.Description">
+              <label>About you</label>
+            </div>
+            <div ng-hide="validations.anonymOtherUserValidationFields.Description">
+              <div class="well">{{otherUserInfo.description}}</div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="chatwrap">
+    <div id="conversation"></div>
+    <form class="form-inline textChat">
+      <div id="userTyping">
+        <p class="text-info">User Typing...</p>
+      </div>
+      <div class="row-fluid">
+        <div class="chatSendContainer">
+          <input id="data" placeholder="Press enter to send" ngChange="pullDown()" type="text" disabled="disabled"/>
+          <input id="datasend" type="button" value="send"/>
+          <div id="btnEmoticon" class="btnEmoticon"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div ng-hide="validations.anonymUser" class="profile">
+    <div class="inside">
+      <div ng-hide="validations.anonymUser" class="btn-group logout pull-right">
+        <button ng-click="logout()" class="btn"> <i class="icon-off"></i>
+          <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+          <ul class="dropdown-menu pull-right">
+            <li ng-click="deleteAccount()">Delete Account</li>
+          </ul>
+        </button>
+      </div>
+      <div ng-init="loadInfo()" class="info">
+        <div ng-hide="validations.anonymUser" class="daysleftwrap">
+          <div ng-show="newpermit.days" class="daysleft">
+            <label><strong>You have <span class="text-error">{{days}} </span>days left to confirm your account via email. Click <span ng-click="resend()" class="text-error hereclick">here </span>to resend it to your email</strong></label>
+          </div>
+        </div>
+        <div ng-show="newpermit.email" class="daysleft">
+          <p class="text-success"> <strong>Email has been send</strong></p>
+        </div>
+        <form name="registerForm" ng-upload="ng-upload" method="POST" action="/API/upload">
+          <fieldset>
+            <legend>{{userInformation.usernameToShow}} Profile</legend>
+            <input id="username" type="hidden" value="{{userInformation.username}}"/>
+            <div class="row-fluid profilepic">
+              <div class="span12"><img ng-src="{{userInformation.avatar}}" class="img-rounded"/>
+                <ul>
+                  <li id="deleteclick" ng-click="deletePhoto()"><i class="icon-remove"></i></li>
+                  <li id="uploadclick" ng-click="uploadClick()"><i class="icon-upload"></i></li>
+                </ul>
+              </div>
+              <div class="span10">
+                <div ng-hide="validations.anonymUser" class="btn-group uploadimgtrue">
+                  <p>
+                    <input id="fileimg" type="file" name="file"/>
+                  </p>
+                  <p>
+                    <input id="imgbtn" upload-submit="uploadImage(content)" type="submit" value="Submit" class="btn"/>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div ng-hide="validations.anonymUser">
+              <label>Name</label>
+              <input name="name" id="name" ng-model="userInformation.name" type="text" placeholder="Name" class="FocusAccion"/>
+            </div>
+            <div ng-hide="validations.anonymUser">
+              <label>Birthday</label>
+              <input id="datepicker" name="datepicker" type="text" ng-model="userInformation.birth"/>
+            </div>
+            <div ng-hide="validations.anonymUser">
+              <label ng-hide="validations.anonymUser">Email</label>
+              <input name="email" id="email" ng-model="userInformation.email" type="text" placeholder="Email contact" class="FocusAccion"/>
+            </div>
+            <div ng-hide="validations.anonymUser">
+              <label ng-hide="validations.anonymUser">Location</label>
+              <input id="locationapi" type="text" placeholder="Where are you?" ng-model="userInformation.location" class="FocusAccion"/>
+              <div class="share">
+                <label>Would you like to share your location?
+                  <input id="checklocation" type="checkbox" ng-model="confirmed" ng-change="locationBool(); updateUsers();"/>
+                </label>
+              </div>
+            </div>
+            <div ng-hide="validations.anonymUser" class="sex">
+              <label>Gender</label>
+              <div class="btn-group"><a data-toggle="dropdown" href="#" class="btn dropdown-toggle">{{userInformation.gender}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li id="male"> <a ng-click="userInformation.gender = 'Male'; updateUsers();">Male</a></li>
+                  <li id="female"> <a ng-click="userInformation.gender = 'Female'; updateUsers();">Female</a></li>
+                  <li id="other"> <a ng-click="userInformation.gender = 'Other'; updateUsers();">Other</a></li>
+                </ul>
+              </div>
+            </div>
+            <div ng-hide="validations.anonymUser">
+              <label ng-hide="validations.anonymUser">About you</label>
+              <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description" class="FocusAccion"></textarea>
+            </div>
+            <div>
+              <label ng-click="updateUsers()" class="updateUser"></label>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <div ng-init="initchat()"></div>
+  </div>
+</div>
