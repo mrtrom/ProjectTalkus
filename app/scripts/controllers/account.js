@@ -23,7 +23,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         setTimeout(function() {
           //executeAnimateLoading();
           var username = $('#username').val();
-          socket.emit('adduser', username);
+          socket.emit('adduser', username, 'text');
         }, 1500);
       });
 
