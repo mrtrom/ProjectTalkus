@@ -208,6 +208,19 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 				}
 			});
 
+			$('#newVideoChat').click(function() {
+				console.log('hola');
+				socket.emit('newVideoChat');
+			});
+
+			$('#startVideoChat').click(function(){
+				socket.emit('succesNewVideoChat');
+			});
+
+			$('#cancelVideoChat').click(function(){
+				socket.emit('failNewVideoChat');
+			});
+
 			socket.on('showWriting', function(){
 				if ($('#userTyping').css('display') === 'none'){
 					$('#userTyping').show();
@@ -248,10 +261,35 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					if (type === 'connect'){
 						$('#conversation').empty();
 					}
+					if (type === 'showMessageVideoMe'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you want to star a videochat</div>');
+					}
+					if (type === 'showMessageVideoAnonym'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>user wants to do video chat <input type=\'button\' value=\'startVideoChat\' id=\'startVideoChat\' /> </br><input type=\'button\' value=\'cancelVideoChat\' id=\'cancelVideoChat\' /></div></div>');
+					}
+					if (type === 'succesMessageVideoMe'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
+					}
+					if (type === 'succesMessageVideoAnonym'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
+					}
+					if (type === 'failMessageVideoMe'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>Sorry :(</div>');
+					}
+					if (type === 'failMessageVideoAnonym'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>Perv!</div>');
+					}
+					if (type === 'message'){
+						//Message from SERVER
+						$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+					}
+				}
+				else{
+					//Message from SERVER
+					$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
 				}
 
-				//Message from SERVER
-				$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+
 			});
 
 			//Anonym user catched
@@ -325,10 +363,15 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					}
 
 					if($scope.validations.anonymUser === true){
-						$('body').addClass('not-login');
+						//$('body').addClass('not-login');
 					}else{
-						$('body').addClass('login');
-					}
+						//$('body').addClass('login');
+
+
+					$scope.validations.anonymUser = false;
+
+					$('body').addClass('login');
+		}
 				}
 
 				//User validation
@@ -445,7 +488,7 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 								case 404:
 									$scope.otherUserInfo.avatar = 'uploads/images/avatars/default.jpg';
 									$scope.otherUserInfo.username = 'Anonym';
-									$('body').addClass('other-anonym');
+									//$('body').addClass('other-anonym');
 							}
 						});
 			}
@@ -459,7 +502,14 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 				$('.preview-loading').hide();
 				$location.path('/');
 			});
-		};
+
+
+
+		//new Video Chat petition
+		$scope.newVideoChat = function () {
+			console.log('hola');
+			socket.emit('newVideoChat');
+		};	};
 
 		/*Javascript section*/
 

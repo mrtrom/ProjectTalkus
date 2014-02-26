@@ -10,7 +10,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1],
-        socket = io.connect(hostURL, {port: portURL});
+        socket = io.connect(hostURL, {port: portURL}),
+				RouletteApp;
 
     $scope.initchat = function(){
 
@@ -26,6 +27,173 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           socket.emit('adduser', username, 'text');
         }, 1500);
       });
+
+
+			socket.on('initial', function(data) {
+				RouletteApp.init(data.sessionId, data.token);
+			});
+
+			socket.on('subscribe', function(data) {
+				RouletteApp.subscribe(data.sessionId, data.token);
+			});
+
+			socket.on('disconnectPartner', function(data) {
+
+				/*Oculatar camara actual*/
+
+				RouletteApp.unsuscribePartner();
+			});
+
+			socket.on('empty', function(data) {
+				var notificationContainer = document.getElementById('notificationContainer');
+				notificationContainer.innerHTML = "Nobody to talk to :(.  When someone comes, you'll be the first to know :).";
+			});
+
+			var SocketProxy = function() {
+
+				var findPartner = function(mySessionId) {
+					socket.emit('next', { sessionId: mySessionId });
+				};
+
+				var disconnectPartners = function() {
+					socket.emit('disconnectPartners');
+				};
+
+				return {
+					findPartner: findPartner,
+					disconnectPartners: disconnectPartners
+				};
+			}();
+
+			RouletteApp = function() {
+
+				var apiKey = 44655492;
+
+				var mySession;
+				var partnerSession;
+				var subscriberObject;
+				var publisher;
+
+				// Get view elements
+				var ele = {};
+				TB.setLogLevel(TB.DEBUG);
+
+				var init = function(sessionId, token) {
+					ele.publisherContainer = document.getElementById('publisherContainer');
+					ele.subscriberContainer = document.getElementById('subscriberContainer');
+					ele.notificationContainer = document.getElementById('notificationContainer');
+					ele.nextButton = document.getElementById('nextButton');
+
+					ele.notificationContainer.innerHTML = "Connecting...";
+
+					ele.nextButton.onclick = function() {
+						RouletteApp.next();
+					};
+
+					mySession = TB.initSession(sessionId);
+					mySession.addEventListener('sessionConnected', sessionConnectedHandler);
+					mySession.addEventListener('streamCreated', streamCreatedHandler);
+					mySession.connect(apiKey, token);
+
+					function sessionConnectedHandler(event) {
+						ele.notificationContainer.innerHTML = "Connected, press allow.";
+
+						var div = document.createElement('div');
+						div.setAttribute('id', 'publisher');
+						ele.publisherContainer.appendChild(div);
+
+						publisher = mySession.publish(div.id);
+					};
+
+					function streamCreatedHandler(event) {
+
+						if ($('#cancelVideoChat').length === 0){
+							socket.emit('newVideoChat2');
+						}
+
+						var stream = event.streams[0];
+						if (mySession.connection.connectionId == stream.connection.connectionId) {
+							SocketProxy.findPartner(mySession.sessionId);
+						}
+					};
+				};
+
+				var next = function() {
+					if (partnerSession !== undefined && partnerSession.connected) {
+						SocketProxy.disconnectPartners();
+					} else {
+						SocketProxy.findPartner();
+					}
+				};
+
+				var disconnectPartner = function() {
+					partnerSession.disconnect();
+				};
+
+				var unsuscribePartner = function() {
+					partnerSession.unsubscribe(subscriberObject);
+
+					$('#publisherContainer').html('');
+					$('#notificationContainer').html('');
+//					ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
+//					ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
+
+					//partnerSession.unpublish(publisher);
+				};
+
+				var subscribe = function(sessionId, token) {
+					ele.notificationContainer.innerHTML = "Have fun !!!!";
+
+					partnerSession = TB.initSession(sessionId);
+
+					partnerSession.addEventListener('sessionConnected', sessionConnectedHandler);
+					partnerSession.addEventListener('sessionDisconnected', sessionDisconnectedHandler);
+					partnerSession.addEventListener('streamDestroyed', streamDestroyedHandler);
+
+					partnerSession.connect(apiKey, token);
+
+					function sessionConnectedHandler(event) {
+						var div = document.createElement('div');
+						div.setAttribute('id', 'subscriber');
+						ele.subscriberContainer.appendChild(div);
+
+
+
+
+						subscriberObject = partnerSession.subscribe(event.streams[0], div.id);
+					}
+
+					function sessionDisconnectedHandler(event) {
+						partnerSession.removeEventListener('sessionConnected', sessionConnectedHandler);
+						partnerSession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
+						partnerSession.removeEventListener('streamDestroyed', streamDestroyedHandler);
+
+						ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
+						ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
+
+						//SocketProxy.findPartner(mySession.sessionId);
+						partnerSession = null;
+					}
+
+					function streamDestroyedHandler(event) {
+						partnerSession.disconnect();
+					}
+				};
+
+				var wait = function() {
+					ele.notificationContainer.innerHTML = "Nobody to talk to :(.  When someone comes, you'll be the first to know :).";
+				};
+
+				return {
+					init: init,
+					next: next,
+					subscribe: subscribe,
+					disconnectPartner: disconnectPartner,
+					unsuscribePartner: unsuscribePartner,
+					wait: wait
+				};
+
+			}();
 
       //Send text chat to room via click
       $('#datasend').on('click', function() {
@@ -69,6 +237,19 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         }
       });
 
+			$('#newVideoChat').click(function() {
+				console.log('hola');
+				socket.emit('newVideoChat');
+			});
+
+			$('#conversation').on('click', '#startVideoChat',function(){
+				socket.emit('succesNewVideoChat');
+			});
+
+			$('#conversation').on('click', '#cancelVideoChat',function(){
+				socket.emit('failNewVideoChat');
+			});
+
       socket.on('showWriting', function(){
         if ($('#userTyping').css('display') === 'none'){
           $('#userTyping').show();
@@ -84,36 +265,61 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       /*Update room with:
        **-message
        **-disconect (leave)*/
-      socket.on('updatechat', function (username, data, type) {
-        if (type !== 'undefined'){
-          if (type === 'leave'){
-            //Disconect
-            $('#data').attr('disabled', true);
-            socket.emit('userNotWriting');
+			socket.on('updatechat', function (username, data, type) {
+				if (type !== undefined){
+					if (type === 'leave'){
+						//Disconect
+						$('#data').attr('disabled', true);
+						socket.emit('userNotWriting');
 
-            $scope.validations.anonymOtherUserValidationFields.Email = true;
-            $scope.validations.anonymOtherUserValidationFields.Name = true;
-            $scope.validations.anonymOtherUserValidationFields.Gender = true;
-            $scope.validations.anonymOtherUserValidationFields.Description = true;
-            $scope.validations.anonymOtherUserValidationFields.Location = true;
-            $scope.validations.anonymOtherUserValidationFields.Birth = true;
+						$scope.validations.anonymOtherUserValidationFields.Email = true;
+						$scope.validations.anonymOtherUserValidationFields.Name = true;
+						$scope.validations.anonymOtherUserValidationFields.Gender = true;
+						$scope.validations.anonymOtherUserValidationFields.Description = true;
+						$scope.validations.anonymOtherUserValidationFields.Location = true;
+						$scope.validations.anonymOtherUserValidationFields.Birth = true;
 
-            if ($scope.otherUserInfo !== undefined){
-              $scope.otherUserInfo.username = '';
-            }
+						if ($scope.otherUserInfo !== undefined){
+							$scope.otherUserInfo.username = '';
+						}
 
-            $('.fieldsetProfile').hide();
+						$('.fieldsetProfile').hide();
 
-            //executeAnimateLoading();
-          }
-          if (type === 'connect'){
-            $('#conversation').empty();
-          }
-        }
+						//executeAnimateLoading();
+					}
+					if (type === 'connect'){
+						$('#conversation').empty();
+					}
+					if (type === 'showMessageVideoMe'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you want to star a videochat</div>');
+					}
+					if (type === 'showMessageVideoAnonym'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>user wants to do video chat <input type=\'button\' value=\'startVideoChat\' id=\'startVideoChat\' /> </br><input type=\'button\' value=\'cancelVideoChat\' id=\'cancelVideoChat\' /></div></div>');
+					}
+					if (type === 'succesMessageVideoMe'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
+					}
+					if (type === 'succesMessageVideoAnonym'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
+					}
+					if (type === 'failMessageVideoMe'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>Sorry :(</div>');
+					}
+					if (type === 'failMessageVideoAnonym'){
+						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>Perv!</div>');
+					}
+					if (type === 'message'){
+						//Message from SERVER
+						$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+					}
+				}
+				else{
+					//Message from SERVER
+					$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+				}
 
-        //Message from SERVER
-        $('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
-      });
+
+			});
 
       //Anonym user catched
       socket.on('updateAnonymInfo', function (username, user) {
@@ -186,10 +392,14 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           }
 
           if($scope.validations.anonymUser === true){
-            $('body').addClass('not-login');
+            //$('body').addClass('not-login');
           }else{
-            $('body').addClass('login');
+            //$('body').addClass('login');
           }
+
+					$('body').addClass('login');
+
+					$scope.validations.anonymUser = false;
         }
 
         //User validation
@@ -306,7 +516,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 case 404:
                   $scope.otherUserInfo.avatar = 'uploads/images/avatars/default.jpg';
                   $scope.otherUserInfo.username = 'Anonym';
-                  $('body').addClass('other-anonym');
+                  //$('body').addClass('other-anonym');
               }
             });
       }

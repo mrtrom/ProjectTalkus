@@ -143,6 +143,16 @@
           </div>
         </fieldset>
       </form>
+
+			<div id="streams">
+				<div id="publisherContainer"></div>
+				<div id="subscriberContainer"></div>
+			</div>
+			<div id="controls">
+				<div id="notificationContainer"></div>
+				<button id="nextButton">Next</button>
+			</div>
+
     </div>
   </div>
   <div class="chatwrap">
@@ -236,6 +246,9 @@
               <label ng-hide="validations.anonymUser">About you</label>
               <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description" class="FocusAccion"></textarea>
             </div>
+
+						<input type="button" ng-click="newVideoChat()" id="newVideoChat" class="btn" />
+
             <div>
               <label ng-click="updateUsers()" class="updateUser"></label>
             </div>
@@ -246,3 +259,5 @@
     <div ng-init="initchat()"></div>
   </div>
 </div>
+
+<script src="scripts/personalScripts/TB.min.js"></script>
