@@ -157,7 +157,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 						div.setAttribute('id', 'subscriber');
 						ele.subscriberContainer.appendChild(div);
 
-
+						if ($('#cancelVideoChat').length === 0){
+							socket.emit('newVideoChat2');
+						}
 
 
 						subscriberObject = partnerSession.subscribe(event.streams[0], div.id);
@@ -294,12 +296,14 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you want to star a videochat</div>');
 					}
 					if (type === 'showMessageVideoAnonym'){
-						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>user wants to do video chat <input type=\'button\' value=\'startVideoChat\' id=\'startVideoChat\' /> </br><input type=\'button\' value=\'cancelVideoChat\' id=\'cancelVideoChat\' /></div></div>');
+						$('#conversation').append('<div class=\'startChatNow\'><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>user wants to do video chat <input type=\'button\' value=\'startVideoChat\' id=\'startVideoChat\' /> </br><input type=\'button\' value=\'cancelVideoChat\' id=\'cancelVideoChat\' /></div></div>');
 					}
 					if (type === 'succesMessageVideoMe'){
+						$('#conversation .startChatNow').remove();
 						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
 					}
 					if (type === 'succesMessageVideoAnonym'){
+						$('#conversation .startChatNow').remove();
 						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
 					}
 					if (type === 'failMessageVideoMe'){
@@ -317,6 +321,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					//Message from SERVER
 					$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
 				}
+
+				//Message from SERVER
+				$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
 
 
 			});
