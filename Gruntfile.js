@@ -72,7 +72,7 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*//*}*.js',
           '<%= yeoman.app %>/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
         ],
-      
+
         options: {
           livereload: true
         }
@@ -182,7 +182,7 @@ module.exports = function (grunt) {
     // additional tasks can operate on them
     useminPrepare: {
       html: ['<%= yeoman.app %>/views/index.html',
-             '<%= yeoman.app %>/views/index.jade'],
+        '<%= yeoman.app %>/views/index.jade'],
       options: {
         dest: '<%= yeoman.dist %>/public'
       }
@@ -191,8 +191,8 @@ module.exports = function (grunt) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/views/{,*/}*.html',
-             '<%= yeoman.dist %>/views/{,*/}*.jade'],
-      css: ['<%= yeoman.dist %>/public/styles/{,*/}*.css'],
+        '<%= yeoman.dist %>/views/{,*/}*.jade'],
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>/public']
       }
@@ -232,7 +232,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/views',
-          src: ['*.html', 'partials/**/*.html'],
+          src: ['*.html', 'partials/*.html'],
           dest: '<%= yeoman.dist %>/views'
         }]
       }
