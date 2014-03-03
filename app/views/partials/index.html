@@ -1,137 +1,136 @@
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href="#page-top">
-                <i class="fa fa-play-circle"></i>  <span class="light">Talkus</span>
-            </a>
-        </div>
+	<div class="container">
+		<div class="navbar-header page-scroll">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+				<i class="fa fa-bars"></i>
+			</button>
+			<a class="navbar-brand" href="#page-top">
+				<i class="fa fa-play-circle"></i>  <span class="light">Talkus</span>
+			</a>
+		</div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-            <ul class="nav navbar-nav" id="clickme">
-                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li class="page-scroll">
-                    <a href="/chat">Chat now</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+			<ul class="nav navbar-nav" id="clickme">
+				<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+				<li class="hidden">
+					<a href="#page-top"></a>
+				</li>
+				<li class="page-scroll">
+					<a href="/chat">Chat now</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container -->
 </nav>
 
 <section class="intro">
-    <div class="intro-body">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <h1 class="brand-heading">Anyone Anywhere </h1>
-                    <p class="intro-text">A free, premium quality, responsive one page Bootstrap theme created by Start Bootstrap.</p>
-                    <div class="page-scroll">
-                        <a href="#download" class="btn btn-circle">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="intro-body">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<h1 class="brand-heading">Anyone Anywhere </h1>
+					<p class="intro-text">A free, premium quality, responsive one page Bootstrap theme created by Start Bootstrap.</p>
+					<div class="page-scroll">
+						<a href="#download" class="btn btn-circle">
+							<i class="fa fa-angle-double-down animated"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <section id="download" class="intro forms">
-    <div class="intro-body">
-        <div class="container">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="centerform"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="imgcenter"/>
-                    <h1 class="inew">Sign up</h1>
-                    <form name="registerForm" ng-submit="submitRegister()" class="form-horizontal front-form">
-                        <div ng-show="validations.invalidEmailFormat" class="bg-danger">
-                            <p><strong>Email</strong>   format is incorrect</p>
-                        </div>
-                        <div ng-show="validations.invalidUsername" class="bg-danger">
-                            <p><strong>Username</strong>   format is incorrect</p>
-                        </div>
-                        <div ng-show="succesMesages.creationSucces" class="bg-success">
-                            <p>Succes!!</p>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input name="username" id="username" ng-model="userObject.user.username" type="text" placeholder="Username" required="required"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input name="email" id="email" ng-model="userObject.user.email" type="text" placeholder="Email" required="required"/>
-                            </div>
-                        </div>
-                        <div class="control-group password">
-                            <div class="controls">
-                                <input name="password" id="password" ng-model="userObject.user.password" type="password" placeholder="Password" required="required"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary log">Sign up</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="centerform">
-                    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="imgcenter"/>
-                    <h1 class="inew">Sign in</h1>
-                    <form name="singInForm" ng-submit="submitLogin()" class="form-horizontal front-form">
-                        <div ng-show="permissions.invalidUserInfo" class="alert alert-danger">
-                            <p><strong>Username</strong>   or  <strong>Password</strong>   incorrect</p>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input name="username" id="username" ng-model="session.username" type="text" placeholder="Username or email" required="required"/>
-                            </div>
-                        </div>
-                        <div class="control-group password">
-                            <div class="controls">
-                                <input name="password" id="password" ng-model="session.password" type="password" placeholder="Password" required="required"/>
-                            </div>
-                          <a href data-toggle="modal" data-target="#myModal">Forgot Password</a>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary log">Sign in</button>
-                            </div>
-                        </div>
-                    </form>
+	<div class="intro-body">
+		<div class="container">
+			<div class="col-lg-8 col-lg-offset-2">
+				<div class="centerform"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="imgcenter"/>
+					<h1 class="inew">Sign up</h1>
+					<form name="registerForm" ng-submit="submitRegister()" class="form-horizontal front-form">
+						<div ng-show="validations.invalidEmailFormat" class="alert alert-danger">
+							<p><strong>Email</strong>   format is incorrect</p>
+						</div>
+						<div ng-show="validations.invalidUsername" class="alert alert-danger">
+							<p><strong>Username</strong>   exist</p>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<input name="username" id="username" ng-model="userObject.user.username" type="text" placeholder="Username" required="required"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<input name="email" id="email" ng-model="userObject.user.email" type="text" placeholder="Email" required="required"/>
+							</div>
+						</div>
+						<div class="control-group password">
+							<div class="controls">
+								<input name="password" id="password" ng-model="userObject.user.password" type="password" placeholder="Password" required="required"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-primary log">Sign up</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="centerform">
+					<img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="imgcenter"/>
+					<h1 class="inew">Sign in</h1>
+					<form name="singInForm" ng-submit="submitLogin()" class="form-horizontal front-form">
+						<div ng-show="permissions.invalidUserInfo" class="alert alert-danger">
+							<p><strong>Username</strong>   or  <strong>Password</strong>   incorrect</p>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<input name="username" id="username" ng-model="session.username" type="text" placeholder="Username or email" required="required"/>
+							</div>
+						</div>
+						<div class="control-group password">
+							<div class="controls">
+								<input name="password" id="password" ng-model="session.password" type="password" placeholder="Password" required="required"/>
+							</div>
+							<a href data-toggle="modal" data-target="#myModal">Forgot Password</a>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-primary log">Sign in</button>
+							</div>
+						</div>
+					</form>
 
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
+
+<!-- modal remember password -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form ng-submit="forgotpass()">
-        <div class="modal-header">
-          <h3>Please enter your email.</h3>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form ng-submit="forgotpass()">
+				<div class="modal-header">
+					<h3>Please enter your email.</h3>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        </div>
-        <div class="modal-body">
-          <div ng-show="password.remember" class="alert alert-success"><strong>Success! </strong>an email has been send, please check your inbox</div>
-          <div ng-show="password.remembererror" class="alert alert-danger"><strong>Oops! </strong>looks like that email does not exist on out servers.</div>
-          <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
-            <input type="email" placeholder="Email" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required" class="span12"/>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Send</button>
-        </div>
-      </form>
-    </div>
-  </div>
+				</div>
+				<div class="modal-body">
+					<div ng-show="password.remember" class="alert alert-success"><strong>Success! </strong>an email has been send, please check your inbox</div>
+					<div ng-show="password.remembererror" class="alert alert-danger"><strong>Oops! </strong>looks like that email does not exist on out servers.</div>
+					<div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
+						<input type="email" placeholder="Email" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required" class="span12"/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 <script src="scripts/personalScripts/index.js"></script>

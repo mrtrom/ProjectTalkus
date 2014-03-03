@@ -142,7 +142,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				};
 
 				var subscribe = function(sessionId, token) {
-					ele.notificationContainer.innerHTML = "Have fun !!!!";
+					ele.notificationContainer.innerHTML = 'Have fun !!!!';
 
 					partnerSession = TB.initSession(sessionId);
 

@@ -1,5 +1,7 @@
 'use strict';
 
+/*global Modules:false */
+
 //Modules var and resources route
 var Modules = {
   controllers: angular.module('talkusApp.controllers', ['talkusApp.resources'])
@@ -18,7 +20,7 @@ var App = angular.module('talkusApp', [
   'talkusApp.resources'
 ]);
 
-App.config(function ($routeProvider, $locationProvider, $httpProvider) {
+App.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {templateUrl: '/partials/index', controller: 'LoginController'})
     .when('/chat', {templateUrl: '/partials/chat', controller:  'AccountController'})
