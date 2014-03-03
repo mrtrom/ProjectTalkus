@@ -21,7 +21,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             //Error
           });
     }
-    angular.element('.container.trs , .view , html , body ').addClass('fullHeight');
 
     //Validations
     $scope.permissions = {
@@ -69,63 +68,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
       //error
     });
 
-    $scope.fullscreen = function(){
-
-      $.fn.fullpage({
-        slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE'],
-        afterRender: function(){
-          $('span.welcome').addClass('active');
-          $( '.centerform' ).css( 'position', 'relative' );
-          $( '.centerform' ).css( 'left', '100%' );
-        },
-        onLeave: function(index, direction){
-          //after leaving section 2
-          if(index === '2' || index === '3' || direction ==='down' || direction ==='up'){
-            $( '.centerform' ).css( 'left', '100%' );
-          }
-        },
-        afterLoad: function(anchorLink, index){
-
-          //after leaving section 2
-          if(index === '3'){
-            $( '.centerform' ).css( 'left', '0' );
-            $('span.welcome').removeClass('active');
-            $('span.signin').removeClass('active');
-            $('span.signup').addClass('active');
-          }
-          if(index === '2'){
-            $( '.centerform' ).css( 'left', '0' );
-            $('span.welcome').removeClass('active');
-            $('span.signin').addClass('active');
-            $('span.signup').removeClass('active');
-          }
-          if(index === '1'){
-            $('span.welcome').addClass('active');
-            $('span.signin').removeClass('active');
-            $('span.signup').removeClass('active');
-          }
-        }
-      });
-      $( 'span.welcome' ).click(function() {
-        $.fn.fullpage.moveToSlide(1);
-      });
-      $( '#signup , span.signup' ).click(function() {
-        $.fn.fullpage.moveToSlide(3);
-      });
-      $( '#signin , span.signin' ).click(function() {
-        $.fn.fullpage.moveToSlide(2);
-      });
-      $('.controlArrow.next').append('<p>&rsaquo;</p>');
-      $('.controlArrow.prev').append('<p>&lsaquo;</p>');
-      $('.arrow-down').delay(500)
-          .animate({bottom: '13px'}, {duration: 400, queue: true})
-          .animate({bottom: '103px'}, {duration: 200, queue: true})
-          .animate({opacity: '0'}, {duration: 200, queue: true});
-      $('.arrow-right').delay(500)
-          .animate({right: '6px'}, {duration: 400, queue: true})
-          .animate({right: '96px'}, {duration: 200, queue: true})
-          .animate({opacity: '0'}, {duration: 200, queue: true});
-    };
 
     $scope.forgotpass = function(){
       $scope.Remember.$save(function(res) {
