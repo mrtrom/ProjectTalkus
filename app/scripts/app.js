@@ -11,6 +11,7 @@ var App = angular.module('talkusApp', [
   'ngSanitize',
   'ngRoute',
   'ngUpload',
+  'ui.bootstrap',
   'talkusApp.controllers',
   'talkusApp.directives',
   'talkusApp.filters',

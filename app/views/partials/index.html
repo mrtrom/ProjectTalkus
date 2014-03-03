@@ -98,34 +98,40 @@
                             <div class="controls">
                                 <input name="password" id="password" ng-model="session.password" type="password" placeholder="Password" required="required"/>
                             </div>
+                          <a href data-toggle="modal" data-target="#myModal">Forgot Password</a>
                         </div>
                         <div class="control-group">
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary log">Sign in</button>
                             </div>
                         </div>
-                    </form><a href="#myModal" role="button" data-toggle="modal" class="text-info forgotpassico"><i class="icon-question-sign"></i></a>
-                    <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal hide fade">
-                        <form ng-submit="forgotpass()">
-                            <div class="modal-header">
-                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-                                <h3>Please enter your email.</h3>
-                                <div class="modal-body">
-                                    <div ng-show="password.remember" class="alert alert-success"><strong>Success! </strong>an email has been send, please check your inbox</div>
-                                    <div ng-show="password.remembererror" class="alert alert-error"><strong>Oops! </strong>looks like that email does not exist on out servers.</div>
-                                    <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
-                                        <input type="email" placeholder="Email" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required" class="span12"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Send</button>
-                            </div>
-                        </form>
-                    </div>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
 </section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form ng-submit="forgotpass()">
+        <div class="modal-header">
+          <h3>Please enter your email.</h3>
+        </div>
+        <div class="modal-body">
+          <div ng-show="password.remember" class="alert alert-success"><strong>Success! </strong>an email has been send, please check your inbox</div>
+          <div ng-show="password.remembererror" class="alert alert-danger"><strong>Oops! </strong>looks like that email does not exist on out servers.</div>
+          <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
+            <input type="email" placeholder="Email" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required" class="span12"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Send</button>
+          <button class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <script src="scripts/personalScripts/index.js"></script>

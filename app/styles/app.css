@@ -59,7 +59,7 @@ a:focus {
     border-bottom: 1px solid rgba(255,255,255,.3);
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    background-color: rgb(75, 191, 195);
+    background-color: rgba(255,255,255,0.5);
 }
 
 .navbar-brand {
@@ -295,12 +295,44 @@ a:focus {
     color: rgb(75, 191, 195);
     background-color: #28c3ab;
 }
+#forgotemail {
+  border: 1px solid #CCC;
+  margin-top: 16px;
+  width: 100%;
+}
+@media screen and (min-width: 768px){
+  .modal-dialog {
+    width: 450px;
+    margin: 30px auto;
+  }
+}
 
+#myModal div.modal-header h3 {
+  color: #428BCA;
+  text-transform: none;
+  margin: 0;
+}
+.modal-body {
+  position: relative;
+  padding: 0 20px;
+}
 .btn-huge {
     padding: 25px;
     font-size: 26px;
 }
-
+.centerform a {
+  color: #FFF;
+  display: block;
+  margin-bottom: -16px;
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px #000;
+}
+.centerform a:hover {
+  color: #285E8E;
+  text-shadow: 1px 1px 2px #FFF;
+  opacity: 0.5;
+}
 .banner-social-buttons {
     margin-top: 0;
 }
@@ -370,8 +402,19 @@ input[type] {
   font-style: italic;
   font-family: tahoma;
 }
+.modal-backdrop.in{
+  opacity: 0;
+}
 div.controls button {
   margin-top: 14px;
+}
+#myModal .alert {
+  margin-top: 12px;
+  margin-bottom: -4px;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  font-family: helvetica;
 }
 #download > div > div > div > div:nth-child(2) > form > div:nth-child(4) > div > button {
   margin-top: 51px;

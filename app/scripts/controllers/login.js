@@ -3,8 +3,8 @@
 /*global $:false */
 /*global Modules:false */
 
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location', 'Session','Mails','Remember', 'User', 'Valid',
-  function($rootScope, $scope, $http, $location, Session, Mails ,Remember, User, Valid) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session','Mails','Remember', 'User', 'Valid',
+  function($rootScope, $scope, $http, $location,$modal, Session, Mails ,Remember, User, Valid) {
 
     //Checks if any string was send via url
     if(($location.search()).idValid !== undefined && ($location.search()).idValid !== null && ($location.search()).idValid !== ''){
@@ -21,7 +21,13 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
             //Error
           });
     }
+    $scope.open = function () {
 
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl
+      });
+    };
     //Validations
     $scope.permissions = {
       invalidUserInfo: false
@@ -67,8 +73,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
     }, function(response) {
       //error
     });
-
-
     $scope.forgotpass = function(){
       $scope.Remember.$save(function(res) {
             $scope.password.remember = true;
