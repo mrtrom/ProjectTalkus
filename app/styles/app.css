@@ -308,9 +308,21 @@ a:focus {
 }
 
 #myModal div.modal-header h3 {
-  color: #428BCA;
-  text-transform: none;
-  margin: 0;
+	color: #464646;
+	text-transform: none;
+	margin: 0;
+	font-weight: 100;
+	font-size: 19px;
+	font-family: helvetica;
+}
+#myModal div.modal-header {
+	min-height: 16.428571429px;
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+	background: #f0f0f0;
+}
+#myModal div.modal-header .close {
+	margin-top: -20px;
 }
 .modal-body {
   position: relative;

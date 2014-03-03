@@ -118,6 +118,7 @@
       <form ng-submit="forgotpass()">
         <div class="modal-header">
           <h3>Please enter your email.</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
         <div class="modal-body">
           <div ng-show="password.remember" class="alert alert-success"><strong>Success! </strong>an email has been send, please check your inbox</div>
@@ -128,7 +129,6 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Send</button>
-          <button class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>
       </form>
     </div>
