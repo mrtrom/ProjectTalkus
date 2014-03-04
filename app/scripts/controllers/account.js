@@ -423,7 +423,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         if ($scope.userInformation.email === undefined || $scope.userInformation.email === ''){$scope.userInformation.email = '';}
         if ($scope.userInformation.name === undefined || $scope.userInformation.name === ''){$scope.userInformation.name = $scope.userInformation.username;}
         if ($scope.userInformation.gender === undefined || $scope.userInformation.gender === ''){$scope.userInformation.gender = '';}
-        if ($scope.userInformation.avatar === undefined || $scope.userInformation.avatar === ''){$scope.userInformation.avatar = 'uploads/images/avatars/default.jpg';}
+        if ($scope.userInformation.avatar === undefined || $scope.userInformation.avatar === ''){$scope.userInformation.avatar = '/images/uploads/images/avatars/default.jpg';}
         if ($scope.userInformation.description === undefined || $scope.userInformation.description === ''){$scope.userInformation.description = '';}
         if ($scope.userInformation.location === undefined || $scope.userInformation.location === ''){$scope.userInformation.location = '';}
         if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = '';}
@@ -466,7 +466,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
     /*End images*/
     $scope.deletePhoto = function(){
-      $scope.userInformation.avatar = '/uploads/images/avatars/default.jpg';
+      $scope.userInformation.avatar = '/images/uploads/images/avatars/default.jpg';
       updateUserAll();
     };
 
@@ -474,8 +474,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.uploadImage = function(content){
       if(content.path === undefined || content.path === ''){
       }else{
-        //trim path, quite lo que no necesita, con tal que a la final el path queda /uploads/images/avatars[[image.jpg]]
-        $scope.userInformation.avatar = content.path.substr(content.path.indexOf('/uploads/images/avatars/') + 1);
+        //trim path, quite lo que no necesita, con tal que a la final el path queda /images/uploads/images/avatars[[image.jpg]]
+        $scope.userInformation.avatar = content.path.substr(content.path.indexOf('/images/uploads/images/avatars/') + 1);
 
         //se debe hacer aqui el mismo update
         updateUserAll();
@@ -521,7 +521,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             }, function(response) {
               switch (response.status) {
                 case 404:
-                  $scope.otherUserInfo.avatar = 'uploads/images/avatars/default.jpg';
+                  $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
                   $scope.otherUserInfo.username = 'Anonym';
                   //$('body').addClass('other-anonym');
               }

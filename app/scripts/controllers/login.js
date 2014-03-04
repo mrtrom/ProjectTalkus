@@ -52,7 +52,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 		//Remember password
 		$scope.Remember = new Remember();
 
-
 		//Redireccion si ya está logueado
 		Session.get(function(response) {
 			if ((response !== null ? response._id : void 0) !== null) {
@@ -102,10 +101,10 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 			$scope.userObject.$save(function(res){
 						$scope.Mails.user = res.user;
 						$scope.Mails.$save(function(resMails){
-									console.log('exito');
+									//console.log('exito');
 								},
 								function(error) {
-									console.log('error');
+									//console.log('error');
 								});
 
 						$scope.permissions.invalidUserInfo = false;
