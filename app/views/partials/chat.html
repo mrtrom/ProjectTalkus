@@ -1,4 +1,4 @@
-<div id="section3" class="section">
+<div>
 
 	<a id="menu-toggle-anonym" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
 	<div id="sidebar-wrapper-anonym">
@@ -119,20 +119,26 @@
 
 	</div>
 
-	<div class="chatwrap" style="display: none;">
-		<div id="conversation"></div>
-		<form class="form-inline textChat">
-			<div id="userTyping">
-				<p class="text-info">User Typing...</p>
+	<div class="chatwrap">
+		<div id="conversation" class="well well-lg">
+			<div class="container">
+
 			</div>
-			<div class="row-fluid">
-				<div class="chatSendContainer">
-					<input id="data" placeholder="Press enter to send" ngChange="pullDown()" type="text" disabled="disabled"/>
-					<input id="datasend" type="button" value="send"/>
-					<div id="btnEmoticon" class="btnEmoticon"></div>
+		</div>
+		<div class="wraper-chat">
+			<form class="form-inline textChat">
+				<!--<div id="userTyping">
+					<p class="text-info">User Typing...</p>
+				</div>-->
+				<div class="row-fluid">
+					<div class="chatSendContainer">
+						<input id="data" placeholder="Press enter to send" ngChange="pullDown()" type="text" disabled="disabled"/>
+						<input id="datasend" type="button" value="send"/>
+						<div id="btnEmoticon" class="btnEmoticon"></div>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 
 </div>

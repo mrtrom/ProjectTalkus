@@ -240,7 +240,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       });
 
 			$('#newVideoChat').click(function() {
-				console.log('hola');
 				socket.emit('newVideoChat');
 			});
 
@@ -267,7 +266,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       /*Update room with:
        **-message
        **-disconect (leave)*/
-			socket.on('updatechat', function (username, data, type) {
+			socket.on('updatechat', function (username, data, type, user) {
 				if (type !== undefined){
 					if (type === 'leave'){
 						//Disconect
@@ -291,39 +290,39 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					}
 					if (type === 'connect'){
 						$('#conversation').empty();
+						//Message from SERVER
+						$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
 					}
 					if (type === 'showMessageVideoMe'){
-						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you want to star a videochat</div>');
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
 					}
 					if (type === 'showMessageVideoAnonym'){
-						$('#conversation').append('<div class=\'startChatNow\'><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>user wants to do video chat <input type=\'button\' value=\'startVideoChat\' id=\'startVideoChat\' /> </br><input type=\'button\' value=\'cancelVideoChat\' id=\'cancelVideoChat\' /></div></div>');
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>');
 					}
 					if (type === 'succesMessageVideoMe'){
 						$('#conversation .startChatNow').remove();
-						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
 					}
 					if (type === 'succesMessageVideoAnonym'){
 						$('#conversation .startChatNow').remove();
-						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>you both are now on Video</div>');
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
 					}
 					if (type === 'failMessageVideoMe'){
-						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>Sorry :(</div>');
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
 					}
 					if (type === 'failMessageVideoAnonym'){
-						$('#conversation').append('<div><i class=\'icon-user\'></i><span class=\'text-info\'>Server</span><div>Perv!</div>');
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
 					}
 					if (type === 'message'){
-						//Message from SERVER
-						$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+						if(user === 'me'){
+							$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+						}else{
+							$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+						}
+
 					}
 				}
-				else{
-					//Message from SERVER
-					$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
-				}
 
-				//Message from SERVER
-				$('#conversation').append('<div><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
 
 
 			});
