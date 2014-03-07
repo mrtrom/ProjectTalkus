@@ -10,18 +10,11 @@ $(function(){
 		$("#sidebar-wrapper-anonym").toggleClass("active");
 		$(".view.ng-scope").toggleClass("slide-left");
 	});
-
+  $('#menu-close-anonym, #conversation , .navbar .container , .wraper-chat').click(function(){
+    $('#popoverInfoMeModal').css('display','none');
+  });
+  $('#locationapi').geocomplete();
 	$('#popoverInfoMe').on('click', function(){
-		var left = $(this).offset().left,
-				width = $('#popoverInfoMeModal').width(),
-				calcWidth = left - width;
-
-		$('#popoverInfoMeModal').show();
-		$('#popoverInfoMeModal').css({
-			position: 'absolute',
-			left: calcWidth,
-			top: '40px'
-		});
-		$('#locationapi').geocomplete();
+		$('#popoverInfoMeModal').toggle();
 	});
 });

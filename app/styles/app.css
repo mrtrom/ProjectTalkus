@@ -567,8 +567,17 @@ div.controls button {
 	opacity: 0;
 	width: 0px;
 	height: 0px;
+  display:none;
 }
-
+.btn#newVideoChat {
+  float: none;
+  display: block;
+  margin: 5px auto 9px;
+  font-style: normal;
+  font-weight: bold;
+  color: #FFF;
+  font-family: Helvetica;
+}
 #sidebar-wrapper-anonym div.profile,
 #sidebar-wrapper-anonym div.user{
 	padding: 0px 22px;
@@ -585,17 +594,34 @@ div.controls button {
 	text-decoration: underline;
 	cursor: pointer;
 }
-
+#popoverInfoMeModal{
+  position: absolute;
+  right: 12px;
+  left: auto;
+}
 #popoverInfoMeModal > h3 {
 	color: #5b687b;
 	font-weight: 700;
 }
-
+.popover-content label{
+  display:block;
+}
+.popover.left .arrow{
+  top:30%;
+}
 #popoverInfoMeModal div.popover-content > div {
-	border-bottom: 1px solid #ccc;
 	padding: 5px 0px;
 }
-
+#nextButton{
+  display: block;
+  margin: 0 auto;
+}
+.btn-group.logout.pull-right {
+  float: none !important;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
 #popoverInfoMeModal div.popover-content > div:last-child,
 #popoverInfoMeModal div.popover-content > div:nth-child(6){
 	border-bottom: none;
@@ -610,8 +636,11 @@ div.controls button {
 
 #popoverInfoMeModal input {
 	border: 1px solid #ccc;
+  width: 100%;
 }
-
+#popoverInfoMeModal #checklocation{
+  width:auto;
+}
 #popoverInfoMeModal div.popover-content div.share label {
 	font-style: italic;
 	font-size: 13px;

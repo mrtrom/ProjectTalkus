@@ -9,7 +9,7 @@
 		<div ng-hide="validations.anonymUser" class="profile">
 			<div class="inside">
 
-				<!--<div ng-hide="validations.anonymUser" class="btn-group logout pull-right">
+				<div ng-hide="validations.anonymUser" class="btn-group logout pull-right">
 					<div class="btn-group">
 						<button type="button" ng-click="logout()" class="btn btn-danger"><i class="glyphicon glyphicon-off"></i></button>
 
@@ -23,7 +23,7 @@
 							<li><a ng-click="deleteAccount()">Acción #1</a></li>
 						</ul>
 					</div>
-				</div>-->
+				</div>
 
 				<div ng-init="loadInfo()" class="info">
 					<form name="registerForm" ng-upload="ng-upload" method="POST" action="/API/upload">
@@ -59,7 +59,7 @@
 									</div>
 								</div>
 							</div>
-							<input type="button" ng-click="newVideoChat()" id="newVideoChat" class="btn" value="video chat" />
+							<input type="button" ng-click="newVideoChat()" id="newVideoChat" class="btn btn-primary log" value="video chat" />
 
 						</fieldset>
 					</form>
@@ -111,7 +111,7 @@
 				</div>
 				<div id="controls">
 					<div id="notificationContainer"></div>
-					<button id="nextButton">Next</button>
+					<button class="btn btn-primary log" id="nextButton">New Room</button>
 				</div>
 			</div>
 		</div>
