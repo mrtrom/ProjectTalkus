@@ -6,6 +6,18 @@
 Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
 	function($rootScope, $scope, $http, $location, $modal, Session, Mails, Remember, User, Valid) {
 
+		//Redireccion si ya está logueado
+		Session.get(function(response) {
+			if ((response !== null ? response._id : void 0) !== null) {
+				if (response._id !== null && response._id !== undefined){
+					$scope.loginValidations.userSessionExist = true;
+					$location.path('/chat');
+				}
+			}
+		}, function(response) {
+			//error
+		});
+
 		//Checks if any string was send via url
 		if(($location.search()).idValid !== undefined && ($location.search()).idValid !== null && ($location.search()).idValid !== ''){
 			$scope.Valid = new Valid();
@@ -52,16 +64,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 		//Remember password
 		$scope.Remember = new Remember();
 
-		//Redireccion si ya está logueado
-		Session.get(function(response) {
-			if ((response !== null ? response._id : void 0) !== null) {
-				if (response._id !== null && response._id !== undefined){
-					$scope.loginValidations.userSessionExist = true;
-				}
-			}
-		}, function(response) {
-			//error
-		});
+
 
 		//Rememeber password
 		$scope.forgotpass = function(){

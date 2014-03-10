@@ -10,6 +10,7 @@ $(function() {
     }
   });
 	$('html').removeClass('chat');
+	$('html').removeClass('video');
   $('.page-scroll a').on('click', function(event) {
 		console.log('entro');
     var $anchor = $(this);

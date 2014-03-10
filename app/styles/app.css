@@ -512,7 +512,7 @@ div.controls button {
 	line-height: inherit;
 	padding-top: 15px;
 	color: #5b687b;
-	height: 58px;
+	min-height: 58px;
 	border: 0;
 	border-bottom: 1px solid #e5e5e5;
 	text-transform: uppercase;
@@ -814,6 +814,14 @@ input#datasend {
 	display: inline-block;
 	margin-bottom: 22px;
 }
+.alert-success {
+	color: rgb(60, 118, 61);
+	background-color: rgb(223, 240, 216);
+	border-color: rgb(214, 233, 198);
+	font-size: 14px;
+	font-family: helvetica;
+	font-style: italic;
+}
 #conversation div.serverchat span.muted{
 	opacity: 0.6;
 }
@@ -821,4 +829,13 @@ input#datasend {
 	display: inline-block;
 	color: rgb(255, 255, 255);
 	margin-left:11px;
+}
+.chat .chat-url{
+	display:none;
+}
+.chat.video .video-url{
+	display:none;
+}
+.chat.video .chat-url{
+	display: block;
 }

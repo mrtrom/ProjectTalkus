@@ -16,6 +16,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.initchat = function(){
 
       $('html').addClass('chat');
+			$('html').removeClass('video');
       $('.superContainer').css('top','0');
       $('#locationapi').geocomplete();
 
@@ -366,7 +367,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       Session.get(function(response) {
         if ((response !== null ? response._id : void 0) !== null) {
           if (response._id !== null && response._id !== undefined){
-
+						$scope.logoutBtn = true;
             //User info and User birth in format (dd/MM/yyyy)
             $scope.userInformation = response;
             $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');

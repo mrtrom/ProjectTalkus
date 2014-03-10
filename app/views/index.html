@@ -24,13 +24,13 @@
     <!-- endbuild -->
   </head>
   <body ng-app="talkusApp" id="page-top" data-spy="scroll" data-target=".navbar-custom">
-	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 					<i class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand" ng-href="/">
+				<a class="navbar-brand" href ng-click="logoValidate()">
 					<i class="fa fa-play-circle"></i>  <span class="light">Talkus</span>
 				</a>
 			</div>
@@ -41,8 +41,11 @@
 					<li class="hidden">
 						<a href="#page-top"></a>
 					</li>
-					<li>
-						<a href="/chat">Chat now</a>
+					<li class="chat-url">
+						<a ng-href="/chat" href>Chat</a>
+					</li>
+					<li class="video-url">
+						<a ng-href="/video-chat" href>Video Chat</a>
 					</li>
 				</ul>
 			</div>
@@ -95,6 +98,7 @@
     <script src="scripts/controllers/account.js"></script>
     <script src="scripts/controllers/videochat.js"></script>
     <script src="scripts/controllers/login.js"></script>
+		<script src="scripts/controllers/menu.js"></script>
     <!-- endbuild -->
 </body>
 </html>

@@ -16,6 +16,7 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 		$scope.initchat = function(){
 
 			$('html').addClass('chat');
+			$('html').addClass('video');
 			$('.superContainer').css('top','0');
 			$('#locationapi').geocomplete();
 

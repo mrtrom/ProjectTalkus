@@ -9,7 +9,7 @@
 		<div ng-hide="validations.anonymUser" class="profile">
 			<div class="inside">
 
-				<div ng-hide="validations.anonymUser" class="btn-group logout pull-right">
+				<div ng-show="logoutBtn" class="btn-group logout pull-right">
 					<div class="btn-group">
 						<button type="button" ng-click="logout()" class="btn btn-danger"><i class="glyphicon glyphicon-off"></i></button>
 
@@ -36,8 +36,8 @@
 									<label><strong>You have <span class="text-error">{{days}} </span>days left to confirm your account via email. Click <span ng-click="resend()" class="text-error hereclick">here</span> to resend it to your email</strong></label>
 								</div>
 							</div>
-							<div ng-show="newpermit.email" class="daysleft">
-								<p class="text-success"> <strong>Email has been send</strong></p>
+							<div class="alert alert-success" ng-show="newpermit.email" class="daysleft">
+								 Email has been send
 							</div>
 
 							<div class="row-fluid profilepic">
@@ -75,34 +75,8 @@
 						<legend class="sidebar-brand">{{otherUserInfo.username}} Anonym</legend>
 						<input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
 						<div class="row-fluid profilepic"><img ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/></div>
-						<div ng-hide="validations.anonymOtherUser">
-							<div ng-hide="validations.anonymOtherUserValidationFields.Name">
-								<label>Name</label>
-								<label>{{otherUserInfo.name}}</label>
-							</div>
-							<div ng-hide="validations.anonymOtherUserValidationFields.Birth">
-								<label>Birth</label>
-								<label>{{otherUserInfo.birth}}</label>
-							</div>
-							<div ng-hide="validations.anonymOtherUserValidationFields.Email">
-								<label>Email</label>
-								<label>{{otherUserInfo.email}}</label>
-							</div>
-							<div ng-hide="validations.anonymOtherUserValidationFields.Location">
-								<label>Location</label>
-								<label>{{otherUserInfo.location}}</label>
-							</div>
-							<div ng-hide="validations.anonymOtherUserValidationFields.Gender">
-								<label>Gender</label>
-								<label>{{otherUserInfo.gender}}</label>
-							</div>
-							<div ng-hide="validations.anonymOtherUserValidationFields.Description">
-								<label>About you</label>
-							</div>
-							<div ng-hide="validations.anonymOtherUserValidationFields.Description">
-								<div class="well">{{otherUserInfo.description}}</div>
-							</div>
-						</div>
+
+
 					</fieldset>
 				</form>
 				<div id="streams">
@@ -190,6 +164,37 @@
 		</div>
 		<div>
 			<label ng-click="updateUsers()" class="updateUser"></label>
+		</div>
+	</div>
+</div>
+
+<div class="popover fade left in ng-scope">
+	<div ng-hide="validations.anonymOtherUser">
+		<div ng-hide="validations.anonymOtherUserValidationFields.Name">
+			<label>Name</label>
+			<label>{{otherUserInfo.name}}</label>
+		</div>
+		<div ng-hide="validations.anonymOtherUserValidationFields.Birth">
+			<label>Birth</label>
+			<label>{{otherUserInfo.birth}}</label>
+		</div>
+		<div ng-hide="validations.anonymOtherUserValidationFields.Email">
+			<label>Email</label>
+			<label>{{otherUserInfo.email}}</label>
+		</div>
+		<div ng-hide="validations.anonymOtherUserValidationFields.Location">
+			<label>Location</label>
+			<label>{{otherUserInfo.location}}</label>
+		</div>
+		<div ng-hide="validations.anonymOtherUserValidationFields.Gender">
+			<label>Gender</label>
+			<label>{{otherUserInfo.gender}}</label>
+		</div>
+		<div ng-hide="validations.anonymOtherUserValidationFields.Description">
+			<label>About you</label>
+		</div>
+		<div ng-hide="validations.anonymOtherUserValidationFields.Description">
+			<div class="well">{{otherUserInfo.description}}</div>
 		</div>
 	</div>
 </div>
