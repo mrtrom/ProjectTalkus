@@ -28,7 +28,7 @@
 				<div ng-init="loadInfo()" class="info">
 					<form name="registerForm" ng-upload="ng-upload" method="POST" action="/API/upload">
 						<fieldset>
-							<legend>{{userInformation.usernameToShow}} Me</legend>
+							<legend>Me</legend>
 							<input id="username" type="hidden" value="{{userInformation.username}}"/>
 
 							<div ng-hide="validations.anonymUser" class="daysleftwrap">
@@ -72,9 +72,9 @@
 			<div class="inside">
 				<form>
 					<fieldset class="fieldsetProfile">
-						<legend class="sidebar-brand">{{otherUserInfo.username}} Anonym</legend>
+						<legend class="sidebar-brand">Anonym</legend>
 						<input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
-						<div class="row-fluid profilepic"><img ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/></div>
+						<div class="row-fluid profilepic"><img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/></div>
 
 
 					</fieldset>
@@ -168,8 +168,10 @@
 	</div>
 </div>
 
-<div class="popover fade left in ng-scope">
-	<div ng-hide="validations.anonymOtherUser">
+<div class="popover fade left in ng-scope" id="anonym-popup">
+  <div class="arrow"></div>
+  <h3 class="popover-title">my info</h3>
+	<div class="popover-content">
 		<div ng-hide="validations.anonymOtherUserValidationFields.Name">
 			<label>Name</label>
 			<label>{{otherUserInfo.name}}</label>

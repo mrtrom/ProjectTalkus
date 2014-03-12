@@ -599,7 +599,7 @@ div.controls button {
   right: 12px;
   left: auto;
 }
-#popoverInfoMeModal > h3 {
+#popoverInfoMeModal > h3 , #anonym-popup > h3{
 	color: #5b687b;
 	font-weight: 700;
 }
@@ -609,7 +609,7 @@ div.controls button {
 .popover.left .arrow{
   top:30%;
 }
-#popoverInfoMeModal div.popover-content > div {
+#popoverInfoMeModal div.popover-content > div , #anonym-popup div.popover-content > div{
 	padding: 5px 0px;
 }
 #nextButton{
@@ -623,25 +623,30 @@ div.controls button {
   right: 0px;
 }
 #popoverInfoMeModal div.popover-content > div:last-child,
-#popoverInfoMeModal div.popover-content > div:nth-child(6){
+#popoverInfoMeModal div.popover-content > div:nth-child(6)
+#anonym-popup div.popover-content > div:last-child,
+#anonym-popup div.popover-content > div:nth-child(6){
 	border-bottom: none;
 }
 
-#popoverInfoMeModal label:first-child {
+#popoverInfoMeModal label:first-child ,
+#anonym-popup label:first-child{
 	color: #5b687b;
 	font-weight: 700;
 	font-family: helvetica;
 	padding-right: 12px;
 }
 
-#popoverInfoMeModal input {
+#popoverInfoMeModal input ,
+#anonym-popup input {
 	border: 1px solid #ccc;
   width: 100%;
 }
 #popoverInfoMeModal #checklocation{
   width:auto;
 }
-#popoverInfoMeModal div.popover-content div.share label {
+#popoverInfoMeModal div.popover-content div.share label ,
+#anonym-popup div.popover-content div.share label{
 	font-style: italic;
 	font-size: 13px;
 }
@@ -710,6 +715,7 @@ textarea#about {
 	margin: 0;
 	border-radius: 0;
 	text-align: center;
+  overflow:scroll;
 }
 .chat #page-top nav.navbar{
 	background: #428bca;
@@ -794,6 +800,8 @@ input#datasend {
 	font-family: helvetica;
 	font-size: 14px;
 	margin-bottom: 4px;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 .text-info {
 	color: rgb(49, 112, 143);
@@ -838,4 +846,11 @@ input#datasend {
 }
 .chat.video .chat-url{
 	display: block;
+}
+#anonym-popup {
+  position: absolute;
+  right: 12px;
+  left: auto;
+  bottom: 11%;
+  top: auto;
 }
