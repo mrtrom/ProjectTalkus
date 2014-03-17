@@ -715,7 +715,7 @@ textarea#about {
 	margin: 0;
 	border-radius: 0;
 	text-align: center;
-  overflow:scroll;
+  overflow-y:auto;
 }
 .chat #page-top nav.navbar{
 	background: #428bca;

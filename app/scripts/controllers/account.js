@@ -272,6 +272,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					if (type === 'leave'){
 						//Disconect
 						$('#data').attr('disabled', true);
+            $('#datasend').attr('disabled', true);
 						socket.emit('userNotWriting');
 
 						$scope.validations.anonymOtherUserValidationFields.Email = true;
@@ -332,6 +333,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       socket.on('updateAnonymInfo', function (username, user) {
         $('#confirm').click();
         $('#data').attr('disabled', false);
+        $('#datasend').attr('disabled', false);
         $('.fieldsetProfile').show();
         //stopAnimateLoading();
       });
