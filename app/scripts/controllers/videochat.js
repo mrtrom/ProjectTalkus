@@ -155,9 +155,6 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 						partnerSession.removeEventListener('sessionConnected', sessionConnectedHandler);
 						partnerSession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
 						partnerSession.removeEventListener('streamDestroyed', streamDestroyedHandler);
-
-//						SocketProxy.findPartner(mySession.sessionId);
-//						partnerSession = null;
 					}
 
 					function streamDestroyedHandler(event) {
@@ -256,7 +253,6 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					if (type === 'leave'){
 						//Disconect
 						$('#data').attr('disabled', true);
-						socket.emit('userNotWriting');
 
 						$scope.validations.anonymOtherUserValidationFields.Email = true;
 						$scope.validations.anonymOtherUserValidationFields.Name = true;
