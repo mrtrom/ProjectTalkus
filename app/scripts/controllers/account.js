@@ -22,16 +22,15 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
       //Connect to room
       socket.on('connect', function(){
-        setTimeout(function() {
-          //executeAnimateLoading();
-          var username = $('#username').val();
-          socket.emit('adduser', username, 'text');
-        }, 1500);
+          socket.emit('adduser', 'Anonym', 'text');
       });
 
-
-			socket.on('initial', function(data) {
+			socket.on('initialVideo', function(data) {
 				RouletteApp.init(data.sessionId, data.token);
+			});
+
+			socket.on('initialText', function(data) {
+				RouletteApp.initText(data.sessionId, data.token);
 			});
 
 			socket.on('subscribe', function(data) {
@@ -39,11 +38,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 			});
 
 			socket.on('disconnectPartner', function(data) {
-
-				/*Oculatar camara actual*/
-
 				RouletteApp.unsuscribePartner();
 			});
+
+			/*socket.on('disconnectTextPartner', function(data) {
+				socket.emit('disconnectAllPartners');
+			});*/
 
 			socket.on('empty', function(data) {
 				var notificationContainer = document.getElementById('notificationContainer');
@@ -52,24 +52,33 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 			var SocketProxy = function() {
 
-				var findPartner = function(mySessionId) {
-					socket.emit('next', { sessionId: mySessionId });
+				var findVideoPartner = function(mySessionId) {
+					socket.emit('nextVideo', { sessionId: mySessionId });
+				};
+
+				var findTextPartner = function() {
+					socket.emit('nextText');
 				};
 
 				var disconnectPartners = function() {
 					socket.emit('disconnectPartners');
 				};
 
+				var disconnectTextPartners = function() {
+					socket.emit('disconnectPartners', 'text');
+				};
+
 				return {
-					findPartner: findPartner,
-					disconnectPartners: disconnectPartners
+					findTextPartner: findTextPartner,
+					findVideoPartner: findVideoPartner,
+					disconnectPartners: disconnectPartners,
+					disconnectTextPartners: disconnectTextPartners
 				};
 			}();
 
 			RouletteApp = function() {
 
-				var apiKey = 44655492;
-
+				var apiKey = 44705712;
 				var mySession;
 				var partnerSession;
 				var subscriberObject;
@@ -88,7 +97,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					ele.notificationContainer.innerHTML = "Connecting...";
 
 					ele.nextButton.onclick = function() {
-						RouletteApp.next();
+						RouletteApp.nextText();
 					};
 
 					mySession = TB.initSession(sessionId);
@@ -114,16 +123,32 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 						var stream = event.streams[0];
 						if (mySession.connection.connectionId == stream.connection.connectionId) {
-							SocketProxy.findPartner(mySession.sessionId);
+							SocketProxy.findVideoPartner(mySession.sessionId);
 						}
 					};
+				};
+
+				var nextText = function() {
+						SocketProxy.disconnectTextPartners();
+						SocketProxy.findTextPartner();
+				};
+
+				var initText = function(sessionId, token) {
+					ele.nextButton = document.getElementById('nextButton');
+
+					ele.nextButton.onclick = function() {
+						RouletteApp.nextText();
+					};
+
+					SocketProxy.findTextPartner();
+
 				};
 
 				var next = function() {
 					if (partnerSession !== undefined && partnerSession.connected) {
 						SocketProxy.disconnectPartners();
 					} else {
-						SocketProxy.findPartner();
+						SocketProxy.findVideoPartner();
 					}
 				};
 
@@ -136,10 +161,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 					$('#publisherContainer').html('');
 					$('#notificationContainer').html('');
-//					ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
-//					ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
-
-					//partnerSession.unpublish(publisher);
 				};
 
 				var subscribe = function(sessionId, token) {
@@ -174,7 +195,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 						ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
 						ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
 
-						//SocketProxy.findPartner(mySession.sessionId);
+						//SocketProxy.findVideoPartner(mySession.sessionId);
 						partnerSession = null;
 					}
 
@@ -190,6 +211,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				return {
 					init: init,
 					next: next,
+					initText: initText,
+					nextText: nextText,
 					subscribe: subscribe,
 					disconnectPartner: disconnectPartner,
 					unsuscribePartner: unsuscribePartner,
@@ -323,6 +346,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 						}
 
 					}
+					if (type === 'meDejaron'){
+						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
+					}
 				}
 
 
@@ -330,7 +356,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 			});
 
       //Anonym user catched
-      socket.on('updateAnonymInfo', function (username, user) {
+      socket.on('updateAnonymInfo', function () {
         $('#confirm').click();
         $('#data').attr('disabled', false);
         $('#datasend').attr('disabled', false);
@@ -429,6 +455,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         if ($scope.userInformation.description === undefined || $scope.userInformation.description === ''){$scope.userInformation.description = '';}
         if ($scope.userInformation.location === undefined || $scope.userInformation.location === ''){$scope.userInformation.location = '';}
         if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = '';}
+
+				/*console.log('entro');
+
+
+				console.log($scope.userInformation.username);
+				socket.emit('adduser', username, 'text');*/
 
       }, function(response) {
         //error

@@ -2,6 +2,7 @@
   "name": "talkus",
   "version": "0.0.0",
   "author" : "Talkus Team",
+	"private": true,
   "dependencies": {
     "express": "~3.4.3",
     "lodash": "~2.4.1",
