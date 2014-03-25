@@ -101,9 +101,9 @@
 		</div>
 		<div class="wraper-chat">
 			<form class="form-inline textChat">
-				<!--<div id="userTyping">
+				<div id="userTyping">
 					<p class="text-info">User Typing...</p>
-				</div>-->
+				</div>
 				<div class="row-fluid">
 					<div class="chatSendContainer">
 						<input id="data" placeholder="Press enter to send" ngChange="pullDown()" type="text" disabled="disabled"/>
@@ -279,7 +279,7 @@
 
 		setTimeout(function(){
 			$('html').click(function() {
-				$( "#emoticonContainer" ).hide("slow");
+        //$( "#emoticonContainer" ).css('height' , '0px');
 			});
 
 			$('#emoticonContainer').click(function(event){
@@ -289,11 +289,11 @@
 			$("#btnEmoticon").click(function(event) {
 				var disAttr = $('#data').attr('disabled');
 				if (disAttr != 'undefined' && disAttr != 'disabled'){
-					if($('#emoticonContainer').css('display') == 'none'){
-						$( "#emoticonContainer" ).show("slow");
+					if($('#emoticonContainer').css('height') == '0px'){
+            $( "#emoticonContainer" ).css('height' , '160px');
 					}
 					else{
-						$( "#emoticonContainer" ).hide("slow");
+            $( "#emoticonContainer" ).css('height' , '0px');
 					}
 					event.stopPropagation();
 				}

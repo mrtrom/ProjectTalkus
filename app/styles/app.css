@@ -697,14 +697,46 @@ textarea#about {
 	height: 100%;
 	color: #000;
 }
+#userTyping {
+  position: absolute;
+  bottom: 65px;
+  left: 10px;
+  display: none;
+}
 #emoticonContainer{
-	display: none;
+  position: absolute;
+  bottom: 61px;
+  right: 0;
+  height: 0px;
+  overflow: hidden;
+  border-radius: 5px 0px 0px 0px;
+  background: rgb(66, 139, 202);
+  -webkit-transition: all 0.4s ease 0s;
+  -moz-transition: all 0.4s ease 0s;
+  -ms-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+#emoticonTable img{
+  cursor: pointer;
+  margin: 0px 3px;
+}
+#btnEmoticon {
+  position: absolute;
+  right: 100px;
+  bottom: 24px;
+  background: url(../images/emoticons/simple/Happy_2.png) no-repeat center center;
+  width: 15px;
+  cursor: pointer;
+  height: 15px;
 }
 #userTyping > p {
-	font-size: 13px;
-	font-weight: bold;
-	color: #666;
-	margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+  opacity: 0.5;
+  font-family: helvetica;
 }
 .view.ng-scope{
 	height: 100%;
