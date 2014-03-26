@@ -316,6 +316,15 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           $('#userTyping').hide();
         }
       });
+        //to check if it has an image url
+        function checkURL(url) {
+            if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+                return url;
+            }
+            else{
+                return false;
+            }
+        };
 
 			socket.on('updatechat', function (username, data, type, user) {
 
@@ -374,6 +383,21 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 							break;
 
 						case 'message':
+                            //to check if it has an image url
+                            var a = data,
+                                text = a.split(' '),
+                                filterTxt = [];
+                            for (var i=0; i<text.length; i++)
+                            {
+                                if(checkURL(text[i])){
+                                    filterTxt.push('<a target="_blank" href="'+text[i]+'"><img src="'+text[i]+'" alt="img" class="in-image"></a>');
+                                }
+                                else{
+                                    filterTxt.push(text[i]);
+                                }
+                            }
+                            data = filterTxt.join(" ");
+                            //end check
 							if(user === 'me'){
 								$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
 							}

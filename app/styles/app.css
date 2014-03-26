@@ -705,7 +705,7 @@ textarea#about {
 }
 #emoticonContainer{
   position: absolute;
-  bottom: 61px;
+  bottom: 60px;
   right: 0;
   height: 0px;
   overflow: hidden;
@@ -885,4 +885,15 @@ input#datasend {
   left: auto;
   bottom: 11%;
   top: auto;
+}
+img.in-image {
+    display: block;
+    margin: 8px auto;
+    height: auto;
+    width: 400px;
+}
+@media(max-width:462px) {
+    img.in-image {
+        width: 100%;
+    }
 }
