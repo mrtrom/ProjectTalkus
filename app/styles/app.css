@@ -804,6 +804,13 @@ textarea#about {
     border:none;
     box-shadow: none;
 }
+div.audiorecord {
+    position: absolute;
+    bottom: 60px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 8px 10px;
+    width: 100%;
+}
 input#datasend {
 	border: 1px solid #fff;
 	background: #fff;

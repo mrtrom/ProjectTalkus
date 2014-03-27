@@ -7,7 +7,7 @@
 
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
   function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-
+    initVoice();
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1],
         socket = io.connect(hostURL, {port: portURL}),
@@ -282,7 +282,27 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             reader.readAsDataURL(data);
 
         });
+        window.handleWAV = function (blob) {
+            var tableRef = document.getElementById('recordingslist');
+            if (currentEditedSoundIndex !== -1) {
+                $('#recordingslist tr:nth-child(' + (currentEditedSoundIndex + 1) + ')').remove();
+            }
 
+            var url = URL.createObjectURL(blob);
+            var audioElement = document.createElement('audio');
+            var downloadAnchor = document.createElement('a');
+            var editButton = document.createElement('button');
+
+            audioElement.controls = true;
+            audioElement.src = url;
+            //$('#conversation .container').append(audioElement);
+            console.log(blob);
+            socket.emit('user sound', audioElement.src);
+            downloadAnchor.href = url;
+            downloadAnchor.download = new Date().toISOString() + '.wav';
+            downloadAnchor.innerHTML = 'Download';
+            downloadAnchor.className = 'btn btn-primary';
+        }
 
       //Send text chat to room via enter
       $('#data').keydown(function(e) {
@@ -342,7 +362,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             }
         };
 
-			socket.on('updatechat', function (username, data, type, user, file) {
+			socket.on('updatechat', function (username, data, type, user, file , sound) {
 				if (type !== undefined){
 					switch(type){
 						case 'leave':
@@ -417,7 +437,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                                 if(file){
                                     $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
                                 }else{
-                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                    if(sound){
+                                      $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                                    }
+                                    else{
+                                      $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                    }
                                 }
 
 							}
@@ -426,7 +451,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                                     $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
                                 }
                                 else{
-                                    $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                    if(sound){
+                                        $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                                    }
+                                    else{
+                                        $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                    }
                                 }
 
 							}
