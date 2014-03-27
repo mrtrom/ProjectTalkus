@@ -22,16 +22,15 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
       //Connect to room
       socket.on('connect', function(){
-        setTimeout(function() {
-          //executeAnimateLoading();
-          var username = $('#username').val();
-          socket.emit('adduser', username, 'text');
-        }, 1500);
+          socket.emit('adduser', 'Anonym', 'text');
       });
 
-
-			socket.on('initial', function(data) {
+			socket.on('initialVideo', function(data) {
 				RouletteApp.init(data.sessionId, data.token);
+			});
+
+			socket.on('initialText', function(data) {
+				RouletteApp.initText(data.sessionId, data.token);
 			});
 
 			socket.on('subscribe', function(data) {
@@ -39,10 +38,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 			});
 
 			socket.on('disconnectPartner', function(data) {
-
-				/*Oculatar camara actual*/
-
 				RouletteApp.unsuscribePartner();
+				//RouletteApp.disconnectPartner();
+			});
+
+			socket.on('destroyPartner', function(data) {
+				RouletteApp.disconnectTextVideo();
 			});
 
 			socket.on('empty', function(data) {
@@ -52,24 +53,33 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 			var SocketProxy = function() {
 
-				var findPartner = function(mySessionId) {
-					socket.emit('next', { sessionId: mySessionId });
+				var findVideoPartner = function(mySessionId) {
+					socket.emit('nextVideo', { sessionId: mySessionId });
+				};
+
+				var findTextPartner = function() {
+					socket.emit('nextText');
 				};
 
 				var disconnectPartners = function() {
 					socket.emit('disconnectPartners');
 				};
 
+				var disconnectTextPartners = function() {
+					socket.emit('disconnectPartners', 'text');
+				};
+
 				return {
-					findPartner: findPartner,
-					disconnectPartners: disconnectPartners
+					findTextPartner: findTextPartner,
+					findVideoPartner: findVideoPartner,
+					disconnectPartners: disconnectPartners,
+					disconnectTextPartners: disconnectTextPartners
 				};
 			}();
 
 			RouletteApp = function() {
 
-				var apiKey = 44655492;
-
+				var apiKey = 44705712;
 				var mySession;
 				var partnerSession;
 				var subscriberObject;
@@ -88,42 +98,84 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					ele.notificationContainer.innerHTML = "Connecting...";
 
 					ele.nextButton.onclick = function() {
-						RouletteApp.next();
+						RouletteApp.nextText();
 					};
 
 					mySession = TB.initSession(sessionId);
 					mySession.addEventListener('sessionConnected', sessionConnectedHandler);
 					mySession.addEventListener('streamCreated', streamCreatedHandler);
-					mySession.connect(apiKey, token);
 
-					function sessionConnectedHandler(event) {
+					console.log('connectSession');
+
+					if (mySession.connected){
+						$('#publisherContainer').css('display', 'block');
+						$('#notificationContainer').css('display', 'block');
+
+
+
+						sessionConnectedHandler();
+
+					}
+					else{
+						mySession.connect(apiKey, token);
+					}
+
+					console.log('endConnectSession');
+
+					function sessionConnectedHandler() {
 						ele.notificationContainer.innerHTML = "Connected, press allow.";
 
 						var div = document.createElement('div');
 						div.setAttribute('id', 'publisher');
 						ele.publisherContainer.appendChild(div);
 
+						console.log('publisher: ' + div.id);
+
 						publisher = mySession.publish(div.id);
+
+						console.log('publisher: ' + publisher);
+						console.log(publisher);
 					};
 
 					function streamCreatedHandler(event) {
 
-						if ($('#cancelVideoChat').length === 0){
+						//if ($('#cancelVideoChat').length === 0){
 							socket.emit('newVideoChat2');
-						}
+						//}
 
 						var stream = event.streams[0];
 						if (mySession.connection.connectionId == stream.connection.connectionId) {
-							SocketProxy.findPartner(mySession.sessionId);
+							SocketProxy.findVideoPartner(mySession.sessionId);
 						}
 					};
 				};
 
+				var nextText = function() {
+						SocketProxy.disconnectTextPartners();
+						SocketProxy.findTextPartner();
+				};
+
+				var initText = function(sessionId, token) {
+					ele.nextButton = document.getElementById('nextButton');
+
+					ele.nextButton.onclick = function() {
+						RouletteApp.nextText();
+					};
+
+					SocketProxy.findTextPartner();
+
+				};
+
+				var disconnectTextVideo = function(){
+					mySession.unpublish(publisher);
+				};
+
 				var next = function() {
+					console.log('entro');
 					if (partnerSession !== undefined && partnerSession.connected) {
 						SocketProxy.disconnectPartners();
 					} else {
-						SocketProxy.findPartner();
+						SocketProxy.findVideoPartner();
 					}
 				};
 
@@ -134,12 +186,10 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				var unsuscribePartner = function() {
 					partnerSession.unsubscribe(subscriberObject);
 
-					$('#publisherContainer').html('');
-					$('#notificationContainer').html('');
-//					ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
-//					ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
+					console.log('unsubscribe');
 
-					//partnerSession.unpublish(publisher);
+					$('#publisherContainer').css('display', 'none');
+					$('#notificationContainer').css('display', 'none');
 				};
 
 				var subscribe = function(sessionId, token) {
@@ -171,11 +221,11 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 						partnerSession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
 						partnerSession.removeEventListener('streamDestroyed', streamDestroyedHandler);
 
-						ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
-						ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
+						//ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
+						//ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
 
-						//SocketProxy.findPartner(mySession.sessionId);
-						partnerSession = null;
+						//SocketProxy.findVideoPartner(mySession.sessionId);
+						//partnerSession = null;
 					}
 
 					function streamDestroyedHandler(event) {
@@ -190,9 +240,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				return {
 					init: init,
 					next: next,
+					initText: initText,
+					nextText: nextText,
 					subscribe: subscribe,
 					disconnectPartner: disconnectPartner,
 					unsuscribePartner: unsuscribePartner,
+					disconnectTextVideo: disconnectTextVideo,
 					wait: wait
 				};
 
@@ -214,6 +267,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
         socket.emit('sendchat', mensaje);
       });
+
+        $('.glyphicon.glyphicon-camera.mycam').click(function(){
+            if($('#data').attr('disabled') != 'disabled'){
+                $('#imagefile').click();
+            }
+        });
+        $('#imagefile').bind('change', function(e){
+            var data = e.originalEvent.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt){
+                socket.emit('user image', evt.target.result);
+            };
+            reader.readAsDataURL(data);
+
+        });
+
 
       //Send text chat to room via enter
       $('#data').keydown(function(e) {
@@ -263,75 +332,118 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           $('#userTyping').hide();
         }
       });
+        //to check if it has an image url
+        function checkURL(url) {
+            if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+                return url;
+            }
+            else{
+                return false;
+            }
+        };
 
-      /*Update room with:
-       **-message
-       **-disconect (leave)*/
-			socket.on('updatechat', function (username, data, type, user) {
+			socket.on('updatechat', function (username, data, type, user, file) {
 				if (type !== undefined){
-					if (type === 'leave'){
-						//Disconect
-						$('#data').attr('disabled', true);
-						socket.emit('userNotWriting');
+					switch(type){
+						case 'leave':
+							//Disconect
+							$('#data').attr('disabled', true);
+							$('#datasend').attr('disabled', true);
 
-						$scope.validations.anonymOtherUserValidationFields.Email = true;
-						$scope.validations.anonymOtherUserValidationFields.Name = true;
-						$scope.validations.anonymOtherUserValidationFields.Gender = true;
-						$scope.validations.anonymOtherUserValidationFields.Description = true;
-						$scope.validations.anonymOtherUserValidationFields.Location = true;
-						$scope.validations.anonymOtherUserValidationFields.Birth = true;
+							$scope.validations.anonymOtherUserValidationFields.Email = true;
+							$scope.validations.anonymOtherUserValidationFields.Name = true;
+							$scope.validations.anonymOtherUserValidationFields.Gender = true;
+							$scope.validations.anonymOtherUserValidationFields.Description = true;
+							$scope.validations.anonymOtherUserValidationFields.Location = true;
+							$scope.validations.anonymOtherUserValidationFields.Birth = true;
 
-						if ($scope.otherUserInfo !== undefined){
-							$scope.otherUserInfo.username = '';
-						}
+							if ($scope.otherUserInfo !== undefined){
+								$scope.otherUserInfo.username = '';
+							}
 
-						$('.fieldsetProfile').hide();
+							$('.fieldsetProfile').hide();
 
-						//executeAnimateLoading();
-					}
-					if (type === 'connect'){
-						$('#conversation').empty();
-						//Message from SERVER
-						$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
-					}
-					if (type === 'showMessageVideoMe'){
-						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
-					}
-					if (type === 'showMessageVideoAnonym'){
-						$('#conversation').append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>');
-					}
-					if (type === 'succesMessageVideoMe'){
-						$('#conversation .startChatNow').remove();
-						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
-					}
-					if (type === 'succesMessageVideoAnonym'){
-						$('#conversation .startChatNow').remove();
-						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
-					}
-					if (type === 'failMessageVideoMe'){
-						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
-					}
-					if (type === 'failMessageVideoAnonym'){
-						$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
-					}
-					if (type === 'message'){
-						if(user === 'me'){
-							$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
-						}else{
-							$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
-						}
+							//executeAnimateLoading();
+							break;
 
+						case 'connect':
+							$('#conversation').empty();
+							$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
+							break;
+
+						case 'showMessageVideoMe':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'showMessageVideoAnonym':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>');
+							break;
+
+						case 'succesMessageVideoMe':
+							$('#conversation .startChatNow').remove();
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'succesMessageVideoAnonym':
+							$('#conversation .startChatNow').remove();
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'failMessageVideoMe':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'failMessageVideoAnonym':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'message':
+                            //to check if it has an image url
+                            var a = data,
+                                text = a.split(' '),
+                                filterTxt = [];
+                            for (var i=0; i<text.length; i++)
+                            {
+                                if(checkURL(text[i])){
+                                    filterTxt.push('<a target="_blank" href="'+text[i]+'"><img src="'+text[i]+'" alt="img" class="in-image"></a>');
+                                }
+                                else{
+                                    filterTxt.push(text[i]);
+                                }
+                            }
+                            data = filterTxt.join(" ");
+                            //end check
+							if(user === 'me'){
+                                if(file){
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                                }else{
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                }
+
+							}
+							else{
+                                if(file){
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                                }
+                                else{
+                                    $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                }
+
+							}
+							break;
+
+						case 'meDejaron':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
+							break;
 					}
 				}
-
-
-
 			});
 
       //Anonym user catched
-      socket.on('updateAnonymInfo', function (username, user) {
+      socket.on('updateAnonymInfo', function () {
         $('#confirm').click();
         $('#data').attr('disabled', false);
+        $('#datasend').attr('disabled', false);
         $('.fieldsetProfile').show();
         //stopAnimateLoading();
       });
@@ -427,6 +539,12 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         if ($scope.userInformation.description === undefined || $scope.userInformation.description === ''){$scope.userInformation.description = '';}
         if ($scope.userInformation.location === undefined || $scope.userInformation.location === ''){$scope.userInformation.location = '';}
         if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = '';}
+
+				/*console.log('entro');
+
+
+				console.log($scope.userInformation.username);
+				socket.emit('adduser', username, 'text');*/
 
       }, function(response) {
         //error

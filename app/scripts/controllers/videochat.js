@@ -22,19 +22,19 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 
 			//Connect to room
 			socket.on('connect', function(){
-				setTimeout(function() {
-					//executeAnimateLoading();
-					var username = $('#username').val();
-					socket.emit('adduser', username, 'video');
-				}, 1000);
+				socket.emit('adduser', 'Anonym', 'video');
 			});
 
-			socket.on('initial', function(data) {
+			socket.on('initialVideo', function(data) {
 				RouletteApp.init(data.sessionId, data.token);
 			});
 
 			socket.on('subscribe', function(data) {
 				RouletteApp.subscribe(data.sessionId, data.token);
+			});
+
+			socket.on('disconnectPartnerMe', function(data) {
+				RouletteApp.disconnectPartnerMe();
 			});
 
 			socket.on('disconnectPartner', function(data) {
@@ -49,11 +49,11 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 			var SocketProxy = function() {
 
 				var findPartner = function(mySessionId) {
-					socket.emit('next', { sessionId: mySessionId });
+					socket.emit('nextVideo', { sessionId: mySessionId });
 				};
 
-				var disconnectPartners = function() {
-					socket.emit('disconnectPartners');
+				var disconnectPartners = function(mySessionId) {
+					socket.emit('disconnectPartners', { sessionId: mySessionId });
 				};
 
 				return {
@@ -64,7 +64,7 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 
 			RouletteApp = function() {
 
-				var apiKey = 44655492;
+				var apiKey = 44705712;
 
 				var mySession;
 				var partnerSession;
@@ -84,6 +84,8 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					ele.nextButton.onclick = function() {
 						RouletteApp.next();
 					};
+
+					console.log('session id: ' + sessionId);
 
 					mySession = TB.initSession(sessionId);
 					mySession.addEventListener('sessionConnected', sessionConnectedHandler);
@@ -109,11 +111,20 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 				};
 
 				var next = function() {
-					if (partnerSession !== undefined && partnerSession.connected) {
-						SocketProxy.disconnectPartners();
+					if (partnerSession !== undefined && partnerSession !== null && partnerSession.connected) {
+						SocketProxy.disconnectPartners(mySession.sessionId);
 					} else {
-						SocketProxy.findPartner();
+						//SocketProxy.findPartner();
+						SocketProxy.findPartner(mySession.sessionId);
 					}
+				};
+
+				var disconnectPartnerMe = function() {
+					partnerSession.disconnect();
+
+					SocketProxy.findPartner(mySession.sessionId);
+					partnerSession = null;
+
 				};
 
 				var disconnectPartner = function() {
@@ -140,15 +151,14 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					}
 
 					function sessionDisconnectedHandler(event) {
+						console.log('desconeto');
 						partnerSession.removeEventListener('sessionConnected', sessionConnectedHandler);
 						partnerSession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
 						partnerSession.removeEventListener('streamDestroyed', streamDestroyedHandler);
-
-						SocketProxy.findPartner(mySession.sessionId);
-						partnerSession = null;
 					}
 
 					function streamDestroyedHandler(event) {
+						console.log('destruyo');
 						partnerSession.disconnect();
 					}
 				};
@@ -162,6 +172,7 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					next: next,
 					subscribe: subscribe,
 					disconnectPartner: disconnectPartner,
+					disconnectPartnerMe: disconnectPartnerMe,
 					wait: wait
 				};
 
@@ -242,7 +253,6 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 					if (type === 'leave'){
 						//Disconect
 						$('#data').attr('disabled', true);
-						socket.emit('userNotWriting');
 
 						$scope.validations.anonymOtherUserValidationFields.Email = true;
 						$scope.validations.anonymOtherUserValidationFields.Name = true;
