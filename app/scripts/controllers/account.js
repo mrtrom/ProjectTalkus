@@ -268,6 +268,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         socket.emit('sendchat', mensaje);
       });
 
+        $('.glyphicon.glyphicon-camera.mycam').click(function(){
+            if($('#data').attr('disabled') != 'disabled'){
+                $('#imagefile').click();
+            }
+        });
+        $('#imagefile').bind('change', function(e){
+            var data = e.originalEvent.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt){
+                socket.emit('user image', evt.target.result);
+            };
+            reader.readAsDataURL(data);
+
+        });
+
+
       //Send text chat to room via enter
       $('#data').keydown(function(e) {
         if(e.keyCode === 8 || e.keyCode === 46){
@@ -326,8 +342,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             }
         };
 
-			socket.on('updatechat', function (username, data, type, user) {
-
+			socket.on('updatechat', function (username, data, type, user, file) {
 				if (type !== undefined){
 					switch(type){
 						case 'leave':
@@ -399,10 +414,21 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                             data = filterTxt.join(" ");
                             //end check
 							if(user === 'me'){
-								$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                if(file){
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                                }else{
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                }
+
 							}
 							else{
-								$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                if(file){
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                                }
+                                else{
+                                    $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                }
+
 							}
 							break;
 

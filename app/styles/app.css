@@ -797,7 +797,7 @@ textarea#about {
 }
 #data {
     margin: 0;
-    width: calc(100% - 31px);
+    width: calc(100% - 56px);
 }
 #data:focus{
     outline:none;
@@ -816,6 +816,23 @@ input#datasend {
 	color: #428bca;
 	position: relative;
 	top: 1px;
+}
+#imagefile {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: auto;
+    z-index: -1;
+}
+span.glyphicon.glyphicon-camera.mycam {
+    position: absolute;
+    bottom: 25px;
+    top: auto;
+    right: 126px;
+    opacity: 0.5;
+    cursor: pointer;
 }
 #conversation div.anonym {
 	float: left;
