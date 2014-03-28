@@ -29,6 +29,10 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				RouletteApp.init(data.sessionId, data.token);
 			});
 
+			socket.on('initialChatVideoInTextRoom', function(data, times) {
+				RouletteApp.init(data.sessionId, data.token, times);
+			});
+
 			socket.on('initialText', function(data) {
 				RouletteApp.initText(data.sessionId, data.token);
 			});
@@ -57,6 +61,10 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					socket.emit('nextVideo', { sessionId: mySessionId });
 				};
 
+				var findTextVideoPartner = function(mySessionId) {
+					socket.emit('nextTextVideo', { sessionId: mySessionId });
+				};
+
 				var findTextPartner = function() {
 					socket.emit('nextText');
 				};
@@ -73,7 +81,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					findTextPartner: findTextPartner,
 					findVideoPartner: findVideoPartner,
 					disconnectPartners: disconnectPartners,
-					disconnectTextPartners: disconnectTextPartners
+					disconnectTextPartners: disconnectTextPartners,
+					findTextVideoPartner: findTextVideoPartner
 				};
 			}();
 
@@ -89,7 +98,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				var ele = {};
 				TB.setLogLevel(TB.DEBUG);
 
-				var init = function(sessionId, token) {
+				var init = function(sessionId, token, times) {
 					ele.publisherContainer = document.getElementById('publisherContainer');
 					ele.subscriberContainer = document.getElementById('subscriberContainer');
 					ele.notificationContainer = document.getElementById('notificationContainer');
@@ -108,10 +117,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					console.log('connectSession');
 
 					if (mySession.connected){
+						console.log('conectada');
 						$('#publisherContainer').css('display', 'block');
 						$('#notificationContainer').css('display', 'block');
-
-
 
 						sessionConnectedHandler();
 
@@ -143,10 +151,17 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 							socket.emit('newVideoChat2');
 						//}
 
+
+
 						var stream = event.streams[0];
-						if (mySession.connection.connectionId == stream.connection.connectionId) {
-							SocketProxy.findVideoPartner(mySession.sessionId);
+
+
+						if (times && times === 'second'){
+							if (mySession.connection.connectionId == stream.connection.connectionId) {
+								SocketProxy.findTextVideoPartner(mySession.sessionId);
+							}
 						}
+
 					};
 				};
 
@@ -175,7 +190,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					if (partnerSession !== undefined && partnerSession.connected) {
 						SocketProxy.disconnectPartners();
 					} else {
-						SocketProxy.findVideoPartner();
+						SocketProxy.findTextVideoPartner();
 					}
 				};
 
@@ -188,6 +203,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 					console.log('unsubscribe');
 
+					$('#subscriberContainer').html('');
 					$('#publisherContainer').css('display', 'none');
 					$('#notificationContainer').css('display', 'none');
 				};
@@ -201,17 +217,18 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					partnerSession.addEventListener('sessionDisconnected', sessionDisconnectedHandler);
 					partnerSession.addEventListener('streamDestroyed', streamDestroyedHandler);
 
-					partnerSession.connect(apiKey, token);
+					if(!partnerSession.connected){
+						partnerSession.connect(apiKey, token);
+					}
+					else{
+						partnerSession.disconnect();
+						partnerSession.connect(apiKey, token);
+					}
 
 					function sessionConnectedHandler(event) {
 						var div = document.createElement('div');
 						div.setAttribute('id', 'subscriber');
 						ele.subscriberContainer.appendChild(div);
-
-						if ($('#cancelVideoChat').length === 0){
-							socket.emit('newVideoChat2');
-						}
-
 
 						subscriberObject = partnerSession.subscribe(event.streams[0], div.id);
 					}
@@ -220,12 +237,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 						partnerSession.removeEventListener('sessionConnected', sessionConnectedHandler);
 						partnerSession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
 						partnerSession.removeEventListener('streamDestroyed', streamDestroyedHandler);
-
-						//ele.publisherContainer.parentNode.removeChild(ele.publisherContainer);
-						//ele.notificationContainer.parentNode.removeChild(ele.notificationContainer);
-
-						//SocketProxy.findVideoPartner(mySession.sessionId);
-						//partnerSession = null;
 					}
 
 					function streamDestroyedHandler(event) {
