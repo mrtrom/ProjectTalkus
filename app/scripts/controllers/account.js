@@ -7,7 +7,7 @@
 
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
   function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-
+    initVoice();
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1],
         socket = io.connect(hostURL, {port: portURL}),
@@ -279,6 +279,42 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         socket.emit('sendchat', mensaje);
       });
 
+        $('.glyphicon.glyphicon-camera.mycam').click(function(){
+            if($('#data').attr('disabled') != 'disabled'){
+                $('#imagefile').click();
+            }
+        });
+        $('#imagefile').bind('change', function(e){
+            var data = e.originalEvent.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt){
+                socket.emit('user image', evt.target.result);
+            };
+            reader.readAsDataURL(data);
+
+        });
+        window.handleWAV = function (blob) {
+            var tableRef = document.getElementById('recordingslist');
+            if (currentEditedSoundIndex !== -1) {
+                $('#recordingslist tr:nth-child(' + (currentEditedSoundIndex + 1) + ')').remove();
+            }
+
+            var url = URL.createObjectURL(blob);
+            var audioElement = document.createElement('audio');
+            var downloadAnchor = document.createElement('a');
+            var editButton = document.createElement('button');
+
+            audioElement.controls = true;
+            audioElement.src = url;
+            //$('#conversation .container').append(audioElement);
+            console.log(blob);
+            socket.emit('user sound', audioElement.src);
+            downloadAnchor.href = url;
+            downloadAnchor.download = new Date().toISOString() + '.wav';
+            downloadAnchor.innerHTML = 'Download';
+            downloadAnchor.className = 'btn btn-primary';
+        }
+
       //Send text chat to room via enter
       $('#data').keydown(function(e) {
         if(e.keyCode === 8 || e.keyCode === 46){
@@ -327,9 +363,17 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           $('#userTyping').hide();
         }
       });
+        //to check if it has an image url
+        function checkURL(url) {
+            if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+                return url;
+            }
+            else{
+                return false;
+            }
+        };
 
-			socket.on('updatechat', function (username, data, type, user) {
-
+			socket.on('updatechat', function (username, data, type, user, file , sound) {
 				if (type !== undefined){
 					switch(type){
 						case 'leave':
@@ -385,11 +429,47 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 							break;
 
 						case 'message':
+                            //to check if it has an image url
+                            var a = data,
+                                text = a.split(' '),
+                                filterTxt = [];
+                            for (var i=0; i<text.length; i++)
+                            {
+                                if(checkURL(text[i])){
+                                    filterTxt.push('<a target="_blank" href="'+text[i]+'"><img src="'+text[i]+'" alt="img" class="in-image"></a>');
+                                }
+                                else{
+                                    filterTxt.push(text[i]);
+                                }
+                            }
+                            data = filterTxt.join(" ");
+                            //end check
 							if(user === 'me'){
-								$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                if(file){
+                                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                                }else{
+                                    if(sound){
+                                      $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                                    }
+                                    else{
+                                      $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                    }
+                                }
+
 							}
 							else{
-								$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                if(file){
+                                    $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                                }
+                                else{
+                                    if(sound){
+                                        $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                                    }
+                                    else{
+                                        $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                                    }
+                                }
+
 							}
 							break;
 
