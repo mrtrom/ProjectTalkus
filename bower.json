@@ -13,7 +13,8 @@
     "angular-route": "1.2.11",
     "angular-bootstrap":"latest",
     "socket.io": "0.9.x",
-    "jquery-geocomplete": ">= 0.0.1"
+    "jquery-geocomplete": ">= 0.0.1",
+		"angular-gettext": "latest"
   },
   "devDependencies": {
     "angular-mocks": "1.2.11",

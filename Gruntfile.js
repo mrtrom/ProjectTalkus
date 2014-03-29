@@ -350,7 +350,23 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
-    }
+    },
+
+		nggettext_extract:{
+			pot:{
+				files:{
+					'po/template.pot': ['app/views/**/*.html']
+				}
+			}
+		},
+
+		nggettext_compile:{
+			all:{
+				files:{
+					'app/scripts/personalScripts/translations.js': ['po/*.po']
+				}
+			}
+		}
   });
 
   // Used for delaying livereload until after server has restarted
@@ -381,6 +397,7 @@ module.exports = function (grunt) {
       'autoprefixer',
       'express:dev',
       'open',
+			'nggettext_compile',
       'watch'
     ]);
   });

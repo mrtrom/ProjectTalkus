@@ -13,12 +13,18 @@ var App = angular.module('talkusApp', [
   'ngSanitize',
   'ngRoute',
   'ngUpload',
+	'gettext',
   'ui.bootstrap',
   'talkusApp.controllers',
   'talkusApp.directives',
   'talkusApp.filters',
   'talkusApp.resources'
 ]);
+
+App.run(function(gettextCatalog){
+	gettextCatalog.currentLanguage = "en";
+	gettextCatalog.debug = true;
+});
 
 App.config(function ($routeProvider, $locationProvider) {
   $routeProvider

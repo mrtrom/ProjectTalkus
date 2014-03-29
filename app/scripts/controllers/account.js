@@ -395,6 +395,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 							break;
 
 						case 'cancelMessageVideoAnonym':
+							$('#registerFieldset #exitVideoChat').remove();
+							$('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
 							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
 							break;
 
