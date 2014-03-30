@@ -7,8 +7,12 @@ var audio_context,
 function startUserMedia(stream) {
   var input = audio_context.createMediaStreamSource(stream);
   console.log('Media stream created.');
-
-  volume = audio_context.createGainNode();
+    console.log(audio_context);
+    if (typeof audio_context.createGainNode == 'function') {
+        volume = audio_context.createGainNode();
+    }else{
+        volume = audio_context.createGain();
+    }
   volume.gain.value = volumeLevel;
   input.connect(volume);
   volume.connect(audio_context.destination);
@@ -40,7 +44,6 @@ function stopRecording(button) {
   
   // create WAV download link using audio data blob
   createDownloadLink();
-  
   recorder.clear();
 }
 

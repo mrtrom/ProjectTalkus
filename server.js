@@ -16,7 +16,7 @@ var app = express(),
 
 //cron config for user account validation
 new cronJob('00 00 12 * * 1-7', function(){
-  var mail = require('./lib/mails');
+  var mail = require('./lib/controllers/mails');
   mail.usermailcheck();
 }, null, true);
 

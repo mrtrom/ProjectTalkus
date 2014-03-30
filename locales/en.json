@@ -19,5 +19,6 @@
 	"EmailHasBeenSent": "an email has been send, please check your inbox",
 	"Oops": "Oops!",
 	"EmailDoesNotExist": "looks like that email does not exist on out servers.",
-	"Send": "Send"
+	"Send": "Send",
+	"Test": "Test"
 }

@@ -8,8 +8,8 @@
 
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
 	function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-
-		var hostURL = window.location.host.split(':')[0],
+        initVoice();
+        var hostURL = window.location.host.split(':')[0],
 				portURL = window.location.host.split(':')[1],
 				socket = io.connect(hostURL, {port: portURL}),
 				RouletteApp;
