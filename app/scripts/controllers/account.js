@@ -45,7 +45,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				var subscriberObject;
 				var publisherObject;
 
-				// Get view elements
 				var ele = {};
 				TB.setLogLevel(TB.DEBUG);
 
@@ -127,7 +126,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				};
 
 				var unpublishSession = function(){
-					//mySession.unpublish(publisherObject);
 					mySession.disconnect();
 				};
 
@@ -458,8 +456,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					return false;
 				}
 			}
-
-
 		};
 
 		$scope.newpermit = {
