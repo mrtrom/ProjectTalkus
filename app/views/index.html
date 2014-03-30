@@ -10,6 +10,11 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+
+		<!--[if lt IE 9]>
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<![endif]-->
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(app) styles/vendor.css -->
     <!-- bower:css -->
@@ -31,7 +36,7 @@
 					<i class="fa fa-bars"></i>
 				</button>
 				<a class="navbar-brand" href ng-click="logoValidate()">
-					<i class="fa fa-play-circle"></i>  <span class="light">Talkus</span>
+					<i class="fa fa-play-circle"></i>  <span class="light">Talkus <%= __('Test') %></span>
 				</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -42,10 +47,10 @@
 						<a href="#page-top"></a>
 					</li>
 					<li class="chat-url">
-						<a ng-href="/chat" href>Chat</a>
+						<a ng-href="/chat" href translate>Chat</a>
 					</li>
 					<li class="video-url">
-						<a ng-href="/video-chat" href>Video Chat</a>
+						<a ng-href="/video-chat" href translate>Video Chat</a>
 					</li>
 				</ul>
 			</div>

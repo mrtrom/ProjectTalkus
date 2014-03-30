@@ -15,41 +15,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 		$scope.initchat = function(){
 
-			$('html').addClass('chat');
-			$('html').removeClass('video');
-			$('.superContainer').css('top','0');
-			$('#locationapi').geocomplete();
-
-			//Connect to room
-			socket.on('connect', function(){
-				socket.emit('adduser', 'Anonym', 'text');
-			});
-
-			socket.on('initialChatVideoInTextRoom', function(data, times) {
-				RouletteApp.init(data.sessionId, data.token, times);
-			});
-
-			socket.on('initialText', function() {
-				RouletteApp.initText();
-			});
-
-			socket.on('subscribe', function(data) {
-				RouletteApp.subscribe(data.sessionId, data.token);
-			});
-
-			socket.on('disconnectPartner', function() {
-				RouletteApp.unsuscribePartner();
-			});
-
-			socket.on('cancelPublishingStream', function(){
-				RouletteApp.unpublishSession();
-			});
-
-			socket.on('empty', function() {
-				var notificationContainer = document.getElementById('notificationContainer');
-				notificationContainer.innerHTML = "Nobody to talk to :(.  When someone comes, you'll be the first to know :).";
-			});
-
 			var SocketProxy = function() {
 
 				var findTextVideoPartner = function(mySessionId) {
@@ -215,6 +180,175 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 			}();
 
+			socket.on('connect', function(){
+				socket.emit('adduser', 'Anonym', 'text');
+			});
+
+			socket.on('initialChatVideoInTextRoom', function(data, times) {
+				RouletteApp.init(data.sessionId, data.token, times);
+			});
+
+			socket.on('initialText', function() {
+				RouletteApp.initText();
+			});
+
+			socket.on('subscribe', function(data) {
+				RouletteApp.subscribe(data.sessionId, data.token);
+			});
+
+			socket.on('disconnectPartner', function() {
+				RouletteApp.unsuscribePartner();
+			});
+
+			socket.on('cancelPublishingStream', function(){
+				RouletteApp.unpublishSession();
+			});
+
+			socket.on('empty', function() {
+				var notificationContainer = document.getElementById('notificationContainer');
+				notificationContainer.innerHTML = "Nobody to talk to :(.  When someone comes, you'll be the first to know :).";
+			});
+
+			socket.on('showWriting', function(){
+				if ($('#userTyping').css('display') === 'none'){
+					$('#userTyping').show();
+				}
+			});
+
+			socket.on('hideWriting', function(){
+				if ($('#userTyping').css('display') === 'block'){
+					$('#userTyping').hide();
+				}
+			});
+
+			socket.on('updatechat', function (username, data, type, user, file , sound) {
+				if (type !== undefined){
+					switch(type){
+						case 'leave':
+							//Disconect
+							$('#data').attr('disabled', true);
+							$('#datasend').attr('disabled', true);
+
+							$scope.validations.anonymOtherUserValidationFields.Email = true;
+							$scope.validations.anonymOtherUserValidationFields.Name = true;
+							$scope.validations.anonymOtherUserValidationFields.Gender = true;
+							$scope.validations.anonymOtherUserValidationFields.Description = true;
+							$scope.validations.anonymOtherUserValidationFields.Location = true;
+							$scope.validations.anonymOtherUserValidationFields.Birth = true;
+
+							if ($scope.otherUserInfo !== undefined){
+								$scope.otherUserInfo.username = '';
+							}
+
+							$('.fieldsetProfile').hide();
+
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
+
+							//executeAnimateLoading();
+							break;
+
+						case 'connect':
+							$('#conversation').empty();
+							$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
+							break;
+
+						case 'showMessageVideoMe':
+							$('#registerFieldset #newVideoChat').remove();
+							$('#registerFieldset').append('<input type="button" id="exitVideoChat" class="btn btn-primary log" value="Cancel video chat">');
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'showMessageVideoAnonym':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>');
+							break;
+
+						case 'succesMessageVideoMe':
+							$('#conversation .startChatNow').remove();
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'succesMessageVideoAnonym':
+							$('#conversation .startChatNow').remove();
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'failMessageVideoMe':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'failMessageVideoAnonym':
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'cancelMessageVideoMe':
+							$('#registerFieldset #exitVideoChat').remove();
+							$('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'cancelMessageVideoAnonym':
+							$('#registerFieldset #exitVideoChat').remove();
+							$('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
+							break;
+
+						case 'message':
+							//to check if it has an image url
+							var a = data,
+									text = a.split(' '),
+									filterTxt = [];
+							for (var i=0; i<text.length; i++)
+							{
+								if(checkURL(text[i])){
+									filterTxt.push('<a target="_blank" href="'+text[i]+'"><img src="'+text[i]+'" alt="img" class="in-image"></a>');
+								}
+								else{
+									filterTxt.push(text[i]);
+								}
+							}
+							data = filterTxt.join(" ");
+							//end check
+							if(user === 'me'){
+								if(file){
+									$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+								}else{
+									if(sound){
+										$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+									}
+									else{
+										$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+									}
+								}
+
+							}
+							else{
+								if(file){
+									$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+								}
+								else{
+									if(sound){
+										$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+									}
+									else{
+										$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+									}
+								}
+
+							}
+							break;
+					}
+				}
+			});
+
+			//Anonym user catched
+			socket.on('updateAnonymInfo', function () {
+				$('#confirm').click();
+				$('#data').attr('disabled', false);
+				$('#datasend').attr('disabled', false);
+				$('.fieldsetProfile').show();
+				//stopAnimateLoading();
+			});
+
 			//Send text chat to room via click
 			$('#datasend').on('click', function() {
 				var cadenaAEliminar = /(<([^>]+)>)/gi,
@@ -310,17 +444,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				socket.emit('failNewVideoChat');
 			});
 
-			socket.on('showWriting', function(){
-				if ($('#userTyping').css('display') === 'none'){
-					$('#userTyping').show();
-				}
-			});
 
-			socket.on('hideWriting', function(){
-				if ($('#userTyping').css('display') === 'block'){
-					$('#userTyping').hide();
-				}
-			});
 			//to check if it has an image url
 			function checkURL(url) {
 				if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
@@ -331,135 +455,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				}
 			};
 
-			socket.on('updatechat', function (username, data, type, user, file , sound) {
-				if (type !== undefined){
-					switch(type){
-						case 'leave':
-							//Disconect
-							$('#data').attr('disabled', true);
-							$('#datasend').attr('disabled', true);
 
-							$scope.validations.anonymOtherUserValidationFields.Email = true;
-							$scope.validations.anonymOtherUserValidationFields.Name = true;
-							$scope.validations.anonymOtherUserValidationFields.Gender = true;
-							$scope.validations.anonymOtherUserValidationFields.Description = true;
-							$scope.validations.anonymOtherUserValidationFields.Location = true;
-							$scope.validations.anonymOtherUserValidationFields.Birth = true;
-
-							if ($scope.otherUserInfo !== undefined){
-								$scope.otherUserInfo.username = '';
-							}
-
-							$('.fieldsetProfile').hide();
-
-							//executeAnimateLoading();
-							break;
-
-						case 'connect':
-							$('#conversation').empty();
-							$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
-							break;
-
-						case 'showMessageVideoMe':
-							$('#registerFieldset #newVideoChat').remove();
-							$('#registerFieldset').append('<input type="button" id="exitVideoChat" class="btn btn-primary log" value="Cancel video chat">');
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'showMessageVideoAnonym':
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>');
-							break;
-
-						case 'succesMessageVideoMe':
-							$('#conversation .startChatNow').remove();
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'succesMessageVideoAnonym':
-							$('#conversation .startChatNow').remove();
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'failMessageVideoMe':
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'failMessageVideoAnonym':
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'cancelMessageVideoMe':
-							$('#registerFieldset #exitVideoChat').remove();
-							$('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'cancelMessageVideoAnonym':
-							$('#registerFieldset #exitVideoChat').remove();
-							$('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
-							break;
-
-						case 'message':
-							//to check if it has an image url
-							var a = data,
-									text = a.split(' '),
-									filterTxt = [];
-							for (var i=0; i<text.length; i++)
-							{
-								if(checkURL(text[i])){
-									filterTxt.push('<a target="_blank" href="'+text[i]+'"><img src="'+text[i]+'" alt="img" class="in-image"></a>');
-								}
-								else{
-									filterTxt.push(text[i]);
-								}
-							}
-							data = filterTxt.join(" ");
-							//end check
-							if(user === 'me'){
-								if(file){
-									$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
-								}else{
-									if(sound){
-										$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
-									}
-									else{
-										$('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
-									}
-								}
-
-							}
-							else{
-								if(file){
-									$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
-								}
-								else{
-									if(sound){
-										$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
-									}
-									else{
-										$('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
-									}
-								}
-
-							}
-							break;
-
-						case 'meDejaron':
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
-							break;
-					}
-				}
-			});
-
-			//Anonym user catched
-			socket.on('updateAnonymInfo', function () {
-				$('#confirm').click();
-				$('#data').attr('disabled', false);
-				$('#datasend').attr('disabled', false);
-				$('.fieldsetProfile').show();
-				//stopAnimateLoading();
-			});
 		};
 
 		$scope.newpermit = {

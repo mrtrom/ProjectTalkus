@@ -21,11 +21,6 @@ var App = angular.module('talkusApp', [
   'talkusApp.resources'
 ]);
 
-App.run(function(gettextCatalog){
-	gettextCatalog.currentLanguage = "en";
-	gettextCatalog.debug = true;
-});
-
 App.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {templateUrl: '/partials/index', controller: 'LoginController'})

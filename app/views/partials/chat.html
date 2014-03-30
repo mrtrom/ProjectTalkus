@@ -284,6 +284,11 @@
 	};
 
 	$(function(){
+
+		$('html').addClass('chat');
+		$('html').removeClass('video');
+		$('#locationapi').geocomplete();
+
 		emo_set_load('simple', emo_set_onload);
 
 		setTimeout(function(){
