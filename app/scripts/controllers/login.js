@@ -1,6 +1,5 @@
 'use strict';
 
-/*global $:false */
 /*global Modules:false */
 
 Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
@@ -14,7 +13,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 					$location.path('/chat');
 				}
 			}
-		}, function(response) {
+		}, function() {
 			//error
 		});
 
@@ -29,7 +28,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 						$scope.permissions.invalidUserInfo = false;
 						$location.path('/chat');
 					},
-					function(res){
+					function(){
 						//Error
 					}
 			);
@@ -68,11 +67,11 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 
 		//Rememeber password
 		$scope.forgotpass = function(){
-			$scope.Remember.$save(function(res) {
+			$scope.Remember.$save(function() {
 						$scope.password.remember = true;
 						$scope.password.remembererror = false;
 					},
-					function(res){
+					function(){
 						$scope.password.remember = false;
 						$scope.password.remembererror = true;
 					}
@@ -103,10 +102,10 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 			//Succes
 			$scope.userObject.$save(function(res){
 						$scope.Mails.user = res.user;
-						$scope.Mails.$save(function(resMails){
+						$scope.Mails.$save(function(){
 									//console.log('exito');
 								},
-								function(error) {
+								function() {
 									//console.log('error');
 								});
 

@@ -4,10 +4,11 @@
 /*global Modules:false */
 /*global emotify:false */
 /*global io:false */
+/*global TB:false */
 
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
 	function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-		initVoice();
+
 		var hostURL = window.location.host.split(':')[0],
 				portURL = window.location.host.split(':')[1],
 				socket = io.connect(hostURL, {port: portURL}),
@@ -49,12 +50,42 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				TB.setLogLevel(TB.DEBUG);
 
 				var init = function(sessionId, token, times) {
+
+					function sessionConnectedHandler() {
+						ele.notificationContainer.innerHTML = "Connected, press allow.";
+
+						var div = document.createElement('div');
+						div.setAttribute('id', 'publisher');
+						ele.publisherContainer.appendChild(div);
+
+						publisherObject = TB.initPublisher(apiKey, div.id);
+						mySession.publish(publisherObject);
+					}
+
+					function streamCreatedHandler(event) {
+						socket.emit('newVideoChat2');
+
+						var stream = event.streams[0];
+
+						if (times && times === 'second'){
+							if (mySession.connection.connectionId === stream.connection.connectionId) {
+								SocketProxy.findTextVideoPartner(mySession.sessionId);
+							}
+						}
+					}
+
+					function sessionDisconnectedHandler() {
+						mySession.removeEventListener('sessionConnected', sessionConnectedHandler);
+						mySession.removeEventListener('streamCreated', streamCreatedHandler);
+						mySession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
+					}
+
 					ele.publisherContainer = document.getElementById('publisherContainer');
 					ele.subscriberContainer = document.getElementById('subscriberContainer');
 					ele.notificationContainer = document.getElementById('notificationContainer');
 					ele.nextButton = document.getElementById('nextButton');
 
-					ele.notificationContainer.innerHTML = "Connecting...";
+					ele.notificationContainer.innerHTML = 'Connecting...';
 
 					ele.nextButton.onclick = function() {
 						socket.emit('cancelPusblish');
@@ -70,36 +101,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					if (!mySession.connected){
 						mySession.connect(apiKey, token);
 					}
-
-					function sessionConnectedHandler() {
-						ele.notificationContainer.innerHTML = "Connected, press allow.";
-
-						var div = document.createElement('div');
-						div.setAttribute('id', 'publisher');
-						ele.publisherContainer.appendChild(div);
-
-						publisherObject = TB.initPublisher(apiKey, div.id);
-						mySession.publish(publisherObject);
-					};
-
-					function streamCreatedHandler(event) {
-						socket.emit('newVideoChat2');
-
-						var stream = event.streams[0];
-
-						if (times && times === 'second'){
-							if (mySession.connection.connectionId == stream.connection.connectionId) {
-								SocketProxy.findTextVideoPartner(mySession.sessionId);
-							}
-						}
-					}
-
-					function sessionDisconnectedHandler() {
-						mySession.removeEventListener('sessionConnected', sessionConnectedHandler);
-						mySession.removeEventListener('streamCreated', streamCreatedHandler);
-						mySession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
-					}
-
 				};
 
 				var nextText = function() {
@@ -131,17 +132,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				};
 
 				var subscribe = function(sessionId, token) {
-					ele.notificationContainer.innerHTML = 'Have fun !!!!';
-
-					partnerSession = TB.initSession(sessionId);
-
-					partnerSession.addEventListener('sessionConnected', sessionConnectedHandler);
-					partnerSession.addEventListener('sessionDisconnected', sessionDisconnectedHandler);
-					partnerSession.addEventListener('streamDestroyed', streamDestroyedHandler);
-
-					if(!partnerSession.connected){
-						partnerSession.connect(apiKey, token);
-					}
 
 					function sessionConnectedHandler(event) {
 						var div = document.createElement('div');
@@ -160,6 +150,20 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 					function streamDestroyedHandler() {
 						partnerSession.disconnect();
 					}
+
+					ele.notificationContainer.innerHTML = 'Have fun !!!!';
+
+					partnerSession = TB.initSession(sessionId);
+
+					partnerSession.addEventListener('sessionConnected', sessionConnectedHandler);
+					partnerSession.addEventListener('sessionDisconnected', sessionDisconnectedHandler);
+					partnerSession.addEventListener('streamDestroyed', streamDestroyedHandler);
+
+					if(!partnerSession.connected){
+						partnerSession.connect(apiKey, token);
+					}
+
+
 
 				};
 
@@ -367,7 +371,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 			});
 
 			$('.glyphicon.glyphicon-camera.mycam').click(function(){
-				if($('#data').attr('disabled') != 'disabled'){
+				if($('#data').attr('disabled') !== 'disabled'){
 					$('#imagefile').click();
 				}
 			});
@@ -400,7 +404,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				downloadAnchor.download = new Date().toISOString() + '.wav';
 				downloadAnchor.innerHTML = 'Download';
 				downloadAnchor.className = 'btn btn-primary';
-			}
+			};
 
 			//Send text chat to room via enter
 			$('#data').keydown(function(e) {
@@ -447,13 +451,13 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
 			//to check if it has an image url
 			function checkURL(url) {
-				if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+				if(url.match(/\.(jpeg|jpg|gif|png)$/) !== null){
 					return url;
 				}
 				else{
 					return false;
 				}
-			};
+			}
 
 
 		};
@@ -536,7 +540,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 							function(response) {
 								$scope.userInformation.username = 'anonym' + response.count;
 								$scope.userInformation.usernameToShow = 'Anonym';
-							}, function(response) {
+							}, function() {
 								//error
 							});
 				}
@@ -555,7 +559,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 				 console.log($scope.userInformation.username);
 				 socket.emit('adduser', username, 'text');*/
 
-			}, function(response) {
+			}, function() {
 				//error
 			});
 		};
@@ -563,17 +567,17 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 		//user delete account
 		$scope.deleteAccount = function(){
 			User.delete({username : $scope.userInformation._id},
-					function(response){
+					function(){
 						//Exito
 					},
-					function(error){
+					function(){
 						//Error
 					});
 		};
 
 		//email resend
 		$scope.resend = function(){
-			Mails.delete(function(res) {
+			Mails.delete(function() {
 						//exito
 					},
 					function () {
@@ -660,7 +664,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 		//logout
 		$scope.logout = function(){
 
-			Session.delete(function(response) {
+			Session.delete(function() {
 				$('.preview-loading').hide();
 				$location.path('/');
 			});
@@ -671,7 +675,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 		//datePicker for users b-day
 		$(function() {
 			$( '#datepicker' ).datepicker({
-				onSelect: function(dateText, inst) {
+				onSelect: function(dateText) {
 					$scope.userInformation.birth = dateText;
 					updateUserAll();
 				},
@@ -690,9 +694,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 		//Here is where the users update function is called when needed
 		function updateUserAll(){
 			User.update($scope.userInformation,
-					function (data) {
+					function () {
 						//succes
-					}, function ($http) {
+					}, function () {
 						//error
 					});
 		}

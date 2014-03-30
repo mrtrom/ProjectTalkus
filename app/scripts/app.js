@@ -1,8 +1,8 @@
 'use strict';
 
-/*global Modules:false */
+/*global Modules:true */
+/*exported Modules*/
 
-//Modules var and resources route
 var Modules = {
   controllers: angular.module('talkusApp.controllers', ['talkusApp.resources'])
 };
@@ -13,7 +13,6 @@ var App = angular.module('talkusApp', [
   'ngSanitize',
   'ngRoute',
   'ngUpload',
-	'gettext',
   'ui.bootstrap',
   'talkusApp.controllers',
   'talkusApp.directives',

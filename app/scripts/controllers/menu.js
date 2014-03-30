@@ -1,6 +1,5 @@
 'use strict';
 
-/*global $:false */
 /*global Modules:false */
 
 Modules.controllers.controller('MenuController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session',
@@ -16,7 +15,7 @@ Modules.controllers.controller('MenuController', ['$rootScope', '$scope', '$http
 						$location.path('/');
 					}
 				}
-			}, function(response) {
+			}, function() {
 				//error
 			});
 		};

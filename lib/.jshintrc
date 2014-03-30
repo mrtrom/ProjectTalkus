@@ -3,7 +3,7 @@
   "esnext": true,
   "bitwise": true,
   "eqeqeq": true,
-  "immed": true,
+  "immed": false,
   "latedef": true,
   "newcap": true,
   "noarg": true,

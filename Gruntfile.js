@@ -48,7 +48,10 @@ module.exports = function (grunt) {
     },
     watch: {
       js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        files: [
+					'<%= yeoman.app %>/scripts/{,*/}*.js',
+					'locales/{,*/}*.json'
+				],
         tasks: ['newer:jshint:all'],
         options: {
           livereload: true

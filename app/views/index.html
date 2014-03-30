@@ -36,7 +36,7 @@
 					<i class="fa fa-bars"></i>
 				</button>
 				<a class="navbar-brand" href ng-click="logoValidate()">
-					<i class="fa fa-play-circle"></i>  <span class="light">Talkus <%= __('Test') %></span>
+					<i class="fa fa-play-circle"></i>  <span class="light">Talkus</span>
 				</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,10 +47,10 @@
 						<a href="#page-top"></a>
 					</li>
 					<li class="chat-url">
-						<a ng-href="/chat" href translate>Chat</a>
+						<a ng-href="/chat" href><%= __('MenuChat') %></a>
 					</li>
 					<li class="video-url">
-						<a ng-href="/video-chat" href translate>Video Chat</a>
+						<a ng-href="/video-chat" href><%= __('MenuVideoChat') %></a>
 					</li>
 				</ul>
 			</div>
@@ -87,7 +87,6 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-gettext/dist/angular-gettext.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -105,7 +104,6 @@
     <script src="scripts/controllers/videochat.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/menu.js"></script>
-		<script src="scripts/personalScripts/translations.js"></script>
     <script src="scripts/personalScripts/lib/recorder.js"></script>
     <script src="scripts/personalScripts/recordLive.js"></script>
     <!-- endbuild -->
