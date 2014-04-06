@@ -10,3 +10,4 @@ heroku
 dist
 .idea
 logs
+npm-debug.log
