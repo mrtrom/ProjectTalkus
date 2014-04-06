@@ -42,7 +42,9 @@
 							</div>
 
 							<div class="row-fluid profilepic">
-								<div class="span12"><img id="popoverInfoMe" ng-src="{{userInformation.avatar}}" class="img-rounded"/>
+								<div class="span12">
+                  <img id="popoverInfoMe" ng-src="{{userInformation.avatar}}" class="img-rounded"/>
+                  <div id="publisherContainer"></div>
 									<ul>
 										<li id="deleteclick" ng-click="deletePhoto()"><i class="glyphicon glyphicon-remove"></i></li>
 										<li id="uploadclick" ng-click="uploadClick()"><i class="glyphicon glyphicon-upload"></i></li>
@@ -75,17 +77,15 @@
 					<fieldset class="fieldsetProfile">
 						<legend class="sidebar-brand">Anonym</legend>
 						<input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
-						<div class="row-fluid profilepic"><img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/></div>
-
-
+						<div class="row-fluid profilepic">
+              <img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/>
+              <div id="subscriberContainer"></div>
+            </div>
 					</fieldset>
 				</form>
-				<div id="streams">
-					<div id="publisherContainer"></div>
-					<div id="subscriberContainer"></div>
-				</div>
+
+
 				<div id="controls">
-					<div id="notificationContainer"></div>
 					<button class="btn btn-primary log" id="nextButton">New Room</button>
 				</div>
 			</div>

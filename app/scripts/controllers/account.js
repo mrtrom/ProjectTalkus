@@ -16,6 +16,22 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
     $scope.initchat = function(){
 
+      function hideMyImageShowCamera(){
+        $('#popoverInfoMe').hide();
+      }
+
+      function showMyImageHideCamera(){
+        $('#popoverInfoMe').show();
+      }
+
+      function hideAnonymImageShowCamera(){
+        $('#anonym-profile').hide();
+      }
+
+      function showAnonymImageHideCamera(){
+        $('#anonym-profile').show();
+      }
+
       var SocketProxy = function() {
 
         var findTextVideoPartner = function(mySessionId) {
@@ -51,7 +67,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         var init = function(sessionId, token, times) {
 
           function sessionConnectedHandler() {
-            ele.notificationContainer.innerHTML = "Connected, press allow.";
+
+            hideMyImageShowCamera();
 
             var div = document.createElement('div');
             div.setAttribute('id', 'publisher');
@@ -74,6 +91,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           }
 
           function sessionDisconnectedHandler() {
+            showMyImageHideCamera();
             mySession.removeEventListener('sessionConnected', sessionConnectedHandler);
             mySession.removeEventListener('streamCreated', streamCreatedHandler);
             mySession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
@@ -81,10 +99,8 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
           ele.publisherContainer = document.getElementById('publisherContainer');
           ele.subscriberContainer = document.getElementById('subscriberContainer');
-          ele.notificationContainer = document.getElementById('notificationContainer');
           ele.nextButton = document.getElementById('nextButton');
 
-          ele.notificationContainer.innerHTML = 'Connecting...';
 
           ele.nextButton.onclick = function() {
             socket.emit('cancelPusblish');
@@ -122,6 +138,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         };
 
         var unsuscribePartner = function() {
+          showAnonymImageHideCamera();
           partnerSession.unsubscribe(subscriberObject);
         };
 
@@ -132,6 +149,9 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         var subscribe = function(sessionId, token) {
 
           function sessionConnectedHandler(event) {
+
+            hideAnonymImageShowCamera();
+
             var div = document.createElement('div');
             div.setAttribute('id', 'subscriber');
             ele.subscriberContainer.appendChild(div);
@@ -149,8 +169,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             partnerSession.disconnect();
           }
 
-          ele.notificationContainer.innerHTML = 'Have fun !!!!';
-
           partnerSession = TB.initSession(sessionId);
 
           partnerSession.addEventListener('sessionConnected', sessionConnectedHandler);
@@ -166,7 +184,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         };
 
         var wait = function() {
-          ele.notificationContainer.innerHTML = "Nobody to talk to :(.  When someone comes, you'll be the first to know :).";
+          //Wait for person
         };
 
         return {
@@ -207,8 +225,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       });
 
       socket.on('empty', function() {
-        var notificationContainer = document.getElementById('notificationContainer');
-        notificationContainer.innerHTML = "Nobody to talk to :(.  When someone comes, you'll be the first to know :).";
+        //nobody to chat
       });
 
       socket.on('showWriting', function(){
@@ -435,7 +452,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
       $('#registerFieldset').on('click', '#exitVideoChat', function(){
         socket.emit('cancelVideoChat');
-        setTimeout(function(){socket.emit('cancelPusblish');}, 1000);
+        setTimeout(function(){socket.emit('cancelPusblish');}, 300);
       });
 
       $('#conversation').on('click', '#startVideoChat',function(){
