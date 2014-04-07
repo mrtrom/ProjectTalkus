@@ -240,8 +240,11 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         }
       });
 
-      socket.on('updatechat', function (username, data, type, user, file , sound) {
+      socket.on('updatechat', function (username, data, type, user, file , sound, video) {
         if (type !== undefined){
+          var videoExist = false;
+          var countPlayer;
+          var videoId;
           switch(type){
             case 'leave':
               //Disconect
@@ -324,18 +327,42 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                 else{
                   filterTxt.push(text[i]);
                 }
+
+                if (checkURLVideo(text[i])){
+                  countPlayer = $('.ytplayer').size() + "ytplayer";
+                  filterTxt.splice(i, 1);
+                  filterTxt.push('<div class="ytplayer" id=' + countPlayer + '></div>');
+                  videoExist = true;
+                  videoId = returnVideoId(text[i]);
+
+                  console.log('countPlayer: ' + countPlayer);
+                  console.log('filterTxt: ' + filterTxt);
+                }
+                else{
+                  filterTxt.push(text[i]);
+                }
               }
               data = filterTxt.join(" ");
               //end check
               if(user === 'me'){
                 if(file){
                   $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                  if (videoExist){
+                    onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
+                  }
                 }else{
                   if(sound){
                     $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                    if (videoExist){
+                      onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
+                    }
                   }
                   else{
-                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                      $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                    if (videoExist){
+                      onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
+                    }
+
                   }
                 }
 
@@ -343,17 +370,28 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
               else{
                 if(file){
                   $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                  if (videoExist){
+                    onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
+                  }
                 }
                 else{
                   if(sound){
                     $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                    if (videoExist){
+                      onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
+                    }
                   }
                   else{
                     $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                    if (videoExist){
+                      onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
+                    }
                   }
                 }
 
               }
+
+
               break;
           }
         }
@@ -472,6 +510,29 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         else{
           return false;
         }
+      }
+
+      function checkURLVideo(url){
+        if (url.match(/www.youtube.com/) !== null){
+          return url;
+        }
+        else{
+          return false;
+        }
+      }
+
+      function returnVideoId(url){
+        var splitedUrl = url.split('v=');
+        return splitedUrl[1];
+      }
+
+      var player;
+      function onYouTubePlayerAPIReady(height, width, videoId, ytPlayerId) {
+        player = new YT.Player(ytPlayerId, {
+          height: height,
+          width: width,
+          videoId: videoId
+        });
       }
     };
 
