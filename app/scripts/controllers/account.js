@@ -339,7 +339,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                   console.log('filterTxt: ' + filterTxt);
                 }
                 else{
-                  filterTxt.push(text[i]);
+                  //filterTxt.push(text[i]);
                 }
               }
               data = filterTxt.join(" ");
@@ -452,7 +452,11 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         audioElement.src = url;
         //$('#conversation .container').append(audioElement);
         console.log(blob);
-        socket.emit('user sound', audioElement.src);
+         var stream = ss.createStream();
+        //socket.emit('user sound', audioElement.src);
+          ss(socket).emit('user sound', stream, {name: audioElement.src});
+          ss.createBlobReadStream(blob).pipe(stream);
+
         downloadAnchor.href = url;
         downloadAnchor.download = new Date().toISOString() + '.wav';
         downloadAnchor.innerHTML = 'Download';
