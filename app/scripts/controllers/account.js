@@ -8,7 +8,32 @@
 
 Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
   function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-    initVoice();
+
+      //calendar
+      $scope.today = function() {
+          $scope.dt = new Date();
+      };
+      $scope.today();
+
+      $scope.showWeeks = true;
+      $scope.toggleWeeks = function () {
+          $scope.showWeeks = ! $scope.showWeeks;
+      };
+
+      $scope.toggleMin = function() {
+          $scope.minDate = ( $scope.minDate ) ? null : new Date();
+      };
+      $scope.toggleMin();
+
+      $scope.open = function($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+
+          $scope.opened = true;
+      };
+
+      $scope.format = 'dd/MM/yyyy';
+
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1],
         socket = io.connect(hostURL, {port: portURL}),
@@ -231,12 +256,14 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       socket.on('showWriting', function(){
         if ($('#userTyping').css('display') === 'none'){
           $('#userTyping').show();
+            document.title = 'User Typing..';
         }
       });
 
       socket.on('hideWriting', function(){
         if ($('#userTyping').css('display') === 'block'){
           $('#userTyping').hide();
+            document.title = 'New Message';
         }
       });
 
@@ -437,31 +464,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         reader.readAsDataURL(data);
 
       });
-      window.handleWAV = function (blob) {
-        var tableRef = document.getElementById('recordingslist');
-        if (currentEditedSoundIndex !== -1) {
-          $('#recordingslist tr:nth-child(' + (currentEditedSoundIndex + 1) + ')').remove();
-        }
-
-        var url = URL.createObjectURL(blob);
-        var audioElement = document.createElement('audio');
-        var downloadAnchor = document.createElement('a');
-        var editButton = document.createElement('button');
-
-        audioElement.controls = true;
-        audioElement.src = url;
-        //$('#conversation .container').append(audioElement);
-        console.log(blob);
-         var stream = ss.createStream();
-        //socket.emit('user sound', audioElement.src);
-          ss(socket).emit('user sound', stream, {name: audioElement.src});
-          ss.createBlobReadStream(blob).pipe(stream);
-
-        downloadAnchor.href = url;
-        downloadAnchor.download = new Date().toISOString() + '.wav';
-        downloadAnchor.innerHTML = 'Download';
-        downloadAnchor.className = 'btn btn-primary';
-      };
 
       //Send text chat to room via enter
       $('#data').keydown(function(e) {
@@ -574,7 +576,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             //User info and User birth in format (dd/MM/yyyy)
             $scope.userInformation = response;
             $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
-
+            console.log($scope.userInformation.birth);
             //Validations
             //-Not a anonym user, just a loged user.
             $scope.validations.anonymUser = false;
@@ -749,20 +751,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     };
 
     /*Javascript section*/
-
-    //datePicker for users b-day
-    $(function() {
-      $( '#datepicker' ).datepicker({
-        onSelect: function(dateText) {
-          $scope.userInformation.birth = dateText;
-          updateUserAll();
-        },
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '-80:+0',
-        dateFormat: 'dd/mm/yy'
-      });
-    });
 
     //update user info
     $('.FocusAccion').focusout(function() {

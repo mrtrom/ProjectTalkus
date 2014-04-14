@@ -4,7 +4,7 @@
 
 Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
 	function($rootScope, $scope, $http, $location, $modal, Session, Mails, Remember, User, Valid) {
-
+        document.title = 'Welcome to Talkus';
 		//Redireccion si ya está logueado
 		Session.get(function(response) {
 			if ((response !== null ? response._id : void 0) !== null) {

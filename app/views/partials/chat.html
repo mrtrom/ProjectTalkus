@@ -100,10 +100,6 @@
 
 			</div>
 		</div>
-        <div class="audiorecord">
-            <button class="btn btn-primary" onclick="startRecording(this);" disabled>Record</button>
-            <button class="btn btn-warning" onclick="stopRecording(this);" disabled>Stop</button>
-        </div>
 		<div class="wraper-chat">
 			<form class="form-inline textChat">
 				<div id="userTyping">
@@ -130,14 +126,20 @@
 <div class="popover fade left in" id="popoverInfoMeModal">
 	<div class="arrow"></div>
 	<h3 class="popover-title">my info</h3>
-	<div class="popover-content">
+	<div class="popover-content" ng-hide="validations.anonymUser">
 		<div ng-hide="validations.anonymUser">
 			<label>Name</label>
 			<input ng-model="userInformation.name" type="text" placeholder="Name" class="FocusAccion"/>
 		</div>
 		<div ng-hide="validations.anonymUser">
 			<label>Birthday</label>
-			<input id="datepicker" name="datepicker" type="text" ng-model="userInformation.birth"/>
+			<!--<input id="datepicker" name="datepicker" type="text" ng-model="userInformation.birth"/>-->
+            <p class="input-group">
+              <input name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened" min="minDate" max="'2015-06-22'"  close-text="Close" />
+              <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
 		</div>
 		<div ng-hide="validations.anonymUser">
 			<label ng-hide="validations.anonymUser">Email</label>
