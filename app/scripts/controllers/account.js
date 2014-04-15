@@ -6,33 +6,33 @@
 /*global io:false */
 /*global TB:false */
 
-Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
-  function($routeParams, $rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
+Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
+  function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
 
-      //calendar
-      $scope.today = function() {
-          $scope.dt = new Date();
-      };
-      $scope.today();
+    //calendar
+    $scope.today = function() {
+      $scope.dt = new Date();
+    };
+    $scope.today();
 
-      $scope.showWeeks = true;
-      $scope.toggleWeeks = function () {
-          $scope.showWeeks = ! $scope.showWeeks;
-      };
+    $scope.showWeeks = true;
+    $scope.toggleWeeks = function () {
+      $scope.showWeeks = ! $scope.showWeeks;
+    };
 
-      $scope.toggleMin = function() {
-          $scope.minDate = ( $scope.minDate ) ? null : new Date();
-      };
-      $scope.toggleMin();
+    $scope.toggleMin = function() {
+      $scope.minDate = ( $scope.minDate ) ? null : new Date();
+    };
+    $scope.toggleMin();
 
-      $scope.open = function($event) {
-          $event.preventDefault();
-          $event.stopPropagation();
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
 
-          $scope.opened = true;
-      };
+      $scope.opened = true;
+    };
 
-      $scope.format = 'dd/MM/yyyy';
+    $scope.format = 'dd/MM/yyyy';
 
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1],
@@ -41,10 +41,14 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
 
     $scope.initchat = function(){
       function hideMyImageShowCamera(){
+        $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').hide();
+        $('#sidebar-wrapper-anonym.active').css('width', '30.7%');
         $('#popoverInfoMe').hide();
       }
 
       function showMyImageHideCamera(){
+        $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').show();
+        $('#sidebar-wrapper-anonym.active').css('width', '250px');
         $('#popoverInfoMe').show();
       }
 
@@ -98,7 +102,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             div.setAttribute('id', 'publisher');
             ele.publisherContainer.appendChild(div);
 
-            publisherObject = TB.initPublisher(apiKey, div.id);
+            publisherObject = TB.initPublisher(apiKey, div.id,{width:400, height:300});
             mySession.publish(publisherObject);
           }
 
@@ -180,7 +184,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
             div.setAttribute('id', 'subscriber');
             ele.subscriberContainer.appendChild(div);
 
-            subscriberObject = partnerSession.subscribe(event.streams[0], div.id);
+            subscriberObject = partnerSession.subscribe(event.streams[0], div.id, {width:400, height:300});
           }
 
           function sessionDisconnectedHandler() {
@@ -255,14 +259,14 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
       socket.on('showWriting', function(){
         if ($('#userTyping').css('display') === 'none'){
           $('#userTyping').show();
-            document.title = 'User Typing..';
+          document.title = 'User Typing..';
         }
       });
 
       socket.on('hideWriting', function(){
         if ($('#userTyping').css('display') === 'block'){
           $('#userTyping').hide();
-            document.title = 'New Message';
+          document.title = 'New Message';
         }
       });
 
@@ -384,7 +388,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
                     }
                   }
                   else{
-                      $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                    $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
                     if (videoExist){
                       onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                     }
@@ -449,21 +453,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         socket.emit('sendchat', mensaje);
       });
 
-      $('.glyphicon.glyphicon-camera.mycam').click(function(){
-        if($('#data').attr('disabled') !== 'disabled'){
-          $('#imagefile').click();
-        }
-      });
-      $('#imagefile').bind('change', function(e){
-        var data = e.originalEvent.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(evt){
-          socket.emit('user image', evt.target.result);
-        };
-        reader.readAsDataURL(data);
-
-      });
-
       //Send text chat to room via enter
       $('#data').keydown(function(e) {
         if(e.keyCode === 8 || e.keyCode === 46){
@@ -487,6 +476,21 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
           }
           socket.emit('userNotWriting');
         }
+      });
+
+      $('.glyphicon.glyphicon-camera.mycam').click(function(){
+        if($('#data').attr('disabled') !== 'disabled'){
+          $('#imagefile').click();
+        }
+      });
+      $('#imagefile').bind('change', function(e){
+        var data = e.originalEvent.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(evt){
+          socket.emit('user image', evt.target.result);
+        };
+        reader.readAsDataURL(data);
+
       });
 
       $('#registerFieldset').on('click', '#newVideoChat', function(){
