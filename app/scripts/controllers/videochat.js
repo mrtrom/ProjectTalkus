@@ -17,7 +17,6 @@ Modules.controllers.controller('VideoChatController', ['$routeParams', '$rootSco
 
 			$('html').addClass('chat');
 			$('html').addClass('video');
-			$('#locationapi').geocomplete();
 
 			//Connect to room
 			socket.on('connect', function(){
