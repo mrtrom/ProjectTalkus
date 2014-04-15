@@ -11,3 +11,4 @@ dist
 .idea
 logs
 npm-debug.log
+.DS_Store
