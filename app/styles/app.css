@@ -804,6 +804,12 @@ textarea#about {
     border:none;
     box-shadow: none;
 }
+.pac-container{
+    z-index: 9999;
+}
+input[name="datepicker"]{
+    margin:0;
+}
 div.audiorecord {
     position: absolute;
     bottom: 60px;

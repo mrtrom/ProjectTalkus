@@ -40,7 +40,6 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
         RouletteApp;
 
     $scope.initchat = function(){
-
       function hideMyImageShowCamera(){
         $('#popoverInfoMe').hide();
       }
@@ -706,7 +705,7 @@ Modules.controllers.controller('AccountController', ['$routeParams', '$rootScope
     $scope.locationBool = function () {
       if(googleBool === false){
         googleBool = true;
-        $scope.userInformation.location = document.getElementById('locationapi').value;
+        $scope.userInformation.location = document.getElementById('locationgeo').value;
       }else{
         $scope.userInformation.location = '';
         googleBool = false;

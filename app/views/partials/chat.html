@@ -147,7 +147,7 @@
 		</div>
 		<div ng-hide="validations.anonymUser">
 			<label ng-hide="validations.anonymUser">Location</label>
-			<input id="locationapi" type="text" placeholder="Where are you?" ng-model="userInformation.location" class="FocusAccion"/>
+			<input id="locationgeo" type="text" placeholder="Where are you?" ng-model="userInformation.location" class="FocusAccion"/>
 			<div class="share">
 				<label>Would you like to share your location?
 					<input id="checklocation" type="checkbox" ng-model="confirmed" ng-change="locationBool(); updateUsers();"/>
@@ -299,7 +299,7 @@
 
 		$('html').addClass('chat');
 		$('html').removeClass('video');
-		$('#locationapi').geocomplete();
+		$('#locationgeo').geocomplete();
 
 		emo_set_load('simple', emo_set_onload);
 

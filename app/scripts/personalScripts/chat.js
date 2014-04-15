@@ -18,7 +18,6 @@ $(function(){
     $('#popoverInfoMeModal').css('display','none');
     $('#anonym-popup').css('display','none');
   });
-  $('#locationapi').geocomplete();
 	$('#popoverInfoMe').on('click', function(){
 		$('#popoverInfoMeModal').toggle();
     $('#anonym-popup').css('display','none');
