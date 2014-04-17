@@ -40,15 +40,18 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
         RouletteApp;
 
     $scope.initchat = function(){
+
       function hideMyImageShowCamera(){
         $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').hide();
-        $('#sidebar-wrapper-anonym.active').css('width', '30.7%');
+        $('#menu-close-anonym').click();
+        $('#sidebar-wrapper-anonym').css('width', '30.7%');
         $('#popoverInfoMe').hide();
       }
 
       function showMyImageHideCamera(){
         $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').show();
-        $('#sidebar-wrapper-anonym.active').css('width', '250px');
+        $('#menu-toggle-anonym').click();
+        $('#sidebar-wrapper-anonym').css('width', '250px');
         $('#popoverInfoMe').show();
       }
 
@@ -305,8 +308,8 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
               break;
 
             case 'showMessageVideoMe':
-              $('#registerFieldset #newVideoChat').remove();
-              $('#registerFieldset').append('<input type="button" id="exitVideoChat" class="btn btn-primary log" value="Cancel video chat">');
+              $('#extra-buttons #newVideoChat').remove();
+              $('#extra-buttons').append('<input type="button" id="exitVideoChat" class="btn btn-primary log" value="Cancel video chat">');
               $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
               break;
 
@@ -333,14 +336,14 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
               break;
 
             case 'cancelMessageVideoMe':
-              $('#registerFieldset #exitVideoChat').remove();
-              $('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+              $('#extra-buttons #exitVideoChat').remove();
+              $('#extra-buttons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
               $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
               break;
 
             case 'cancelMessageVideoAnonym':
-              $('#registerFieldset #exitVideoChat').remove();
-              $('#registerFieldset').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+              $('#extra-buttons #exitVideoChat').remove();
+              $('#extra-buttons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
               $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
               break;
 
@@ -493,11 +496,11 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
 
       });
 
-      $('#registerFieldset').on('click', '#newVideoChat', function(){
+      $('#extra-buttons').on('click', '#newVideoChat', function(){
         socket.emit('newVideoChat');
       });
 
-      $('#registerFieldset').on('click', '#exitVideoChat', function(){
+      $('#extra-buttons').on('click', '#exitVideoChat', function(){
         socket.emit('cancelVideoChat');
         setTimeout(function(){socket.emit('cancelPusblish');}, 300);
       });

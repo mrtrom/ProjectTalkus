@@ -569,15 +569,6 @@ div.controls button {
 	height: 0px;
   display:none;
 }
-.btn#newVideoChat {
-  float: none;
-  display: block;
-  margin: 5px auto 9px;
-  font-style: normal;
-  font-weight: bold;
-  color: #FFF;
-  font-family: Helvetica;
-}
 #sidebar-wrapper-anonym div.profile,
 #sidebar-wrapper-anonym div.user{
 	padding: 0px 22px;
@@ -611,10 +602,6 @@ div.controls button {
 }
 #popoverInfoMeModal div.popover-content > div , #anonym-popup div.popover-content > div{
 	padding: 5px 0px;
-}
-#nextButton{
-  display: block;
-  margin: 0 auto;
 }
 .btn-group.logout.pull-right {
   float: none !important;
@@ -936,4 +923,17 @@ img.in-image {
     img.in-image {
         width: 100%;
     }
+}
+
+div.extra-buttons {
+  display: block;
+  background: rgba(0,0,0,0.1);
+  height: 108px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+div.extra-buttons .btn {
+  margin-top: 7px;
 }
