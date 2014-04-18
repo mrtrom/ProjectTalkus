@@ -8,7 +8,7 @@
 
 Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
   function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
-
+      document.title = "Talkus";
     //calendar
     $scope.today = function() {
       $scope.dt = new Date();
@@ -263,13 +263,19 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
         if ($('#userTyping').css('display') === 'none'){
           $('#userTyping').show();
           document.title = 'User Typing..';
+            $(window).focus(function() {
+                document.title = 'Talkus';
+            });
         }
       });
 
       socket.on('hideWriting', function(){
         if ($('#userTyping').css('display') === 'block'){
           $('#userTyping').hide();
-          document.title = 'New Message';
+            document.title = 'New Message';
+            $(window).focus(function() {
+                document.title = 'Talkus';
+            });
         }
       });
 
@@ -490,7 +496,27 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
         var data = e.originalEvent.target.files[0];
         var reader = new FileReader();
         reader.onload = function(evt){
-          socket.emit('user image', evt.target.result);
+            loadImage(
+                evt.target.result,
+                function (canvas) {
+                    canvas.toBlob(
+                        function (blob) {
+                            var readerFinal = new window.FileReader();
+                            readerFinal.readAsDataURL(blob);
+                            readerFinal.onload = function() {
+                                var base64data = readerFinal.result;
+                                socket.emit('user image', base64data);
+                            }
+                        },
+                        'image/jpeg'
+                    );
+                },
+                {
+                    maxWidth: 600,
+                    crop:true
+                }
+            );
+
         };
         reader.readAsDataURL(data);
 
