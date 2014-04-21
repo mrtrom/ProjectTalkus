@@ -8,6 +8,7 @@
 
 Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
 	function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
+        document.title = "Talkus";
 
     //calendar
     $scope.today = function() {
@@ -200,14 +201,20 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
       socket.on('showWriting', function(){
         if ($('#userTyping').css('display') === 'none'){
           $('#userTyping').show();
-          document.title = 'User Typing..';
+            document.title = 'User Typing..';
+            $(window).focus(function() {
+                document.title = 'Talkus';
+            });
         }
       });
 
       socket.on('hideWriting', function(){
         if ($('#userTyping').css('display') === 'block'){
           $('#userTyping').hide();
-          document.title = 'New Message';
+            document.title = 'New Message';
+            $(window).focus(function() {
+                document.title = 'Talkus';
+            });
         }
       });
 
@@ -424,15 +431,35 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
           $('#imagefile').click();
         }
       });
-      $('#imagefile').bind('change', function(e){
-        var data = e.originalEvent.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(evt){
-          socket.emit('user image', evt.target.result);
-        };
-        reader.readAsDataURL(data);
+            $('#imagefile').bind('change', function(e){
+                var data = e.originalEvent.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function(evt){
+                    loadImage(
+                        evt.target.result,
+                        function (canvas) {
+                            canvas.toBlob(
+                                function (blob) {
+                                    var readerFinal = new window.FileReader();
+                                    readerFinal.readAsDataURL(blob);
+                                    readerFinal.onload = function() {
+                                        var base64data = readerFinal.result;
+                                        socket.emit('user image', base64data);
+                                    }
+                                },
+                                'image/jpeg'
+                            );
+                        },
+                        {
+                            maxWidth: 600,
+                            crop:true
+                        }
+                    );
 
-      });
+                };
+                reader.readAsDataURL(data);
+
+            });
 
       $('#registerFieldset').on('click', '#newVideoChat', function(){
         socket.emit('newVideoChat');
