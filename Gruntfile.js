@@ -379,7 +379,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'forever:dev:start', 'open', 'express-keepalive']);
+      return grunt.task.run(['build', 'forever:prod:start', 'open', 'express-keepalive']);
     }
 
     grunt.task.run([
