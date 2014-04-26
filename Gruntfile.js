@@ -41,6 +41,14 @@ module.exports = function (grunt) {
         }
       }
     },
+    forever: {
+      prod: {
+        options: {
+          index: 'dist/server.js',
+          logDir: 'logs'
+        }
+      }
+    },
     open: {
       server: {
         url: 'http://localhost:<%= express.options.port %>'
@@ -371,7 +379,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'express:prod', 'open', 'express-keepalive']);
+      return grunt.task.run(['build', 'forever:dev:start', 'open', 'express-keepalive']);
     }
 
     grunt.task.run([
