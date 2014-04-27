@@ -23,7 +23,7 @@ var App = angular.module('talkusApp', [
 App.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {templateUrl: '/partials/index', controller: 'LoginController'})
-    .when('/chat', {templateUrl: '/partials/chat', controller:  'AccountController'})
+    .when('/chat', {templateUrl: '/partials/chat', controller:  'ChatController'})
     .when('/video-chat', {templateUrl: '/partials/videochat', controller:  'VideoChatController'})
     .otherwise({redirectTo: '/'});
   $locationProvider.html5Mode(true);

@@ -6,7 +6,7 @@
 /*global io:false */
 /*global TB:false */
 
-Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
   function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
       document.title = "Talkus";
     //calendar
@@ -86,7 +86,7 @@ Modules.controllers.controller('AccountController', ['$rootScope', '$scope', '$h
 
       RouletteApp = function() {
 
-        var apiKey = 44705712;
+        var apiKey = 44738532;
         var mySession;
         var partnerSession;
         var subscriberObject;

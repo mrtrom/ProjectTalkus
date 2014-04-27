@@ -63,7 +63,7 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
 
       RouletteApp = function() {
 
-        var apiKey = 44705712;
+        var apiKey = 44738532;
 
         var mySession;
         var partnerSession;
