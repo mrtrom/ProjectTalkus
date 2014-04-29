@@ -6,21 +6,19 @@ $(function(){
 		$(".view.ng-scope").toggleClass("slide-left");
 	});
   $('#anonym-profile').click(function(){
-    $('#anonym-popup').toggle();
-    $('#popoverInfoMeModal').css('display','none');
+      $('.popoverInfoMeModal.other').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
   });
 	$("#menu-close-anonym").click(function(e) {
 		e.preventDefault();
 		$("#sidebar-wrapper-anonym").toggleClass("active");
 		$(".view.ng-scope").toggleClass("slide-left");
 	});
-  $('#menu-close-anonym, #conversation , .navbar .container , .wraper-chat').click(function(){
-    $('#popoverInfoMeModal').css('display','none');
-    $('#anonym-popup').css('display','none');
+  $('#menu-close-anonym, #conversation , .navbar .container , .wraper-chat , .infomodel a').click(function(){
+    $('.popoverInfoMeModal').css('width','0');
   });
 	$('#popoverInfoMe').on('click', function(){
-		$('#popoverInfoMeModal').toggle();
-    $('#anonym-popup').css('display','none');
+		$('.popoverInfoMeModal.me').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
+        $('#anonym-popup').css('display','none');
 	});
   $('#conversation').bind('scroll', function()
   {

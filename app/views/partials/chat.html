@@ -122,8 +122,10 @@
 </div>
 
 
-<div class="popover fade left in" id="popoverInfoMeModal">
-  <div class="arrow"></div>
+<div class="mypop popoverInfoMeModal me">
+    <ul class="sidebar-nav infomodel">
+        <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    </ul>
   <h3 class="popover-title">my info</h3>
   <div class="popover-content" ng-hide="validations.anonymUser">
     <div ng-hide="validations.anonymUser">
@@ -178,8 +180,10 @@
   </div>
 </div>
 
-<div class="popover fade left in ng-scope" id="anonym-popup">
-  <div class="arrow"></div>
+<div class="mypop popoverInfoMeModal other">
+    <ul class="sidebar-nav infomodel">
+        <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    </ul>
   <h3 class="popover-title">my info</h3>
   <div class="popover-content">
     <div ng-hide="validations.anonymOtherUserValidationFields.Name">

@@ -585,12 +585,20 @@ div.controls button {
 	text-decoration: underline;
 	cursor: pointer;
 }
-#popoverInfoMeModal{
-  position: absolute;
-  right: 12px;
-  left: auto;
+.chat .ng-scope .popoverInfoMeModal{
+    position: fixed;
+    right: 0px;
+    left: auto;
+    top: 0;
+    background: #fff;
+    width: 0px;
+    height: 100%;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    overflow:hidden;
 }
-#popoverInfoMeModal > h3 , #anonym-popup > h3{
+.chat .ng-scope .popoverInfoMeModal > h3 , #anonym-popup > h3{
 	color: #5b687b;
 	font-weight: 700;
 }
@@ -600,7 +608,7 @@ div.controls button {
 .popover.left .arrow{
   top:30%;
 }
-#popoverInfoMeModal div.popover-content > div , #anonym-popup div.popover-content > div{
+.chat .ng-scope .popoverInfoMeModal div.popover-content > div , #anonym-popup div.popover-content > div{
 	padding: 5px 0px;
 }
 .btn-group.logout.pull-right {
@@ -609,14 +617,14 @@ div.controls button {
   bottom: 0px;
   right: 0px;
 }
-#popoverInfoMeModal div.popover-content > div:last-child,
-#popoverInfoMeModal div.popover-content > div:nth-child(6)
+.chat .ng-scope .popoverInfoMeModal div.popover-content > div:last-child,
+.chat .ng-scope .popoverInfoMeModal div.popover-content > div:nth-child(6)
 #anonym-popup div.popover-content > div:last-child,
 #anonym-popup div.popover-content > div:nth-child(6){
 	border-bottom: none;
 }
 
-#popoverInfoMeModal label:first-child ,
+.chat .ng-scope .popoverInfoMeModal label:first-child ,
 #anonym-popup label:first-child{
 	color: #5b687b;
 	font-weight: 700;
@@ -624,15 +632,15 @@ div.controls button {
 	padding-right: 12px;
 }
 
-#popoverInfoMeModal input ,
+.chat .ng-scope .popoverInfoMeModal input ,
 #anonym-popup input {
 	border: 1px solid #ccc;
   width: 100%;
 }
-#popoverInfoMeModal #checklocation{
+.chat .ng-scope .popoverInfoMeModal #checklocation{
   width:auto;
 }
-#popoverInfoMeModal div.popover-content div.share label ,
+.chat .ng-scope .popoverInfoMeModal div.popover-content div.share label ,
 #anonym-popup div.popover-content div.share label{
 	font-style: italic;
 	font-size: 13px;
@@ -936,4 +944,15 @@ div.extra-buttons {
 
 div.extra-buttons .btn {
   margin-top: 7px;
+}
+ul.sidebar-nav.infomodel{
+    position: absolute;
+    right: 0px;
+    margin: 0;
+    padding: 0;
+}
+.mypop.ng-scope .btn.btn-default.btn-lg.pull-right.toggle{
+    padding: 6px 10px;
+    background: none;
+    border: none;
 }
