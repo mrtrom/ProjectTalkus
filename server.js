@@ -26,7 +26,7 @@ new cronJob('00 00 12 * * 1-7', function(){
 
 
 // Set default node environment to development
-process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Application Config
 var config = require('./lib/config/config');
