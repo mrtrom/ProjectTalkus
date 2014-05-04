@@ -215,10 +215,14 @@
   </div>
 </div>
 
+<!-- build:js({.tmp,app}) scripts/chat.js -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDKJmyaz07K3RpG1LAMXnKbUYJ4creTA&libraries=places&sensor=false"></script>
+<script src="bower_components/jquery-geocomplete/jquery.geocomplete.min.js"></script>
 <script src="scripts/personalScripts/datepicker.js"></script>
 <script src="scripts/personalScripts/ba-emotify.js"></script>
 <script src="scripts/personalScripts/TB.min.js"></script>
 <script src="scripts/personalScripts/chat.js"></script>
+<!-- endbuild -->
 
 <script>
   // Load an Adium Emoticonset.
@@ -299,7 +303,7 @@
     // Replace the 'ytplayer' element with an <iframe> and
     // YouTube player after the API code downloads.
 
-    $('#locationgeo').geocomplete();
+    //$('#locationgeo').geocomplete();
 
     emo_set_load('simple', emo_set_onload);
 

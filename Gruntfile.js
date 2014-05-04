@@ -177,9 +177,9 @@ module.exports = function (grunt) {
         files: {
           src: [
             '<%= yeoman.dist %>/public/scripts/{,*/}*.js',
-            '<%= yeoman.dist %>/public/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/styles/fonts/*'
+            '<%= yeoman.dist %>/public/styles/{,*/}*.css'
+            //'<%= yeoman.dist %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            //'<%= yeoman.dist %>/public/styles/fonts/*'
           ]
         }
       }
@@ -190,7 +190,9 @@ module.exports = function (grunt) {
     // additional tasks can operate on them
     useminPrepare: {
       html: ['<%= yeoman.app %>/views/index.html',
-        '<%= yeoman.app %>/views/index.jade'],
+        '<%= yeoman.app %>/views/index.jade',
+        '<%= yeoman.app %>/views/partials/index.html',
+        '<%= yeoman.app %>/views/partials/chat.html'],
       options: {
         dest: '<%= yeoman.dist %>/public'
       }

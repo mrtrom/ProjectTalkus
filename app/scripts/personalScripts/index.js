@@ -9,10 +9,11 @@ $(function() {
       $(".navbar-fixed-top").removeClass("top-nav-collapse");
     }
   });
+
 	$('html').removeClass('chat');
 	$('html').removeClass('video');
+
   $('.page-scroll a').on('click', function(event) {
-		console.log('entro');
     var $anchor = $(this);
     $('html, body').stop().animate({
       scrollTop: $($anchor.attr('href')).offset().top
