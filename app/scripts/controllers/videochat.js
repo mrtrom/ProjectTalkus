@@ -36,7 +36,7 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
 		$scope.format = 'dd/MM/yyyy';
 
 		var hostURL = window.location.host.split(':')[0],
-				portURL = window.location.host.split(':')[1],
+        portURL = window.location.host.split(':')[1] !== undefined ? window.location.host.split(':')[1] : 80,
 				socket = io.connect(hostURL, {port: portURL}),
 				RouletteApp;
 
