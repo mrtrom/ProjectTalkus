@@ -5,7 +5,9 @@
 
 var Modules = {
   controllers: angular.module('talkusApp.controllers', ['talkusApp.services']),
-  services: angular.module('talkusApp.services', [])
+  services: angular.module('talkusApp.services', []),
+  directives: angular.module('talkusApp.directives', []),
+  filters: angular.module('talkusApp.filters', [])
 };
 
 var App = angular.module('talkusApp', [
