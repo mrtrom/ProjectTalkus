@@ -4,7 +4,8 @@
 /*exported Modules*/
 
 var Modules = {
-  controllers: angular.module('talkusApp.controllers', ['talkusApp.resources'])
+  controllers: angular.module('talkusApp.controllers', ['talkusApp.services']),
+  services: angular.module('talkusApp.services', [])
 };
 
 var App = angular.module('talkusApp', [
@@ -17,7 +18,7 @@ var App = angular.module('talkusApp', [
   'talkusApp.controllers',
   'talkusApp.directives',
   'talkusApp.filters',
-  'talkusApp.resources'
+  'talkusApp.services'
 ]);
 
 App.config(function ($routeProvider, $locationProvider) {
