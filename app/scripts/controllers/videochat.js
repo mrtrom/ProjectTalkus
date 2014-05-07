@@ -637,32 +637,6 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
 			$scope.newpermit.email = true;
 		};
 
-		/*upload images*/
-		$('#fileimg').change(function(){
-			$('#imgbtn').click();
-		});
-
-		$scope.uploadClick = function(){
-			$('#fileimg').click();
-		};
-
-		/*End images*/
-		$scope.deletePhoto = function(){
-			$scope.userInformation.avatar = '/images/uploads/images/avatars/default.jpg';
-			updateUserAll();
-		};
-
-		//user image is shown
-		$scope.uploadImage = function(content){
-			if(content.path === undefined || content.path === ''){
-			}else{
-				//trim path, quite lo que no necesita, con tal que a la final el path queda /images/uploads/images/avatars[[image.jpg]]
-				$scope.userInformation.avatar = content.path.substr(content.path.indexOf('/images/uploads/images/avatars/') + 1);
-
-				//se debe hacer aqui el mismo update
-				updateUserAll();
-			}
-		};
 
 		//general update function
 		$scope.updateUsers = function () {

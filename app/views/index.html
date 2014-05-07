@@ -82,7 +82,9 @@
     <!-- build:js(app) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
     <script src="bower_components/jquery.easing/js/jquery.easing.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -102,20 +104,22 @@
 
     <!-- build:js({.tmp,app}) scripts/public.js -->
 		<script src="bower_components/jquery-geocomplete/jquery.geocomplete.min.js"></script>
-    <script src="scripts/personalScripts/ng-upload.js"></script>
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/directives/appversion.js"></script>
+    <script src="scripts/directives/upload.js"></script>
     <script src="scripts/filters/interpolate.js"></script>
     <script src="scripts/services/chatuser.js"></script>
+    <script src="scripts/services/upload.js"></script>
     <script src="scripts/services/mails.js"></script>
     <script src="scripts/services/remember.js"></script>
     <script src="scripts/services/session.js"></script>
     <script src="scripts/services/user.js"></script>
     <script src="scripts/services/valid.js"></script>
     <script src="scripts/controllers/chat.js"></script>
+    <script src="scripts/controllers/upload.js"></script>
     <script src="scripts/controllers/videochat.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/menu.js"></script>

@@ -15,7 +15,7 @@ var App = angular.module('talkusApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ngUpload',
+  'angularFileUpload',
   'ui.bootstrap',
   'talkusApp.controllers',
   'talkusApp.directives',

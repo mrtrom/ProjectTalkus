@@ -25,7 +25,7 @@
         </div>
 
         <div ng-init="loadInfo()" class="info">
-          <form name="registerForm" ng-upload="ng-upload" method="POST" action="/API/upload">
+          <form name="registerForm" method="POST" action="/API/upload">
             <fieldset id="registerFieldset">
               <legend>Me</legend>
               <input id="username" type="hidden" value="{{userInformation.username}}"/>
@@ -48,17 +48,8 @@
                     <li id="uploadclick" ng-click="uploadClick()"><i class="glyphicon glyphicon-upload"></i></li>
                   </ul>
                 </div>
+                  <upload></upload>
 
-                <div class="span10">
-                  <div ng-hide="validations.anonymUser" class="btn-group uploadimgtrue">
-                    <p>
-                      <input id="fileimg" type="file" name="file"/>
-                    </p>
-                    <p>
-                      <input id="imgbtn" upload-submit="uploadImage(content)" type="submit" value="Submit" class="btn"/>
-                    </p>
-                  </div>
-                </div>
               </div>
 
             </fieldset>
