@@ -6,3 +6,8 @@ angular.module('talkusApp')
 
         });
     })
+    .factory('uploadget', function ($resource) {
+        return $resource('/API/upload/get', {
+
+        });
+    });

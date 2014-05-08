@@ -6,8 +6,8 @@
 /*global io:false */
 /*global TB:false */
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser',
-	function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser) {
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser','uploadget',
+	function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser , uploadget) {
 		document.title = "Talkus";
 		//calendar
 		$scope.today = function() {
@@ -377,8 +377,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 									videoExist = true;
 									videoId = returnVideoId(text[i]);
 
-									console.log('countPlayer: ' + countPlayer);
-									console.log('filterTxt: ' + filterTxt);
 								}
 								else{
 									//filterTxt.push(text[i]);
@@ -606,47 +604,51 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 			//Get the user info by the session
 			Session.get(function(response) {
 				if ((response !== null ? response._id : void 0) !== null) {
-					if (response._id !== null && response._id !== undefined){
-						$scope.logoutBtn = true;
-						//User info and User birth in format (dd/MM/yyyy)
-						$scope.userInformation = response;
-						$scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
-						console.log($scope.userInformation.birth);
-						//Validations
-						//-Not a anonym user, just a loged user.
-						$scope.validations.anonymUser = false;
+                    uploadget.save({username:response.username},function(avatar){
+                        if(avatar.image){$scope.avatar = avatar.image;}else{$scope.avatar = '/images/uploads/images/avatars/default.jpg';}
 
-						//Calculate how many days left before profile delete
-						if($scope.userInformation.confirmed !== 'true'){
+                        if (response._id !== null && response._id !== undefined){
+                            $scope.logoutBtn = true;
+                            //User info and User birth in format (dd/MM/yyyy)
+                            $scope.userInformation = response;
+                            $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
+                            //Validations
+                            //-Not a anonym user, just a loged user.
+                            $scope.validations.anonymUser = false;
 
-							//Show days left in account
-							$scope.newpermit.days = true;
+                            //Calculate how many days left before profile delete
+                            if($scope.userInformation.confirmed !== 'true'){
 
-							var createdDate = new Date($scope.userInformation.created), //Account created date
-									realRest = Math.floor((new Date() - createdDate) / 86400000); //days diff between dates
+                                //Show days left in account
+                                $scope.newpermit.days = true;
 
-							if(realRest >= 15){}else{
-								//Show adv days left
-								$scope.days = 15 - realRest;
-							}
-						}
-						else{
-							//It's a confirmed account, and dont need any action.
-						}
-					}
-					else{
-						$scope.validations.anonymUser = true;
-					}
+                                var createdDate = new Date($scope.userInformation.created), //Account created date
+                                    realRest = Math.floor((new Date() - createdDate) / 86400000); //days diff between dates
 
-					if($scope.validations.anonymUser === true){
-						//$('body').addClass('not-login');
-					}else{
-						//$('body').addClass('login');
-					}
+                                if(realRest >= 15){}else{
+                                    //Show adv days left
+                                    $scope.days = 15 - realRest;
+                                }
+                            }
+                            else{
+                                //It's a confirmed account, and dont need any action.
+                            }
+                        }
+                        else{
+                            $scope.validations.anonymUser = true;
+                        }
 
-					$('body').addClass('login');
+                        if($scope.validations.anonymUser === true){
+                            //$('body').addClass('not-login');
+                        }else{
+                            //$('body').addClass('login');
+                        }
 
-					$scope.validations.anonymUser = false;
+                        $('body').addClass('login');
+
+                        $scope.validations.anonymUser = false;
+                    });
+
 				}
 
 				//User validation
@@ -663,7 +665,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 				if ($scope.userInformation.email === undefined || $scope.userInformation.email === ''){$scope.userInformation.email = '';}
 				if ($scope.userInformation.name === undefined || $scope.userInformation.name === ''){$scope.userInformation.name = $scope.userInformation.username;}
 				if ($scope.userInformation.gender === undefined || $scope.userInformation.gender === ''){$scope.userInformation.gender = '';}
-				if ($scope.userInformation.avatar === undefined || $scope.userInformation.avatar === ''){$scope.userInformation.avatar = '/images/uploads/images/avatars/default.jpg';}
 				if ($scope.userInformation.description === undefined || $scope.userInformation.description === ''){$scope.userInformation.description = '';}
 				if ($scope.userInformation.location === undefined || $scope.userInformation.location === ''){$scope.userInformation.location = '';}
 				if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = '';}
@@ -704,10 +705,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 		//general update function
 		$scope.updateUsers = function () {
 			updateUserAll();
-		};
-
-		$scope.pullDown = function(){
-			console.log('push down');
 		};
 
 		//When GPS is enable, it will get users location

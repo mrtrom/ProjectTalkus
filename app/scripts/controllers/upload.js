@@ -2,8 +2,8 @@
 
 /*global Modules:false */
 
-Modules.controllers.controller('UploadChat', ['$rootScope', '$scope', 'upload',
-    function($rootScope, $scope, upload) {
+Modules.controllers.controller('UploadChat', ['$rootScope', '$scope', 'upload','User','uploadget',
+    function($rootScope, $scope, upload, User, uploadget) {
         $scope.onFileSelect = function($files) {
             //$files: an array of files selected, each file has name, size, and type.
             for (var i = 0; i < $files.length; i++) {
@@ -17,9 +17,8 @@ Modules.controllers.controller('UploadChat', ['$rootScope', '$scope', 'upload',
                                 readerFinal.readAsDataURL(blob);
                                 readerFinal.onload = function() {
                                     var base64data = readerFinal.result;
-                                    upload.save({profile:base64data} , function(allimg){
-                                       console.log(allimg);
-                                        $scope.userInformation.avatar = allimg.imagefull;
+                                    upload.save({photo:base64data , username:$scope.userInformation.username} , function(allimg){
+                                        $scope.avatar = allimg.imagefull;
                                     });
                                 }
                             },
