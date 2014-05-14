@@ -4,25 +4,18 @@
     <ul class="sidebar-nav">
       <a id="menu-close-anonym" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
     </ul>
-
+      <div ng-show="validations.anonymUser" class="profile">
+          <fieldset class="fieldsetProfile">
+              <legend class="sidebar-brand">Anonym</legend>
+              <div class="row-fluid profilepic">
+                  <img ng-src="/images/uploads/images/avatars/default.jpg" class="img-rounded" src="/images/uploads/images/avatars/default.jpg">
+              </div>
+          </fieldset>
+      </div>
     <div ng-hide="validations.anonymUser" class="profile">
       <div class="inside">
 
-        <div ng-show="logoutBtn" class="btn-group logout pull-right">
-          <div class="btn-group">
-            <button type="button" ng-click="logout()" class="btn btn-danger"><i class="glyphicon glyphicon-off"></i></button>
 
-            <button type="button" class="btn btn-danger dropdown-toggle"
-                    data-toggle="dropdown">
-              <span class="caret"></span>
-              <span class="sr-only">Desplegar menú</span>
-            </button>
-
-            <ul class="dropdown-menu" role="menu">
-              <li><a ng-click="deleteAccount()">Acción #1</a></li>
-            </ul>
-          </div>
-        </div>
 
         <div ng-init="loadInfo()" class="info">
           <form name="registerForm" method="POST" action="/API/upload">
@@ -71,9 +64,9 @@
             </div>
           </fieldset>
         </form>
+
       </div>
     </div>
-
 
   </div>
 
@@ -167,6 +160,16 @@
     <div>
       <label ng-click="updateUsers()" class="updateUser"></label>
     </div>
+          <div class="btn-group dropup" ng-show="logoutBtn">
+              <button type="button" class="btn btn-danger" ng-click="logout()">Sign out</button>
+              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                  <li><a ng-click="deleteAccount()">Delete Account</a></li>
+              </ul>
+          </div>
   </div>
 </div>
 
