@@ -506,7 +506,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 											readerFinal.readAsDataURL(blob);
 											readerFinal.onload = function() {
 												var base64data = readerFinal.result;
-												socket.emit('user image', base64data);
+												socket.emit('userImage', base64data);
 											}
 										},
 										'image/jpeg'
