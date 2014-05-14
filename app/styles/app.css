@@ -737,7 +737,9 @@ textarea#about {
 	margin: 0;
 	border-radius: 0;
 	text-align: center;
-  overflow-y:auto;
+	padding-left: 10%;
+	padding-right: 10%;
+	overflow-y: auto;
 }
 .chat #page-top nav.navbar{
 	background: #428bca;
@@ -929,16 +931,22 @@ img.in-image {
 }
 
 div.extra-buttons {
-  display: block;
-  background: rgba(0,0,0,0.1);
-  height: 108px;
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
+	display: block;
+	height: 100%;
+	position: absolute;
+	bottom: 0px;
+	width: 9%;
 }
 
 div.extra-buttons .btn {
-  margin-top: 7px;
+	margin-top: 7px;
+	clear: both;
+	float: left;
+	-webkit-transition: all .3s ease-in-out;
+	transition: all .3s ease-in-out;
+	width: 37px;
+	margin-left: -10px;
+	border-radius: 100px;
 }
 ul.sidebar-nav.infomodel {
     position: absolute;
@@ -951,4 +959,11 @@ ul.sidebar-nav.infomodel {
     padding: 13px 2px;
     background: none;
     border: none;
+}
+div.extra-buttons .btn:hover {
+	width: 168px;
+
+}
+div.extra-buttons .btn i {
+	padding-right: 18px;
 }

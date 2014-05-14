@@ -5,7 +5,6 @@
 Modules.controllers.controller('UploadChat', ['$rootScope', '$scope', 'upload','User','uploadget',
     function($rootScope, $scope, upload, User, uploadget) {
         $scope.onFileSelect = function($files) {
-            console.log($scope.userInformation.username);
             //$files: an array of files selected, each file has name, size, and type.
             for (var i = 0; i < $files.length; i++) {
                 var $file = $files[i];
