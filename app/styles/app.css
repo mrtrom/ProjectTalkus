@@ -601,6 +601,7 @@ div.controls button {
 .chat .ng-scope .popoverInfoMeModal > h3 , #anonym-popup > h3{
 	color: #5b687b;
 	font-weight: 700;
+    padding: 19px 14px;
 }
 .popover-content label{
   display:block;
@@ -610,12 +611,6 @@ div.controls button {
 }
 .chat .ng-scope .popoverInfoMeModal div.popover-content > div , #anonym-popup div.popover-content > div{
 	padding: 5px 0px;
-}
-.btn-group.logout.pull-right {
-  float: none !important;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
 }
 .chat .ng-scope .popoverInfoMeModal div.popover-content > div:last-child,
 .chat .ng-scope .popoverInfoMeModal div.popover-content > div:nth-child(6)
@@ -945,14 +940,15 @@ div.extra-buttons {
 div.extra-buttons .btn {
   margin-top: 7px;
 }
-ul.sidebar-nav.infomodel{
+ul.sidebar-nav.infomodel {
     position: absolute;
-    right: 0px;
+    right: 21px;
     margin: 0;
     padding: 0;
+    top: 4px;
 }
 .mypop.ng-scope .btn.btn-default.btn-lg.pull-right.toggle{
-    padding: 6px 10px;
+    padding: 13px 2px;
     background: none;
     border: none;
 }

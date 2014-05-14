@@ -639,27 +639,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                         }
 
                         if($scope.validations.anonymUser === true){
-                            //$('body').addClass('not-login');
+                            $('body').addClass('not-login');
                         }else{
-                            //$('body').addClass('login');
+                            $('body').addClass('login');
                         }
-
-                        $('body').addClass('login');
-
-                        $scope.validations.anonymUser = false;
                     });
 
-				}
-
-				//User validation
-				if ($scope.userInformation.username === undefined || $scope.userInformation.username === ''){
-					ChatUser.getUsername({username: 'get'},
-							function(response) {
-								$scope.userInformation.username = 'anonym' + response.count;
-								$scope.userInformation.usernameToShow = 'Anonym';
-							}, function() {
-								//error
-							});
 				}
 
 				if ($scope.userInformation.email === undefined || $scope.userInformation.email === ''){$scope.userInformation.email = '';}
@@ -679,7 +664,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 				//error
 			});
 		};
-
+        console.log($scope.validations.anonymUser);
 		//user delete account
 		$scope.deleteAccount = function(){
 			User.delete({username : $scope.userInformation._id},
