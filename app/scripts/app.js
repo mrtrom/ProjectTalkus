@@ -28,6 +28,7 @@ App.config(function ($routeProvider, $locationProvider) {
     .when('/', {templateUrl: '/partials/index', controller: 'LoginController'})
     .when('/chat', {templateUrl: '/partials/chat', controller:  'ChatController'})
     .when('/video-chat', {templateUrl: '/partials/chat', controller:  'VideoChatController'})
+    .when('/test-chat', {templateUrl: '/partials/testchat', controller:  'TestChatController'})
     .otherwise({redirectTo: '/'});
   $locationProvider.html5Mode(true);
 });
