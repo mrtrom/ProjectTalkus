@@ -585,6 +585,11 @@ div.controls button {
 	text-decoration: underline;
 	cursor: pointer;
 }
+ul.dropdown-menu{
+    left:auto !important;
+    right:0 !important;
+    z-index: 99999 !important;
+}
 .chat .ng-scope .popoverInfoMeModal{
     position: fixed;
     right: 0px;
@@ -596,7 +601,7 @@ div.controls button {
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
-    overflow:hidden;
+    overflow:scroll;
 }
 .chat .ng-scope .popoverInfoMeModal > h3 , #anonym-popup > h3{
 	color: #5b687b;
@@ -654,12 +659,16 @@ textarea#about {
 
 #sidebar-wrapper-anonym div.profile div.inside form fieldset ul {
 	background: rgba(50, 118, 177, 0.7);
-	width: 13%;
+	width: 26px;
 	padding: 4px 6px;
 	border-radius: 11px;
 	position: absolute;
 	top: 0px;
-	right: -8px;
+	left: -10px;
+}
+input.upload-file{
+    position: absolute;
+    left: -9999px;
 }
 
 #sidebar-wrapper-anonym div.profile div.inside form fieldset ul li {

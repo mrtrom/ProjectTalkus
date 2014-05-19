@@ -7,7 +7,11 @@
 /*global TB:false */
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser','uploadget',
-	function($rootScope, $scope, $http, $location, $filter, Session, User, Mails, ChatUser , uploadget) {
+	function($rootScope, $scope, f$http, $location, $filter, Session, User, Mails, ChatUser , uploadget) {
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
 		document.title = "Talkus";
 		//calendar
 		$scope.today = function() {
@@ -38,7 +42,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         portURL = window.location.host.split(':')[1] !== undefined ? window.location.host.split(':')[1] : 80,
 				socket = io.connect(hostURL, {port: portURL}),
 				RouletteApp;
-
 		$scope.initchat = function(){
 
 			$('html').addClass('chat');
@@ -235,8 +238,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 			}();
 
 			socket.on('connect', function(){
+                $('.alert.alert-danger.down').remove();
 				socket.emit('adduser', 'Anonym', 'text');
 			});
+
+            socket.on('disconnect', function(){
+                console.log('soket erro');
+                $('#conversation').append('<div class="alert alert-danger down">Looks like our service is currently down, please try again later</div>');
+            });
 
 			socket.on('initialChatVideoInTextRoom', function(data, times) {
 				RouletteApp.init(data.sessionId, data.token, times);
@@ -610,8 +619,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                         if (response._id !== null && response._id !== undefined){
                             $scope.logoutBtn = true;
                             //User info and User birth in format (dd/MM/yyyy)
+                            $scope.userInformation.birth = new Date();
                             $scope.userInformation = response;
-                            $scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
+
+                            //$scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
                             //Validations
                             //-Not a anonym user, just a loged user.
                             $scope.validations.anonymUser = false;
@@ -748,9 +759,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 		function updateUserAll(){
 			User.update($scope.userInformation,
 					function () {
-						//succes
+                        $scope.alerts = [
+                            { type: 'success', msg: 'Profile Updated!' }
+                        ];
 					}, function () {
-						//error
+                        $scope.alerts = [
+                            { type: 'danger', msg: 'Error while updating please try again later' }
+                        ];
 					});
 		}
 

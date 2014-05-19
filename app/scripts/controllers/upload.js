@@ -4,6 +4,14 @@
 
 Modules.controllers.controller('UploadChat', ['$rootScope', '$scope', 'upload','User','uploadget',
     function($rootScope, $scope, upload, User, uploadget) {
+        $scope.uploadClick = function(){
+            $('input.upload-file').click();
+        };
+        $scope.deletePhoto = function(){
+            upload.save({photo:false , username:$scope.userInformation.username} , function(allimg){
+                $scope.avatar = allimg.imagefull;
+            });
+        };
         $scope.onFileSelect = function($files) {
             //$files: an array of files selected, each file has name, size, and type.
             for (var i = 0; i < $files.length; i++) {
