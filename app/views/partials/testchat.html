@@ -6,17 +6,6 @@
 <button type="button" onclick="hangUp();">Hang Up</button>
 
 <script>
-  /*var video = document.getElementById('sourcevid');
-  navigator.webkitGetUserMedia({audio: true, video: true}, success, error);
-  function success(stream) {
-    video.src = window.URL.createObjectURL(stream);
-  }
-  function error(stream) {
-    console.log('error');
-  }*/
-</script>
-
-<script>
 
   // create socket
   var hostURL = window.location.host.split(':')[0],
@@ -33,11 +22,40 @@
     'OfferToReceiveAudio':true,
     'OfferToReceiveVideo':true }};
   var isVideoMuted = false;
+  var RTCPeerConnection;
+  var RTCSessionDescription;
 
   // get the local video up
   function startVideo() {
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || window.navigator.mozGetUserMedia || navigator.msGetUserMedia;
-    window.URL = window.URL || window.webkitURL;
+
+    if (navigator.getUserMedia){
+      navigator.getUserMedia = navigator.getUserMedia;
+      RTCPeerConnection = RTCPeerConnection;
+      RTCSessionDescription = RTCSessionDescription;
+      window.URL = window.URL;
+    }
+    else {
+      if (navigator.webkitGetUserMedia) {
+        navigator.getUserMedia = navigator.webkitGetUserMedia;
+        RTCPeerConnection = webkitRTCPeerConnection;
+        RTCSessionDescription = RTCSessionDescription;
+        window.URL = window.URL || window.webkitURL;
+      }
+      else {
+        if (navigator.mozGetUserMedia) {
+          navigator.getUserMedia = navigator.mozGetUserMedia;
+          RTCPeerConnection = mozRTCPeerConnection;
+          RTCSessionDescription = mozRTCSessionDescription;
+          window.URL = window.URL;
+        }
+        else {
+          navigator.getUserMedia = navigator.msGetUserMedia;
+          RTCPeerConnection = RTCPeerConnection;
+          RTCSessionDescription = RTCSessionDescription;
+          window.URL = window.URL;
+        }
+      }
+    }
 
     navigator.getUserMedia({video: true, audio: true}, successCallback, errorCallback);
     function successCallback(stream) {
@@ -127,14 +145,14 @@
         createPeerConnection();
         started = true;
       }
-      console.log('Creating remote session description...' );
+      console.log('Creating remote session description...');
       peerConn.setRemoteDescription(new RTCSessionDescription(evt));
       console.log('Sending answer...');
       peerConn.createAnswer(setLocalAndSendMessage, createAnswerFailed, mediaConstraints);
 
     } else if (evt.type === 'answer' && started) {
       console.log('Received answer...');
-      console.log('Setting remote session description...' );
+      console.log('Setting remote session description...');
       peerConn.setRemoteDescription(new RTCSessionDescription(evt));
 
     } else if (evt.type === 'candidate' && started) {
@@ -151,7 +169,6 @@
 
   function createPeerConnection() {
     console.log("Creating peer connection");
-    RTCPeerConnection = webkitRTCPeerConnection || mozRTCPeerConnection;
     var pc_config = {"iceServers":[]};
     try {
       peerConn = new RTCPeerConnection(pc_config);
