@@ -12,3 +12,4 @@ dist
 logs
 npm-debug.log
 .DS_Store
+/lib/data/images
