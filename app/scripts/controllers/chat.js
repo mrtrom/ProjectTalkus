@@ -6,8 +6,22 @@
 /*global io:false */
 /*global TB:false */
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser','uploadget',
-	function($rootScope, $scope, f$http, $location, $filter, Session, User, Mails, ChatUser , uploadget) {
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser','uploadget','$route',
+	function($rootScope, $scope, $location, $filter, Session, User, Mails, ChatUser , uploadget,$route) {
+        $scope.newRoom = function(){
+            $route.reload();
+        };
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Looks like your leaving us';
+            }
+
+            // For Safari
+            return 'Looks like your leaving us';
+        };
 
         $scope.closeAlert = function(index) {
             $scope.alerts.splice(index, 1);
