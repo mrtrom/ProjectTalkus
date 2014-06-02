@@ -40,138 +40,28 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
 				socket = io.connect(hostURL, {port: portURL}),
 				RouletteApp;
 
+    // create socket
+    var hostURL = window.location.host.split(':')[0],
+        portURL = window.location.host.split(':')[1] !== undefined ? window.location.host.split(':')[1] : 80,
+        socket = io.connect(hostURL, {port: portURL});
+
+    var sourcevid = document.getElementById('webrtc-sourcevid');
+    var remotevid = document.getElementById('webrtc-remotevid');
+    var localStream = null;
+    var peerConn = null;
+    var started = false;
+    var channelReady = false;
+    var mediaConstraints = {'mandatory': {
+      'OfferToReceiveAudio':true,
+      'OfferToReceiveVideo':true }};
+    var isVideoMuted = false;
+    var RTCPeerConnection;
+    var RTCSessionDescription;
+
 		$scope.initchat = function(){
 
 			$('html').addClass('chat');
 			$('html').addClass('video');
-
-			var SocketProxy = function() {
-
-				var findPartner = function(mySessionId) {
-					socket.emit('nextVideo', { sessionId: mySessionId });
-				};
-
-				var disconnectPartners = function(mySessionId) {
-					socket.emit('disconnectPartners', { sessionId: mySessionId });
-				};
-
-				return {
-					findPartner: findPartner,
-					disconnectPartners: disconnectPartners
-				};
-			}();
-
-			RouletteApp = function() {
-
-				var apiKey = 44738532;
-
-				var mySession;
-				var partnerSession;
-
-				// Get view elements
-				var ele = {};
-				TB.setLogLevel(TB.DEBUG);
-
-				var init = function(sessionId, token) {
-					ele.publisherContainer = document.getElementById('publisherContainer');
-					ele.subscriberContainer = document.getElementById('subscriberContainer');
-					ele.nextButton = document.getElementById('nextButton');
-
-
-					ele.nextButton.onclick = function() {
-						RouletteApp.next();
-					};
-
-					console.log('session id: ' + sessionId);
-
-					mySession = TB.initSession(sessionId);
-					mySession.addEventListener('sessionConnected', sessionConnectedHandler);
-					mySession.addEventListener('streamCreated', streamCreatedHandler);
-					mySession.connect(apiKey, token);
-
-					function sessionConnectedHandler(event) {
-
-						var div = document.createElement('div');
-						div.setAttribute('id', 'publisher');
-						ele.publisherContainer.appendChild(div);
-
-						var publisher = mySession.publish(div.id);
-					};
-
-					function streamCreatedHandler(event) {
-						var stream = event.streams[0];
-						if (mySession.connection.connectionId == stream.connection.connectionId) {
-							SocketProxy.findPartner(mySession.sessionId);
-						}
-					};
-				};
-
-				var next = function() {
-					if (partnerSession !== undefined && partnerSession !== null && partnerSession.connected) {
-						SocketProxy.disconnectPartners(mySession.sessionId);
-					} else {
-						//SocketProxy.findPartner();
-						SocketProxy.findPartner(mySession.sessionId);
-					}
-				};
-
-				var disconnectPartnerMe = function() {
-					partnerSession.disconnect();
-
-					SocketProxy.findPartner(mySession.sessionId);
-					partnerSession = null;
-
-				};
-
-				var disconnectPartner = function() {
-					partnerSession.disconnect();
-				};
-
-				var subscribe = function(sessionId, token) {
-
-					partnerSession = TB.initSession(sessionId);
-
-					partnerSession.addEventListener('sessionConnected', sessionConnectedHandler);
-					partnerSession.addEventListener('sessionDisconnected', sessionDisconnectedHandler);
-					partnerSession.addEventListener('streamDestroyed', streamDestroyedHandler);
-
-					partnerSession.connect(apiKey, token);
-
-					function sessionConnectedHandler(event) {
-						var div = document.createElement('div');
-						div.setAttribute('id', 'subscriber');
-						ele.subscriberContainer.appendChild(div);
-
-						partnerSession.subscribe(event.streams[0], div.id);
-					}
-
-					function sessionDisconnectedHandler(event) {
-						console.log('desconeto');
-						partnerSession.removeEventListener('sessionConnected', sessionConnectedHandler);
-						partnerSession.removeEventListener('sessionDisconnected', sessionDisconnectedHandler);
-						partnerSession.removeEventListener('streamDestroyed', streamDestroyedHandler);
-					}
-
-					function streamDestroyedHandler(event) {
-						console.log('destruyo');
-						partnerSession.disconnect();
-					}
-				};
-
-				var wait = function() {
-
-				};
-
-				return {
-					init: init,
-					next: next,
-					subscribe: subscribe,
-					disconnectPartner: disconnectPartner,
-					disconnectPartnerMe: disconnectPartnerMe,
-					wait: wait
-				};
-
-			}();
 
 			//Connect to room
 			socket.on('connect', function(){
@@ -179,19 +69,10 @@ Modules.controllers.controller('VideoChatController', ['$rootScope', '$scope', '
 			});
 
 			socket.on('initialVideo', function(data) {
-				RouletteApp.init(data.sessionId, data.token);
-			});
-
-			socket.on('subscribe', function(data) {
-				RouletteApp.subscribe(data.sessionId, data.token);
-			});
-
-			socket.on('disconnectPartnerMe', function(data) {
-				RouletteApp.disconnectPartnerMe();
-			});
-
-			socket.on('disconnectPartner', function(data) {
-				RouletteApp.disconnectPartner();
+        console.log('Channel opened.');
+        channelReady = true;
+        startVideo();
+        socket.emit('nextVideo');
 			});
 
 			socket.on('empty', function() {
