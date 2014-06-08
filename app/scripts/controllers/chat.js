@@ -11,7 +11,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
         $scope.newRoom = function(){
             $route.reload();
         };
-        window.onbeforeunload = function (e) {
+        /*window.onbeforeunload = function (e) {
             e = e || window.event;
 
             // For IE and Firefox prior to version 4
@@ -21,7 +21,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 
             // For Safari
             return 'Looks like your leaving us';
-        };
+        };*/
 
         $scope.closeAlert = function(index) {
             $scope.alerts.splice(index, 1);
@@ -329,14 +329,29 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 
 							$('.fieldsetProfile').hide();
 
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
-
+							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
+                            $.notify('Looks like the user left', {
+                                globalPosition: 'top left'
+                            });
+                            new PNotify({
+                                title: 'Woa',
+                                text: 'Looks like the user left'
+                            });
 							//executeAnimateLoading();
 							break;
 
 						case 'connect':
 							$('#conversation').empty();
-							$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
+							//$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
+                            $.notify('You are now connected to another mitbip!!', {
+                                globalPosition: 'top left',
+                                className:'success'
+                            });
+                            new PNotify({
+                                title: 'Welcome',
+                                text: 'You are now connected to another mitbip!!',
+                                type: 'success'
+                            });
 							break;
 
 						case 'showMessageVideoMe':
@@ -351,20 +366,24 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 
 						case 'succesMessageVideoMe':
 							$('#conversation .startChatNow').remove();
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
+							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
+                            $.notify('You are now both on video', "success");
 							break;
 
 						case 'succesMessageVideoAnonym':
 							$('#conversation .startChatNow').remove();
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
+							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
+                            $.notify('You are now both on video', "success");
 							break;
 
 						case 'failMessageVideoMe':
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
+							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
+                            $.notify('Video failed to initialize', "success");
 							break;
 
 						case 'failMessageVideoAnonym':
-							$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
+							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
+                            $.notify('Video filed to start', "success");
 							break;
 
 						case 'cancelMessageVideoMe':
