@@ -7,6 +7,4 @@ Modules.controllers.controller('TestChatController', ['$rootScope', '$scope', '$
 
 
 
-
-
   }]);

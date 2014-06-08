@@ -35,7 +35,8 @@
               <div class="row-fluid profilepic">
                 <div class="span12">
                   <img id="popoverInfoMe" ng-src="{{avatar}}" class="img-rounded"/>
-                  <div id="publisherContainer"></div>
+                  <video id="webrtc-sourcevid" autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
+                  <button type="button" onclick="connect();">Connect</button>
                   <ul>
                     <li id="deleteclick" ng-click="deletePhoto()"><i class="glyphicon glyphicon-remove"></i></li>
                     <li id="uploadclick" ng-click="uploadClick()"><i class="glyphicon glyphicon-upload"></i></li>
@@ -60,7 +61,7 @@
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
               <img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/>
-              <div id="subscriberContainer"></div>
+              <video id="webrtc-remotevid" autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
             </div>
           </fieldset>
         </form>
@@ -212,6 +213,6 @@
 <!-- build:js({.tmp,app}) scripts/chat.js -->
 <script src="scripts/personalScripts/datepicker.js"></script>
 <script src="scripts/personalScripts/ba-emotify.js"></script>
-<script src="scripts/personalScripts/TB.min.js"></script>
 <script src="scripts/personalScripts/chat.js"></script>
+<script src="scripts/personalScripts/video-chat-streaming.js"></script>
 <!-- endbuild -->
