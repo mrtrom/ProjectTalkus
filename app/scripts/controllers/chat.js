@@ -6,8 +6,16 @@
 /*global io:false */
 /*global TB:false */
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$location', '$filter', 'Session', 'User', 'Mails' , 'ChatUser','uploadget','$route',
-	function($rootScope, $scope, $location, $filter, Session, User, Mails, ChatUser , uploadget,$route) {
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$location', '$filter','$cookies', 'Session', 'User', 'Mails' , 'ChatUser','uploadget','$route',
+	function($rootScope, $scope, $location, $filter,$cookies, Session, User, Mails, ChatUser , uploadget,$route) {
+        $scope.getlog = function(){
+            $('#firstlight').modal('hide');
+            $('#modMain').modal('show');
+        };
+        if(!$cookies.myshow){
+            $cookies.myshow = 'true';
+            $('#firstlight').modal('show');
+        }
         $scope.newRoom = function(){
             $route.reload();
         };
@@ -113,7 +121,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 				var publisherObject;
 
 				var ele = {};
-				TB.setLogLevel(TB.DEBUG);
+				//TB.setLogLevel(TB.DEBUG);
 
 				var init = function(sessionId, token, times) {
 
@@ -330,9 +338,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 							$('.fieldsetProfile').hide();
 
 							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
-                            $.notify('Looks like the user left', {
-                                globalPosition: 'top left'
-                            });
                             new PNotify({
                                 title: 'Woa',
                                 text: 'Looks like the user left'
@@ -343,16 +348,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 						case 'connect':
 							$('#conversation').empty();
 							//$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
-                            $.notify('You are now connected to another mitbip!!', {
-                                globalPosition: 'top left',
-                                className:'success'
-                            });
                             new PNotify({
                                 title: 'Welcome',
                                 text: 'You are now connected to another mitbip!!',
                                 type: 'success'
                             });
 							break;
+
 
 						case 'showMessageVideoMe':
 							$('#extra-buttons #newVideoChat').remove();
@@ -367,23 +369,37 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 						case 'succesMessageVideoMe':
 							$('#conversation .startChatNow').remove();
 							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
-                            $.notify('You are now both on video', "success");
+                            new PNotify({
+                                title: 'Success',
+                                text: 'You are now both on video',
+                                type: 'success'
+                            });
 							break;
 
 						case 'succesMessageVideoAnonym':
 							$('#conversation .startChatNow').remove();
 							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
-                            $.notify('You are now both on video', "success");
+                            new PNotify({
+                                title: 'Success',
+                                text: 'You are now both on video',
+                                type: 'success'
+                            });
 							break;
 
 						case 'failMessageVideoMe':
 							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
-                            $.notify('Video failed to initialize', "success");
+                            new PNotify({
+                                title: 'Success',
+                                text: 'Video failed to initialized'
+                            });
 							break;
 
 						case 'failMessageVideoAnonym':
 							//$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
-                            $.notify('Video filed to start', "success");
+                            new PNotify({
+                                title: 'Success',
+                                text: 'Video failed to initialized'
+                            });
 							break;
 
 						case 'cancelMessageVideoMe':
@@ -708,7 +724,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$loca
 				//error
 			});
 		};
-        console.log($scope.validations.anonymUser);
+        //console.log($scope.validations.anonymUser);
 		//user delete account
 		$scope.deleteAccount = function(){
 			User.delete({username : $scope.userInformation._id},

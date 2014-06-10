@@ -34,35 +34,16 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   </head>
   <body ng-app="talkusApp" id="page-top" data-spy="scroll" data-target=".navbar-custom">
-	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-					<i class="fa fa-bars"></i>
-				</button>
-				<a class="navbar-brand" href ng-click="logoValidate()">
-					<i class="fa fa-play-circle"></i>  <span class="light">Talkus</span>
-				</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-				<ul class="nav navbar-nav" id="clickme">
-					<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-					<li class="hidden">
-						<a href="#page-top"></a>
-					</li>
-					<li class="chat-url">
-						<a ng-href="/chat" href><%= __('MenuChat') %></a>
-					</li>
-					<li class="video-url">
-						<a ng-href="/video-chat" href><%= __('MenuVideoChat') %></a>
-					</li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
+  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
+      <div class="container">
+          <div class="navbar-header">
+              <a class="navbar-brand" href data-toggle="modal" data-target="#modMain" >
+                  <i class="fa fa-play-circle"></i>  <span class="light">Sign in / up</span>
+              </a>
+          </div>
+      </div>
+      <!-- /.container -->
+  </nav>
     <!-- Add your site or application content here -->
 		<div ng-view="ng-view" class="view"></div>
 
@@ -102,7 +83,6 @@
     <script src="bower_components/blueimp-load-image/js/load-image-exif.js"></script>
     <script src="bower_components/blueimp-load-image/js/load-image-exif-map.js"></script>
     <script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
-    <script src="bower_components/notifyjs/dist/notify.js"></script>
     <script src="bower_components/pnotify/pnotify.core.js"></script>
     <script src="bower_components/pnotify/pnotify.buttons.js"></script>
     <script src="bower_components/pnotify/pnotify.callbacks.js"></script>
@@ -121,6 +101,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/directives/appversion.js"></script>
     <script src="scripts/directives/upload.js"></script>
+    <script src="scripts/directives/home.js"></script>
     <script src="scripts/filters/interpolate.js"></script>
     <script src="scripts/services/chatuser.js"></script>
     <script src="scripts/services/upload.js"></script>
@@ -135,7 +116,6 @@
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/menu.js"></script>
     <script src="scripts/controllers/testchat.js"></script>
-    <script src="bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js"></script>
     <!-- endbuild -->
 
 		<!-- External scripts -->

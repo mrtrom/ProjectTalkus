@@ -1,3 +1,4 @@
+
 <div>
   <a id="menu-toggle-anonym" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
   <div id="sidebar-wrapper-anonym">
@@ -209,7 +210,56 @@
     </div>
   </div>
 </div>
+<!-- modal home password -->
+<div class="modal fade" id="modMain" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Welcome
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <home></home>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal remember password -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form ng-submit="forgotpass()">
+                <div class="modal-header">
+                    <h3  ><%= __('EnterEmail') %></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div ng-show="password.remember" class="alert alert-success"  ><strong><%= __('Success') %> </strong><%= __('EmailHasBeenSent') %></div>
+                    <div ng-show="password.remembererror" class="alert alert-danger"  ><strong  ><%= __('Oops') %> </strong><%= __('EmailDoesNotExist') %></div>
+                    <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
+                        <input type="email" placeholder="<%= __('Email') %>" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" ><%= __('Send') %></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="firstlight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="color: #000;margin: 0;padding: 0">Hi there!</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Welcome to talkus! here we can put what ever or click <span ng-click="getlog()">Here</span> to sign up</p>
+                </div>
+        </div>
+    </div>
+</div>
 <!-- build:js({.tmp,app}) scripts/chat.js -->
 <script src="scripts/personalScripts/datepicker.js"></script>
 <script src="scripts/personalScripts/ba-emotify.js"></script>

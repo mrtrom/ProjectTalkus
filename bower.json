@@ -19,7 +19,6 @@
     "jquery-geocomplete": ">= 0.0.1",
     "blueimp-load-image": "1.11.1",
     "blueimp-canvas-to-blob": "2.1.0",
-    "notifyjs":"0.3.1",
     "pnotify": "2.0.1"
   },
   "devDependencies": {

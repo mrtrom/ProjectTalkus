@@ -5,14 +5,12 @@
 Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
 	function($rootScope, $scope, $http, $location, $modal, Session, Mails, Remember, User, Valid) {
 
-    document.title = 'Welcome to Talkus';
-
 		//Redireccion si ya está logueado
 		Session.get(function(response) {
 			if ((response !== null ? response._id : void 0) !== null) {
 				if (response._id !== null && response._id !== undefined){
 					$scope.loginValidations.userSessionExist = true;
-					$location.path('/chat');
+					$location.path('/');
 				}
 			}
 		}, function() {
@@ -28,7 +26,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 			$scope.Valid.$save(function(res) {
 						$rootScope.user = res;
 						$scope.permissions.invalidUserInfo = false;
-						$location.path('/chat');
+						$location.path('/');
 					},
 					function(){
 						//Error
@@ -85,7 +83,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 			$scope.session.$save(function(res) {
 					$rootScope.user = res.user;
 					$scope.permissions.invalidUserInfo = false;
-					$location.path('/chat');
+					$location.path('/');
 				},
 				function(res){
 					switch (res.status) {
