@@ -35,7 +35,7 @@
               <div class="row-fluid profilepic">
                 <div class="span12">
                   <img id="popoverInfoMe" ng-src="{{avatar}}" class="img-rounded"/>
-                  <video id="webrtc-sourcevid" autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
+                  <video id="webrtc-sourcevid" muted autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
                   <button type="button" onclick="connect();">Connect</button>
                   <ul>
                     <li id="deleteclick" ng-click="deletePhoto()"><i class="glyphicon glyphicon-remove"></i></li>
@@ -61,7 +61,7 @@
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
               <img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/>
-              <video id="webrtc-remotevid" autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
+              <video id="webrtc-remotevid" controls autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
             </div>
           </fieldset>
         </form>
@@ -81,6 +81,7 @@
     <div class="extra-buttons" id="extra-buttons">
       <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i> New Room</button>
       <button class="btn btn-primary log" id="newVideoChat" ng-click="newVideoChat()"><i class="glyphicon glyphicon-film"></i> video chat</button>
+      <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i> Cambiar de sala</button>
     </div>
 
     <div class="wraper-chat">

@@ -10,6 +10,48 @@ var mediaConstraints = {'mandatory': {
 var RTCPeerConnection;
 var RTCSessionDescription;
 
+//Camera status
+function hasCamera(){
+  var scope = angular.element($('.view.ng-scope')).scope();
+
+  if (!MediaStreamTrack) {
+    //You must use one of these browsers: Chrome, Firefox or Opera
+    scope.$apply(function(){
+      scope.userHasCamera = false;
+    });
+  }
+  else {
+    var videoSources = [];
+
+    MediaStreamTrack.getSources(function (media_sources) {
+      if (media_sources.length > 0){
+        media_sources.forEach(function (media_source) {
+          if (media_source.kind === 'video') {
+            videoSources.push(media_source);
+          }
+        });
+        if (videoSources.length > 0){
+          scope.$apply(function(){
+            scope.userHasCamera = true;
+          });
+        }
+        else{
+          //No tiene sources de video
+          scope.$apply(function(){
+            scope.userHasCamera = false;
+          });
+        }
+      }
+      else{
+        //No tiene sources
+        scope.$apply(function(){
+          scope.userHasCamera = false;
+        });
+      }
+    });
+  }
+}
+
 //Set local video
 function startVideo() {
 
