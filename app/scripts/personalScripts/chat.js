@@ -141,3 +141,57 @@ $(function(){
     });
   }, 1000);
 });
+//to check if it has an image url
+function checkURL(url) {
+  if(url.match(/\.(jpeg|jpg|gif|png)$/) !== null){
+    return url;
+  }
+  else{
+    return false;
+  }
+}
+
+function checkURLVideo(url){
+  if (url.match(/www.youtube.com/) !== null){
+    return url;
+  }
+  else{
+    return false;
+  }
+}
+
+function returnVideoId(url){
+  var splitedUrl = url.split('v=');
+  return splitedUrl[1];
+}
+
+var player;
+function onYouTubePlayerAPIReady(height, width, videoId, ytPlayerId) {
+  player = new YT.Player(ytPlayerId, {
+    height: height,
+    width: width,
+    videoId: videoId
+  });
+}
+
+function hideMyImageShowCamera(){
+  $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').hide();
+  $('#menu-close-anonym').click();
+  $('#sidebar-wrapper-anonym').css('width', '30.7%');
+  $('#popoverInfoMe').hide();
+}
+
+function showMyImageHideCamera(){
+  $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').show();
+  $('#menu-toggle-anonym').click();
+  $('#sidebar-wrapper-anonym').css('width', '250px');
+  $('#popoverInfoMe').show();
+}
+
+function hideAnonymImageShowCamera(){
+  $('#anonym-profile').hide();
+}
+
+function showAnonymImageHideCamera(){
+  $('#anonym-profile').show();
+}
