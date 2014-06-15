@@ -25,10 +25,10 @@ var App = angular.module('talkusApp', [
 
 App.config(function ($routeProvider, $locationProvider) {
   $routeProvider
-    //.when('/', {templateUrl: '/partials/index', controller: 'LoginController'})
-    .when('/', {templateUrl: '/partials/chat', controller:  'ChatController'})
-    .when('/video-chat', {templateUrl: '/partials/chat', controller:  'VideoChatController'})
-    .when('/test-chat', {templateUrl: '/partials/testchat', controller:  'TestChatController'})
-    .otherwise({redirectTo: '/'});
+      //.when('/', {templateUrl: '/partials/index', controller: 'LoginController'})
+      .when('/', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return false;}}})
+      .when('/chat', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return false;}}})
+      .when('/video-chat', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return true;}}})
+      .otherwise({redirectTo: '/'});
   $locationProvider.html5Mode(true);
 });
