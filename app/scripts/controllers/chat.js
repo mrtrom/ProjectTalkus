@@ -48,11 +48,20 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //<editor-fold desc="InitChat">
     $scope.initchat = function(){
-      hasCamera();
+
+      setTimeout(function(){
+        if (isVideoChat){
+          if (!$scope.userHasCamera){
+            //Show lightbox showing info (don't have camera)
+          }
+
+        }
+      }, 1000);
 
       if (isVideoChat){
         $('html').addClass('chat');
         $('html').addClass('video');
+
       }
       else{
         $('html').addClass('chat');
@@ -400,11 +409,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
       else{
         if ($scope.userHasCamera){
-          console.log('tiene');
           $location.path('/video-chat');
         }
         else{
-          console.log('no tiene');
           //Show lightbox showing info (don't have camera)
         }
       }
@@ -456,7 +463,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     $scope.userInformation = new User();
     $scope.otherUserInfo = new User();
-    $scope.userHasCamera = false;
+    $scope.userHasCamera = hasCamera();
 
     var googleBool = false;
 
