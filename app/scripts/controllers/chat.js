@@ -6,9 +6,20 @@
 /*global io:false */
 /*global channelReady:false */
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
-  function($rootScope, $scope, $http, $location, $filter, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
-    document.title = "Talkus";
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
+  function($rootScope, $scope, $http, $location, $filter,$cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
+      $scope.getlog = function(){
+          $('#firstlight').modal('hide');
+          $('#modMain').modal('show');
+      };
+      if(!$cookies.myshow){
+          $cookies.myshow = 'true';
+          $('#firstlight').modal('show');
+      }
+      $scope.newRoom = function(){
+          $route.reload();
+      };
+      document.title = "Talkus";
 
     /*window.onbeforeunload = function (e) {
      e = e || window.event;
@@ -238,9 +249,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             $('.fieldsetProfile').hide();
 
             //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
-            $.notify('Looks like the user left', {
-              globalPosition: 'top left'
-            });
+
             new PNotify({
               title: 'Woa',
               text: 'Looks like the user left'
@@ -251,10 +260,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
           case 'connect':
             $('#conversation').empty();
             //$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
-            //$.notify('You are now connected to another mitbip!!', {
-            //  globalPosition: 'top left',
-            //  className:'success'
-            //});
+
             new PNotify({
               title: 'Welcome',
               text: 'You are now connected to another mitbip!!',
@@ -275,23 +281,35 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
           case 'succesMessageVideoMe':
             $('#conversation .startChatNow').remove();
             //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
-            $.notify('You are now both on video', "success");
+              new PNotify({
+                  title: 'Success',
+                  text: 'You are now both on video'
+              });
             break;
 
           case 'succesMessageVideoAnonym':
             $('#conversation .startChatNow').remove();
             //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
-            $.notify('You are now both on video', "success");
+              new PNotify({
+                  title: 'Success',
+                  text: 'You are now both on video'
+              });
             break;
 
           case 'failMessageVideoMe':
             //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
-            $.notify('Video failed to initialize', "success");
+              new PNotify({
+                  title: 'Fail',
+                  text: 'The video failed to initialize'
+              });
             break;
 
           case 'failMessageVideoAnonym':
             //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
-            $.notify('Video filed to start', "success");
+              new PNotify({
+                  title: 'Fail',
+                  text: 'The video failed to initialize'
+              });
             break;
 
           case 'cancelMessageVideoMe':
