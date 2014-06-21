@@ -34,16 +34,19 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   </head>
   <body ng-app="talkusApp" id="page-top" data-spy="scroll" data-target=".navbar-custom">
-  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
-      <div class="container">
-          <div class="navbar-header">
-              <a class="navbar-brand" href data-toggle="modal" data-target="#modMain" >
-                  <i class="fa fa-play-circle"></i>  <span class="light">Sign in / up</span>
-              </a>
-          </div>
-      </div>
-      <!-- /.container -->
-  </nav>
+  <div class="mainnavbar">
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href data-toggle="modal" data-target="#modMain" >
+                    <i class="fa fa-play-circle"></i>  <span class="light">Sign in / up</span>
+                </a>
+            </div>
+        </div>
+        <!-- /.container -->
+    </nav>
+    <div class="navtriangle"></div>
+  </div>
     <!-- Add your site or application content here -->
 		<div ng-view="ng-view" class="view"></div>
 
