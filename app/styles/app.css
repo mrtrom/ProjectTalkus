@@ -752,9 +752,6 @@ input.upload-file{
 	overflow-y: auto;
   box-shadow: none;
 }
-div.mainnavbar {
-  padding-top: 10px;
-}
 .chat #page-top nav.navbar{
   background: #428bca;
   padding: 0;
@@ -781,9 +778,13 @@ div.navtriangle {
   margin: 0;
   border-radius: 0;
   padding: 13px 16px;
-  top: 7px;
-  right: 7px;
-  border-radius: 3px;
+  top: -13px;
+  background: #f5f5f5;
+  right: -3px;
+  font-size: 34px;
+}
+.chat #menu-toggle-anonym i {
+  color: #3276b1;
 }
 .chat #page-top > div.view.ng-scope > div:nth-child(1) {
 	height: 100%;
@@ -974,9 +975,9 @@ div.extra-buttons .btn {
 	float: left;
 	-webkit-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
-	width: 37px;
+	width: 39px;
 	margin-left: -10px;
-	border-radius: 100px;
+	border-radius: 0px;
 }
 ul.sidebar-nav.infomodel {
     position: absolute;
@@ -991,11 +992,12 @@ ul.sidebar-nav.infomodel {
     border: none;
 }
 div.extra-buttons .btn:hover {
-	width: 168px;
+	width: 184px;
 
 }
 div.extra-buttons .btn i {
-	padding-right: 18px;
+  padding-right: 21px;
+  padding-left: 4px;
 }
 .chat .modal.ng-scope{
 position: fixed;

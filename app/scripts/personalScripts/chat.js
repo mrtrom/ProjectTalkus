@@ -67,26 +67,26 @@ function emo_set_onload( emoticons ) {
 
 $(function(){
   var intr;
-	$("#menu-toggle-anonym").click(function(e) {
-		e.preventDefault();
-		$("#sidebar-wrapper-anonym").toggleClass("active");
-		$(".view.ng-scope").toggleClass("slide-left");
-	});
-  $('#anonym-profile').click(function(){
-      $('.popoverInfoMeModal.other').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
+  $("#menu-toggle-anonym").click(function(e) {
+    e.preventDefault();
+    $("#sidebar-wrapper-anonym").toggleClass("active");
+    $(".view.ng-scope").toggleClass("slide-left");
   });
-	$("#menu-close-anonym").click(function(e) {
-		e.preventDefault();
-		$("#sidebar-wrapper-anonym").toggleClass("active");
-		$(".view.ng-scope").toggleClass("slide-left");
-	});
+  $('#anonym-profile').click(function(){
+    $('.popoverInfoMeModal.other').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
+  });
+  $("#menu-close-anonym").click(function(e) {
+    e.preventDefault();
+    $("#sidebar-wrapper-anonym").toggleClass("active");
+    $(".view.ng-scope").toggleClass("slide-left");
+  });
   $('#menu-close-anonym, #conversation , .navbar .container , .wraper-chat , .infomodel a').click(function(){
     $('.popoverInfoMeModal').css('width','0');
   });
-	$('#popoverInfoMe').on('click', function(){
-		$('.popoverInfoMeModal.me').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
-        $('#anonym-popup').css('display','none');
-	});
+  $('#popoverInfoMe').on('click', function(){
+    $('.popoverInfoMeModal.me').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
+    $('#anonym-popup').css('display','none');
+  });
   $('#conversation').bind('scroll', function()
   {
     window.clearInterval(intr);
@@ -175,17 +175,25 @@ function onYouTubePlayerAPIReady(height, width, videoId, ytPlayerId) {
 }
 
 function hideMyImageShowCamera(){
-  $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').hide();
-  $('#menu-close-anonym').click();
-  $('#sidebar-wrapper-anonym').css('width', '30.7%');
+  //Hide image
   $('#popoverInfoMe').hide();
+
+  //Hide upload option
+  $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').hide();
+
+  //Show camera
+  $('#webrtc-sourcevid').show();
 }
 
 function showMyImageHideCamera(){
-  $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').show();
-  $('#menu-toggle-anonym').click();
-  $('#sidebar-wrapper-anonym').css('width', '250px');
+  //Show image
   $('#popoverInfoMe').show();
+
+  //Show upload option
+  $('#sidebar-wrapper-anonym div.profile div.inside form fieldset ul').show();
+
+  //Hide camera
+  $('#webrtc-sourcevid').hide();
 }
 
 function hideAnonymImageShowCamera(){

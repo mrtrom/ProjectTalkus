@@ -8,18 +8,8 @@
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
   function($rootScope, $scope, $http, $location, $filter,$cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
-      $scope.getlog = function(){
-          $('#firstlight').modal('hide');
-          $('#modMain').modal('show');
-      };
-      if(!$cookies.myshow){
-          $cookies.myshow = 'true';
-          $('#firstlight').modal('show');
-      }
-      $scope.newRoom = function(){
-          $route.reload();
-      };
-      document.title = "Talkus";
+
+    document.title = "Talkus";
 
     /*window.onbeforeunload = function (e) {
      e = e || window.event;
@@ -65,7 +55,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
           if (!$scope.userHasCamera){
             //Show lightbox showing info (don't have camera)
           }
-
         }
       }, 1000);
 
@@ -248,18 +237,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             $('.fieldsetProfile').hide();
 
-            //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Me dejaron!</span></div><div class=\'clear\'></div>');
-
             new PNotify({
               title: 'Woa',
               text: 'Looks like the user left'
             });
-            //executeAnimateLoading();
             break;
 
           case 'connect':
             $('#conversation').empty();
-            //$('#conversation').append('<div class=\'serverchat\'><i class=\'icon-user\'></i>' + data + '</div><div class=\'clear\'></div>');
 
             new PNotify({
               title: 'Welcome',
@@ -280,36 +265,32 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
           case 'succesMessageVideoMe':
             $('#conversation .startChatNow').remove();
-            //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video<span></div><div class=\'clear\'></div>');
-              new PNotify({
-                  title: 'Success',
-                  text: 'You are now both on video'
-              });
+            new PNotify({
+              title: 'Success',
+              text: 'You are now both on video'
+            });
             break;
 
           case 'succesMessageVideoAnonym':
             $('#conversation .startChatNow').remove();
-            //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you both are now on Video</span></div><div class=\'clear\'></div>');
-              new PNotify({
-                  title: 'Success',
-                  text: 'You are now both on video'
-              });
+            new PNotify({
+              title: 'Success',
+              text: 'You are now both on video'
+            });
             break;
 
           case 'failMessageVideoMe':
-            //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
-              new PNotify({
-                  title: 'Fail',
-                  text: 'The video failed to initialize'
-              });
+            new PNotify({
+              title: 'Fail',
+              text: 'The video failed to initialize'
+            });
             break;
 
           case 'failMessageVideoAnonym':
-            //$('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
-              new PNotify({
-                  title: 'Fail',
-                  text: 'The video failed to initialize'
-              });
+            new PNotify({
+              title: 'Fail',
+              text: 'The video failed to initialize'
+            });
             break;
 
           case 'cancelMessageVideoMe':
@@ -346,12 +327,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                 videoId = returnVideoId(text[i]);
 
               }
-              else{
-                //filterTxt.push(text[i]);
-              }
             }
             data = filterTxt.join(" ");
-            //end check
+
             if(user === 'me'){
               if(file){
                 $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
@@ -407,12 +385,19 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $('#data').attr('disabled', false);
       $('#datasend').attr('disabled', false);
       $('.fieldsetProfile').show();
-      //stopAnimateLoading();
     }
     //</editor-fold>
 
     //<editor-fold desc="User info section">
 
+    $scope.getlog = function(){
+      $('#firstlight').modal('hide');
+      $('#modMain').modal('show');
+    };
+    if(!$cookies.myshow){
+      $cookies.myshow = 'true';
+      $('#firstlight').modal('show');
+    }
     $scope.newRoom = function(){
       $route.reload();
     };
@@ -499,7 +484,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               $scope.userInformation.birth = new Date();
               $scope.userInformation = response;
 
-              //$scope.userInformation.birth = $filter('date')(new Date($scope.userInformation.birth), 'dd/MM/yyyy');
               //Validations
               //-Not a anonym user, just a loged user.
               $scope.validations.anonymUser = false;
@@ -541,12 +525,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         if ($scope.userInformation.description === undefined || $scope.userInformation.description === ''){$scope.userInformation.description = '';}
         if ($scope.userInformation.location === undefined || $scope.userInformation.location === ''){$scope.userInformation.location = '';}
         if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = '';}
-
-        /*console.log('entro');
-
-
-         console.log($scope.userInformation.username);
-         socket.emit('adduser', username, 'text');*/
 
       }, function() {
         //error
