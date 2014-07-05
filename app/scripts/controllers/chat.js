@@ -4,7 +4,21 @@
 /*global Modules:false */
 /*global emotify:false */
 /*global io:false */
-/*global channelReady:false */
+/*global onMessage:false */
+/*global loadImage:false */
+/*global hideMyImageShowCamera:false */
+/*global onChannelOpened:false */
+/*global showMyImageHideCamera:false */
+/*global startVideo:false */
+/*global PNotify:false */
+/*global showAnonymImageHideCamera:false */
+/*global hideAnonymImageShowCamera:false */
+/*global checkURL:false */
+/*global checkURLVideo:false */
+/*global returnVideoId:false */
+/*global onYouTubePlayerAPIReady:false */
+/*global hasCamera:false */
+
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
   function($rootScope, $scope, $http, $location, $filter,$cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
@@ -140,7 +154,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                       readerFinal.onload = function() {
                         var base64data = readerFinal.result;
                         socket.emit('userImage', base64data);
-                      }
+                      };
                     },
                     'image/jpeg'
                 );
@@ -180,9 +194,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $('.alert.alert-danger.down').remove();
 
       if (isVideoChat){
+        hideMyImageShowCamera();
         onChannelOpened();
       }
       else{
+        showMyImageHideCamera();
         socket.emit('adduser', 'Anonym', 'text');
       }
     }
@@ -213,7 +229,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         });
       }
     }
-    function onUpdateChat (username, data, type, user, file , sound, video){
+    function onUpdateChat (username, data, type, user, file , sound){
       if (type !== undefined){
         var videoExist = false;
         var countPlayer;
@@ -246,9 +262,16 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
           case 'connect':
             $('#conversation').empty();
 
+            if (user === 'text'){
+              showAnonymImageHideCamera();
+            }
+            else{
+              hideAnonymImageShowCamera();
+            }
+
             new PNotify({
               title: 'Welcome',
-              text: 'You are now connected to another mitbip!!',
+              text: data,
               type: 'success'
             });
             break;
