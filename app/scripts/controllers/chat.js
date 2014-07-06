@@ -18,6 +18,7 @@
 /*global returnVideoId:false */
 /*global onYouTubePlayerAPIReady:false */
 /*global hasCamera:false */
+/*global hideAnonymImageAndCamera:false */
 
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
@@ -201,6 +202,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         showMyImageHideCamera();
         socket.emit('adduser', 'Anonym', 'text');
       }
+
+      hideAnonymImageAndCamera();
     }
     function onInitialText(){
       socket.emit('nextText');
@@ -602,6 +605,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){
         ChatUser.get({username: $scope.userInformation.username},
             function(response) {
+
               $scope.validations.anonymOtherUser = false;
               $scope.otherUserInfo = response;
 
@@ -620,6 +624,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                   $scope.otherUserInfo.username = 'Anonym';
               }
             });
+      }
+      else{
+        $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+        $scope.otherUserInfo.username = 'Anonym';
       }
     };
 

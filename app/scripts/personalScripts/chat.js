@@ -197,9 +197,25 @@ function showMyImageHideCamera(){
 }
 
 function hideAnonymImageShowCamera(){
+  //Hide image
   $('#anonym-profile').hide();
+
+  //Show camera
+  $('#webrtc-remotevid').show();
 }
 
 function showAnonymImageHideCamera(){
+  //Show image
   $('#anonym-profile').show();
+
+  //Hide camera
+  $('#webrtc-remotevid').hide();
+}
+
+function hideAnonymImageAndCamera(){
+  //Hide image
+  $('#anonym-profile').hide();
+
+  //Hide camera
+  $('#webrtc-remotevid').hide();
 }
