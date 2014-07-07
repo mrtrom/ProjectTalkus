@@ -514,6 +514,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               //-Not a anonym user, just a loged user.
               $scope.validations.anonymUser = false;
 
+              socket.emit('getSocketID');
+
+              socket.on('getSocketIDClient', function(socket){
+                console.log('socket');
+                console.log(socket);
+                $scope.userInformation.socketId = socket;
+              });
+
               //Calculate how many days left before profile delete
               if($scope.userInformation.confirmed !== 'true'){
 
@@ -602,33 +610,36 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //get other user info
     $scope.otherUser = function (){
-      if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){
-        ChatUser.get({username: $scope.userInformation.username},
-            function(response) {
+      setTimeout(function(){
+        if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){
+          console.log('username real: ' + $scope.userInformation.username)
+          ChatUser.get({username: $scope.userInformation.socketId},
+              function(response) {
 
-              $scope.validations.anonymOtherUser = false;
-              $scope.otherUserInfo = response;
+                $scope.validations.anonymOtherUser = false;
+                $scope.otherUserInfo = response;
 
-              //Fields and Validation Fields
-              if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
-              if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
-              if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
-              if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
-              if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
-              if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
+                //Fields and Validation Fields
+                if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
+                if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
+                if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
+                if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
+                if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
+                if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
 
-            }, function(response) {
-              switch (response.status) {
-                case 404:
-                  $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
-                  $scope.otherUserInfo.username = 'Anonym';
-              }
-            });
-      }
-      else{
-        $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
-        $scope.otherUserInfo.username = 'Anonym';
-      }
+              }, function(response) {
+                switch (response.status) {
+                  case 404:
+                    $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+                    $scope.otherUserInfo.username = 'Anonym';
+                }
+              });
+        }
+        else{
+          $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+          $scope.otherUserInfo.username = 'Anonym';
+        }
+      }, 300);
     };
 
 
