@@ -462,7 +462,7 @@ div.controls button {
 	-ms-transition: all 0.4s ease 0s;
 	-o-transition: all 0.4s ease 0s;
 	transition: all 0.4s ease 0s;
-	box-shadow: 3px 0px 10px #000;
+	box-shadow: 2px 0px 5px #428bca;
 	top:0;
   padding-top:40px;
 }
@@ -780,10 +780,10 @@ div.navtriangle {
   margin: 0;
   border-radius: 0;
   padding: 0;
-  top: 1px;
-  /* background: #f5f5f5; */
-  right: 15px;
+  top: 2px;
+  right: 6px;
   font-size: 34px;
+  padding: 0 10px;
 }
 div.mainnavbar {
  z-index: 1033;
@@ -986,7 +986,7 @@ div.extra-buttons {
   display: block;
   height: 83%;
   position: absolute;
-  bottom: 50px;
+  bottom: 21px;
   width: 9%;
 }
 
