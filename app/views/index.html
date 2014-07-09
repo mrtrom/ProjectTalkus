@@ -3,125 +3,129 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <base href="/">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <base href="/">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
 
-		<!--[if lt IE 9]>
-		<meta http-equiv="X-UA-Compatible" content="chrome=1">
-		<![endif]-->
+  <!--[if lt IE 9]>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <![endif]-->
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(app) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/pnotify/pnotify.core.css" />
-    <link rel="stylesheet" href="bower_components/pnotify/pnotify.buttons.css" />
-    <link rel="stylesheet" href="bower_components/pnotify/pnotify.history.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/app.css">
-    <!-- endbuild -->
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(app) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/pnotify/pnotify.core.css" />
+  <link rel="stylesheet" href="bower_components/pnotify/pnotify.buttons.css" />
+  <link rel="stylesheet" href="bower_components/pnotify/pnotify.history.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp,app}) styles/main.css -->
+  <link rel="stylesheet" href="styles/app.css">
+  <!-- endbuild -->
 
-    <!-- Fonts -->
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-  </head>
-  <body ng-app="talkusApp" id="page-top" data-spy="scroll" data-target=".navbar-custom">
-  <div class="mainnavbar">
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href data-toggle="modal" data-target="#modMain" >
-                    <i class="fa fa-play-circle"></i>  <span class="light">Sign in / up</span>
-                </a>
-            </div>
-        </div>
-        <!-- /.container -->
-    </nav>
-    <div class="navtriangle"></div>
-  </div>
-    <!-- Add your site or application content here -->
-		<div ng-view="ng-view" class="view"></div>
+  <!-- Fonts -->
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body ng-app="talkusApp" id="page-top" data-spy="scroll" data-target=".navbar-custom">
+<div class="mainnavbar">
+  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href >
+          <img src="images/mitbip.png" alt="logo" title="mitbip" />
+        </a>
+        <a class="navbar-status" href data-toggle="modal" data-target="#modMain" >
+          <i class="fa fa-play-circle"></i>  <span class="light">Sign in / up</span>
+        </a>
+        <a id="menu-toggle-anonym" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
+      </div>
+    </div>
+    <!-- /.container -->
+  </nav>
+  <!--<div class="navtriangle"></div>-->
+</div>
+<!-- Add your site or application content here -->
+<div ng-view="ng-view" class="view"></div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
+</script>
 
-    <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.min.js"></script>
+<![endif]-->
 
-    <!-- build:js(app) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-    <script src="bower_components/jquery.easing/js/jquery.easing.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/blueimp-load-image/js/load-image.js"></script>
-    <script src="bower_components/blueimp-load-image/js/load-image-ios.js"></script>
-    <script src="bower_components/blueimp-load-image/js/load-image-orientation.js"></script>
-    <script src="bower_components/blueimp-load-image/js/load-image-meta.js"></script>
-    <script src="bower_components/blueimp-load-image/js/load-image-exif.js"></script>
-    <script src="bower_components/blueimp-load-image/js/load-image-exif-map.js"></script>
-    <script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
-    <script src="bower_components/pnotify/pnotify.core.js"></script>
-    <script src="bower_components/pnotify/pnotify.buttons.js"></script>
-    <script src="bower_components/pnotify/pnotify.callbacks.js"></script>
-    <script src="bower_components/pnotify/pnotify.confirm.js"></script>
-    <script src="bower_components/pnotify/pnotify.desktop.js"></script>
-    <script src="bower_components/pnotify/pnotify.history.js"></script>
-    <script src="bower_components/pnotify/pnotify.nonblock.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+<!-- build:js(app) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+<script src="bower_components/jquery.easing/js/jquery.easing.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/blueimp-load-image/js/load-image.js"></script>
+<script src="bower_components/blueimp-load-image/js/load-image-ios.js"></script>
+<script src="bower_components/blueimp-load-image/js/load-image-orientation.js"></script>
+<script src="bower_components/blueimp-load-image/js/load-image-meta.js"></script>
+<script src="bower_components/blueimp-load-image/js/load-image-exif.js"></script>
+<script src="bower_components/blueimp-load-image/js/load-image-exif-map.js"></script>
+<script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
+<script src="bower_components/pnotify/pnotify.core.js"></script>
+<script src="bower_components/pnotify/pnotify.buttons.js"></script>
+<script src="bower_components/pnotify/pnotify.callbacks.js"></script>
+<script src="bower_components/pnotify/pnotify.confirm.js"></script>
+<script src="bower_components/pnotify/pnotify.desktop.js"></script>
+<script src="bower_components/pnotify/pnotify.history.js"></script>
+<script src="bower_components/pnotify/pnotify.nonblock.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/public.js -->
-		<script src="bower_components/jquery-geocomplete/jquery.geocomplete.min.js"></script>
-    <!-- endbuild -->
+<!-- build:js({.tmp,app}) scripts/public.js -->
+<script src="bower_components/jquery-geocomplete/jquery.geocomplete.min.js"></script>
+<!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/directives/appversion.js"></script>
-    <script src="scripts/directives/upload.js"></script>
-    <script src="scripts/directives/home.js"></script>
-    <script src="scripts/filters/interpolate.js"></script>
-    <script src="scripts/services/chatuser.js"></script>
-    <script src="scripts/services/upload.js"></script>
-    <script src="scripts/services/mails.js"></script>
-    <script src="scripts/services/remember.js"></script>
-    <script src="scripts/services/session.js"></script>
-    <script src="scripts/services/user.js"></script>
-    <script src="scripts/services/valid.js"></script>
-    <script src="scripts/controllers/chat.js"></script>
-    <script src="scripts/controllers/upload.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/menu.js"></script>
-    <!-- endbuild -->
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/directives/appversion.js"></script>
+<script src="scripts/directives/upload.js"></script>
+<script src="scripts/directives/home.js"></script>
+<script src="scripts/filters/interpolate.js"></script>
+<script src="scripts/services/chatuser.js"></script>
+<script src="scripts/services/upload.js"></script>
+<script src="scripts/services/mails.js"></script>
+<script src="scripts/services/remember.js"></script>
+<script src="scripts/services/session.js"></script>
+<script src="scripts/services/user.js"></script>
+<script src="scripts/services/valid.js"></script>
+<script src="scripts/controllers/chat.js"></script>
+<script src="scripts/controllers/upload.js"></script>
+<script src="scripts/controllers/login.js"></script>
+<script src="scripts/controllers/menu.js"></script>
+<!-- endbuild -->
 
-		<!-- External scripts -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDKJmyaz07K3RpG1LAMXnKbUYJ4creTA&libraries=places&sensor=false"></script>
-		<script src="/socket.io/socket.io.js"></script>
-		<!-- End External scripts -->
+<!-- External scripts -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDKJmyaz07K3RpG1LAMXnKbUYJ4creTA&libraries=places&sensor=false"></script>
+<script src="/socket.io/socket.io.js"></script>
+<!-- End External scripts -->
 </body>
 </html>

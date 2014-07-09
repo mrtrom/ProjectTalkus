@@ -464,6 +464,7 @@ div.controls button {
 	transition: all 0.4s ease 0s;
 	box-shadow: 3px 0px 10px #000;
 	top:0;
+  padding-top:40px;
 }
 
 #sidebar-wrapper-anonym .sidebar-nav {
@@ -603,6 +604,7 @@ ul.dropdown-menu{
     -moz-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
     overflow:scroll;
+  padding-top: 47px;
 }
 .chat .ng-scope .popoverInfoMeModal > h3 , #anonym-popup > h3{
 	color: #5b687b;
@@ -755,7 +757,7 @@ input.upload-file{
 .chat #page-top nav.navbar{
   background: #428bca;
   padding: 0;
-  width: 50%;
+  width: 100%;
   border: none;
   box-shadow: none;
   float:left;
@@ -777,14 +779,33 @@ div.navtriangle {
   border: none;
   margin: 0;
   border-radius: 0;
-  padding: 13px 16px;
-  top: -13px;
-  background: #f5f5f5;
-  right: -3px;
+  padding: 0;
+  top: 1px;
+  /* background: #f5f5f5; */
+  right: 15px;
   font-size: 34px;
 }
+div.mainnavbar {
+ z-index: 1033;
+ position: relative;
+}
+
+a.navbar-brand {
+ position: absolute;
+ z-index: 1033;
+ top: -15px;
+ left: 44px;
+}
+
+
+a.navbar-brand img{
+ position: absolute;
+ z-index: 99999;
+ width: 99px;
+}
+
 .chat #menu-toggle-anonym i {
-  color: #3276b1;
+  color: #fff;
 }
 .chat #page-top > div.view.ng-scope > div:nth-child(1) {
 	height: 100%;
@@ -962,11 +983,11 @@ img.in-image {
 }
 
 div.extra-buttons {
-	display: block;
-	height: 100%;
-	position: absolute;
-	bottom: 0px;
-	width: 9%;
+  display: block;
+  height: 83%;
+  position: absolute;
+  bottom: 50px;
+  width: 9%;
 }
 
 div.extra-buttons .btn {
@@ -984,12 +1005,18 @@ ul.sidebar-nav.infomodel {
     right: 21px;
     margin: 0;
     padding: 0;
-    top: 4px;
+    top: 51px;
 }
 .mypop.ng-scope .btn.btn-default.btn-lg.pull-right.toggle{
     padding: 13px 2px;
     background: none;
     border: none;
+}
+a.navbar-status {
+  position: absolute;
+  right: 5%;
+  font-size: 16px;
+  top: 13px;
 }
 div.extra-buttons .btn:hover {
 	width: 184px;
