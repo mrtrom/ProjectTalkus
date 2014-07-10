@@ -9,7 +9,7 @@
     <div class="profile">
       <div class="inside">
 
-        <div ng-init="loadInfo()" class="info">
+        <div class="info">
           <form name="registerForm" method="POST" action="/API/upload">
             <fieldset id="registerFieldset">
               <legend>Me</legend>
@@ -26,7 +26,7 @@
 
               <div class="row-fluid profilepic">
                 <div class="span12">
-                  <img id="popoverInfoMe" ng-src="{{avatar}}" class="img-rounded"/>
+                  <img id="popoverInfoMe" ng-src="{{avatar}}" class="img-rounded" width="160" height="160"/>
                   <video id="webrtc-sourcevid" muted autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
                   <button type="button" onclick="connect();">Connect</button>
                   <ul>
@@ -52,7 +52,7 @@
             <legend class="sidebar-brand">Anonym</legend>
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
-              <img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded"/>
+              <img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded" width="160" height="160"/>
               <video id="webrtc-remotevid" controls autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
             </div>
           </fieldset>
@@ -84,7 +84,7 @@
         <div class="row-fluid">
           <div class="chatSendContainer">
             <div class="input">
-              <input id="data" placeholder="Press enter to send" ngChange="pullDown()" type="text" disabled="disabled"/>
+              <input id="data" placeholder="Press enter to send" type="text" disabled="disabled"/>
             </div>
             <input id="datasend" type="button" value="send" disabled="disabled"/>
             <span class="glyphicon glyphicon-camera mycam"></span>
@@ -95,7 +95,6 @@
       </form>
     </div>
   </div>
-
 </div>
 
 
@@ -113,7 +112,7 @@
     <div ng-hide="validations.anonymUser">
       <label>Birthday</label>
       <!--<input id="datepicker" name="datepicker" type="text" ng-model="userInformation.birth"/>-->
-      <p class="input-group">
+      <p class="input-group birth">
         <input name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened"  close-text="Close" datepicker-append-to-body="true" />
           <span class="input-group-btn">
             <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -139,7 +138,7 @@
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           {{userInformation.gender}} <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" role="menu">
+        <ul class="dropdown-menu gender" role="menu">
           <li id="male"> <a ng-click="userInformation.gender = 'Male'; updateUsers();">Male</a></li>
           <li id="female"> <a ng-click="userInformation.gender = 'Female'; updateUsers();">Female</a></li>
           <li id="other"> <a ng-click="userInformation.gender = 'Other'; updateUsers();">Other</a></li>
@@ -195,10 +194,8 @@
       <label>{{otherUserInfo.gender}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Description">
-      <label>About you</label>
-    </div>
-    <div ng-hide="validations.anonymOtherUserValidationFields.Description">
-      <div class="well">{{otherUserInfo.description}}</div>
+      <label>About me</label>
+      <label>{{otherUserInfo.description}}</label>
     </div>
   </div>
 </div>

@@ -2,8 +2,8 @@
 
 /*global Modules:false */
 
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
-	function($rootScope, $scope, $http, $location, $modal, Session, Mails, Remember, User, Valid) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
+	function($rootScope, $scope, $http, $window, $location, $modal, Session, Mails, Remember, User, Valid) {
 
 		//Redireccion si ya está logueado
 		Session.get(function(response) {
@@ -63,8 +63,6 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 		//Remember password
 		$scope.Remember = new Remember();
 
-
-
 		//Rememeber password
 		$scope.forgotpass = function(){
 			$scope.Remember.$save(function() {
@@ -84,6 +82,7 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
 					$rootScope.user = res.user;
 					$scope.permissions.invalidUserInfo = false;
 					$location.path('/');
+          $window.location.reload();
 				},
 				function(res){
 					switch (res.status) {

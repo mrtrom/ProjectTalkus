@@ -160,11 +160,11 @@ function stop() {
   started = false;
 }
 
-function onChannelOpened(evt) {
+function onChannelOpened(username) {
   var scope = angular.element($('.view.ng-scope')).scope();
 
   scope.$apply(function(){
-    scope.emitAddUser('Anonym', 'video');
+    scope.emitAddUser(username, 'video');
   });
 }
 

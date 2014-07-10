@@ -21,8 +21,8 @@
 /*global hideAnonymImageAndCamera:false */
 
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
-  function($rootScope, $scope, $http, $location, $filter,$cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
+  function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
 
     document.title = "Talkus";
 
@@ -76,14 +76,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if (isVideoChat){
         $('html').addClass('chat');
         $('html').addClass('video');
-
       }
       else{
         $('html').addClass('chat');
         $('html').removeClass('video');
       }
 
-      socket.on('connect', onConnect);
+      socket.on('connect', $scope.loadInfo(onConnect));
       socket.on('message', onMessage);
       socket.on('initialVideo', onInitialVideo);
       socket.on('empty', onEmpty);
@@ -191,16 +190,19 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     //</editor-fold>
 
     //<editor-fold desc="Socket functions detail">
-    function onConnect(){
+    function onConnect(username){
+
+      username = username !== undefined ? username : 'Anonym';
+
       $('.alert.alert-danger.down').remove();
 
       if (isVideoChat){
         hideMyImageShowCamera();
-        onChannelOpened();
+        onChannelOpened(username);
       }
       else{
         showMyImageHideCamera();
-        socket.emit('adduser', 'Anonym', 'text');
+        socket.emit('adduser', username, 'text');
       }
 
       hideAnonymImageAndCamera();
@@ -320,13 +322,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'cancelMessageVideoMe':
-            $('#extra-buttons #exitVideoChat').remove();
+            $('#exitVideoChat').remove();
             $('#extra-buttons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
             break;
 
           case 'cancelMessageVideoAnonym':
-            $('#extra-buttons #exitVideoChat').remove();
+            $('#exitVideoChat').remove();
             $('#extra-buttons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
             break;
@@ -497,7 +499,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     var googleBool = false;
 
     //get user session
-    $scope.loadInfo = function () {
+    $scope.loadInfo = function (callback) {
       //Get the user info by the session
       Session.get(function(response) {
         if ((response !== null ? response._id : void 0) !== null) {
@@ -510,6 +512,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               $scope.userInformation.birth = new Date();
               $scope.userInformation = response;
 
+              console.log('$scope.userInformation');
+              console.log($scope.userInformation);
+
+              callback($scope.userInformation.username);
+
               //Validations
               //-Not a anonym user, just a loged user.
               $scope.validations.anonymUser = false;
@@ -517,8 +524,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               socket.emit('getSocketID');
 
               socket.on('getSocketIDClient', function(socket){
-                console.log('socket');
-                console.log(socket);
                 $scope.userInformation.socketId = socket;
               });
 
@@ -542,6 +547,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             }
             else{
               $scope.validations.anonymUser = true;
+              callback('Anonym');
             }
 
             if($scope.validations.anonymUser === true){
@@ -561,7 +567,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         if ($scope.userInformation.birth === undefined || $scope.userInformation.birth === ''){$scope.userInformation.birth = '';}
 
       }, function() {
-        //error
+        //lightbox error
       });
     };
 
@@ -593,10 +599,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       updateUserAll();
     };
 
-    $scope.pullDown = function(){
-      console.log('push down');
-    };
-
     //When GPS is enable, it will get users location
     $scope.locationBool = function () {
       if(googleBool === false){
@@ -610,59 +612,79 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //get other user info
     $scope.otherUser = function (){
-      setTimeout(function(){
-        if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){
-          console.log('username real: ' + $scope.userInformation.username)
-          ChatUser.get({username: $scope.userInformation.socketId},
-              function(response) {
+      if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){
+        ChatUser.get({username: $scope.userInformation.socketId},
+            function(response) {
 
-                $scope.validations.anonymOtherUser = false;
-                $scope.otherUserInfo = response;
+              $scope.validations.anonymOtherUser = false;
+              $scope.otherUserInfo.birth = new Date();
+              $scope.otherUserInfo = response;
 
-                //Fields and Validation Fields
-                if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
-                if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
-                if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
-                if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
-                if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
-                if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
+              $scope.validations.anonymOtherUserValidationFields = {};
 
-              }, function(response) {
-                switch (response.status) {
-                  case 404:
-                    $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
-                    $scope.otherUserInfo.username = 'Anonym';
-                }
-              });
-        }
-        else{
-          $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
-          $scope.otherUserInfo.username = 'Anonym';
-        }
-      }, 300);
+              //Fields and Validation Fields
+              if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
+              if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
+              if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
+              if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
+              if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
+              if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
+
+              if (!$scope.otherUserInfo.username){
+                $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+                $scope.otherUserInfo.username = 'Anonym';
+              }
+              else{
+                uploadget.save({username:$scope.otherUserInfo.username},
+                    function(avatar) {
+                      if (avatar.image) {
+                        $scope.otherUserInfo.avatar = avatar.image;
+                      } else {
+                        $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+                      }
+                    },
+                    function(){
+                      $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+                    });
+              }
+
+            }, function(response) {
+              switch (response.status) {
+                case 404:
+                  $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+                  $scope.otherUserInfo.username = 'Anonym';
+              }
+            });
+      }
+      else{
+        $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
+        $scope.otherUserInfo.username = 'Anonym';
+      }
     };
-
 
     //logout
     $scope.logout = function(){
       Session.delete(function() {
-        $('.preview-loading').hide();
         $location.path('/');
+        $window.location.reload();
       });
     };
-
-    //update user info
-    $('.FocusAccion').focusout(function() {
-      updateUserAll();
-    });
 
     //Here is where the users update function is called when needed
     function updateUserAll(){
       User.update($scope.userInformation,
           function () {
-            $scope.alerts = [
-              { type: 'success', msg: 'Profile Updated!' }
-            ];
+            Session.update({userObject: $scope.userInformation},
+            function(){
+              $scope.alerts = [
+                { type: 'success', msg: 'Profile Updated!' }
+              ];
+            },
+            function(){
+              $scope.alerts = [
+                { type: 'danger', msg: 'Error while updating please try again later' }
+              ];
+            });
           }, function () {
             $scope.alerts = [
               { type: 'danger', msg: 'Error while updating please try again later' }
