@@ -78,6 +78,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         }
       }, 1000);
 
+      $('#locationgeo').geocomplete().bind("geocode:result", function(event, result){
+        $scope.userInformation.location = result.formatted_address;
+      });
+
       if (isVideoChat){
         $('html').addClass('chat');
         $('html').addClass('video');
@@ -183,16 +187,16 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         socket.emit('newVideoChat', 'text');
       });
 
-      $('#extra-buttons').on('click', '#exitVideoChat', function(){
+      $('#videoButtons').on('click', '#exitVideoChat', function(){
         socket.emit('cancelVideoChat');
         setTimeout(function(){socket.emit('cancelPusblish');}, 300);
       });
 
-      $('#conversation').on('click', '#startVideoChat',function(){
+      $(document).on('click', '#startVideoChat',function(){
         socket.emit('succesNewVideoChat');
       });
 
-      $('#conversation').on('click', '#cancelVideoChat',function(){
+      $(document).on('click', '#cancelVideoChat',function(){
         socket.emit('failNewVideoChat');
       });
     };
@@ -215,6 +219,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
 
       hideAnonymImageAndCamera();
+      $('#exitVideoChat').hide();
     }
     function onInitialText(){
       socket.emit('nextText');
@@ -296,8 +301,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'showMessageVideoMe':
-            $('#videoButtons #newVideoChat').remove();
-            $('#extra-buttons').append('<input type="button" id="exitVideoChat" class="btn btn-primary log" value="Cancel video chat">');
+            $('#videoButtons #newVideoChat').hide();
+            $('#videoButtons #exitVideoChat').show();
 
             new PNotify({
               title: 'Video Chat',
@@ -317,7 +322,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'succesMessageVideoMe':
-            $('#conversation .startChatNow').remove();
+            $('#conversation .startChatNow').hide();
             new PNotify({
               title: 'Success',
               text: 'You are now both on video',
@@ -326,7 +331,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'succesMessageVideoAnonym':
-            $('#conversation .startChatNow').remove();
+            $('#conversation .startChatNow').hide();
             new PNotify({
               title: 'Success',
               text: 'You are now both on video',
@@ -351,14 +356,15 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'cancelMessageVideoMe':
-            $('#exitVideoChat').remove();
+            $('#exitVideoChat').hide();
+            $('#newVideoChat').show();
             $('#videoButtons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
             break;
 
           case 'cancelMessageVideoAnonym':
-            $('#exitVideoChat').remove();
-            $('#videoButtons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+            $('#exitVideoChat').hide();
+            $('#newVideoChat').show();
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
             break;
 
@@ -630,7 +636,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if(googleBool === false){
         googleBool = true;
         $scope.userInformation.location = document.getElementById('locationgeo').value;
-      }else{
+      }
+      else{
         $scope.userInformation.location = '';
         googleBool = false;
       }
@@ -683,6 +690,17 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             });
       }
       else{
+
+        $scope.validations.anonymOtherUserValidationFields = {};
+
+        //Fields and Validation Fields
+        if ($scope.otherUserInfo.email === undefined || $scope.otherUserInfo.email === ''){$scope.validations.anonymOtherUserValidationFields.Email = true;}
+        if ($scope.otherUserInfo.name === undefined || $scope.otherUserInfo.name === ''){$scope.validations.anonymOtherUserValidationFields.Name = true;}
+        if ($scope.otherUserInfo.gender === undefined || $scope.otherUserInfo.gender === ''){$scope.validations.anonymOtherUserValidationFields.Gender = true;}
+        if ($scope.otherUserInfo.description === undefined || $scope.otherUserInfo.description === ''){$scope.validations.anonymOtherUserValidationFields.Description = true;}
+        if ($scope.otherUserInfo.location === undefined || $scope.otherUserInfo.location === ''){$scope.validations.anonymOtherUserValidationFields.Location = true;}
+        if ($scope.otherUserInfo.birth === undefined || $scope.otherUserInfo.birth === '' || $scope.otherUserInfo.birth === null){$scope.validations.anonymOtherUserValidationFields.Birth = true;}
+
         $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
         $scope.otherUserInfo.username = 'Anonym';
       }

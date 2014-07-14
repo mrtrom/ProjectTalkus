@@ -26,7 +26,10 @@
 
               <div class="row-fluid profilepic">
                 <div class="span12">
-                  <img id="popoverInfoMe" ng-src="{{avatar}}" class="img-rounded" width="160" height="160"/>
+                  <img id="{{validations.anonymUser === false ? 'popoverInfoMe' : 'popoverInfoAnonym'}}"
+                       ng-src="{{avatar}}" class="img-rounded" width="160" height="160"
+                       data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}"
+                       data-target="{{validations.anonymUser === true ? '#modMain' : ''}}"/>
                   <video id="webrtc-sourcevid" muted autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
                   <ul>
                     <li id="deleteclick" ng-click="deletePhoto()"><i class="glyphicon glyphicon-remove"></i></li>
@@ -37,7 +40,7 @@
               </div>
               <div id="videoButtons">
                 <button class="btn btn-primary log" id="newVideoChat">video chat</button>
-                <button class="btn btn-primary log" id="connectVideoChat">connect</button>
+                <button class="btn btn-primary log" id="exitVideoChat">cancel video chat</button>
               </div>
             </fieldset>
           </form>
@@ -53,7 +56,10 @@
             <legend class="sidebar-brand">Anonym</legend>
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
-              <img id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" class="img-rounded" width="160" height="160"/>
+              <img id="{{validations.anonymUser === false ? 'anonym-profile' : 'anonym-profileAnonym'}}"
+                   ng-src="{{otherUserInfo.avatar}}" class="img-rounded" width="160" height="160"
+                   data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}"
+                   data-target="{{validations.anonymUser === true ? '#modMain' : ''}}"/>
               <video id="webrtc-remotevid" controls autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
             </div>
           </fieldset>
@@ -72,8 +78,8 @@
     </div>
 
     <div class="extra-buttons" id="extra-buttons">
-      <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i> New Room</button>
-      <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i> Cambiar de sala</button>
+      <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i>New room</button>
+      <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i>Change room</button>
     </div>
 
     <div class="wraper-chat">
@@ -107,11 +113,10 @@
   <div class="popover-content" ng-hide="validations.anonymUser">
     <div ng-hide="validations.anonymUser">
       <label>Name</label>
-      <input ng-model="userInformation.name" type="text" placeholder="Name" class="FocusAccion"/>
+      <input ng-model="userInformation.name" type="text" placeholder="Name"/>
     </div>
     <div ng-hide="validations.anonymUser">
       <label>Birthday</label>
-      <!--<input id="datepicker" name="datepicker" type="text" ng-model="userInformation.birth"/>-->
       <p class="input-group birth">
         <input name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened"  close-text="Close" datepicker-append-to-body="true" />
           <span class="input-group-btn">
@@ -121,14 +126,14 @@
     </div>
     <div ng-hide="validations.anonymUser">
       <label ng-hide="validations.anonymUser">Email</label>
-      <input name="email" id="email" ng-model="userInformation.email" type="text" placeholder="Email contact" class="FocusAccion"/>
+      <input name="email" id="email" ng-model="userInformation.email" type="text" placeholder="Email contact"/>
     </div>
     <div ng-hide="validations.anonymUser">
       <label ng-hide="validations.anonymUser">Location</label>
-      <input id="locationgeo" type="text" placeholder="Where are you?" ng-model="userInformation.location" class="FocusAccion"/>
+      <input id="locationgeo" type="text" placeholder="Where are you?" ng-model="userInformation.location" />
       <div class="share">
         <label>Would you like to share your location?
-          <input id="checklocation" type="checkbox" ng-model="confirmed" ng-change="locationBool(); updateUsers();"/>
+          <input id="checklocation" type="checkbox" ng-model="confirmed" ng-change="locationBool();"/>
         </label>
       </div>
     </div>
@@ -139,9 +144,9 @@
           {{userInformation.gender}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu gender" role="menu">
-          <li id="male"> <a ng-click="userInformation.gender = 'Male'; updateUsers();">Male</a></li>
-          <li id="female"> <a ng-click="userInformation.gender = 'Female'; updateUsers();">Female</a></li>
-          <li id="other"> <a ng-click="userInformation.gender = 'Other'; updateUsers();">Other</a></li>
+          <li id="male"> <a ng-click="userInformation.gender = 'Male';">Male</a></li>
+          <li id="female"> <a ng-click="userInformation.gender = 'Female';">Female</a></li>
+          <li id="other"> <a ng-click="userInformation.gender = 'Other';">Other</a></li>
         </ul>
       </div>
 
@@ -149,7 +154,7 @@
     </div>
     <div ng-hide="validations.anonymUser">
       <label ng-hide="validations.anonymUser">About you</label>
-      <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description" class="FocusAccion"></textarea>
+      <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description"></textarea>
     </div>
     <div>
       <button ng-click="updateUsers()" class="btn btn-success">Save</button>
@@ -171,7 +176,7 @@
   <ul class="sidebar-nav infomodel">
     <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
   </ul>
-  <h3 class="popover-title">my info</h3>
+  <h3 class="popover-title">Anonym info</h3>
   <div class="popover-content">
     <div ng-hide="validations.anonymOtherUserValidationFields.Name">
       <label>Name</label>

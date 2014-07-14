@@ -72,7 +72,7 @@ $(function(){
     $("#sidebar-wrapper-anonym").toggleClass("active");
     $(".view.ng-scope").toggleClass("slide-left");
   });
-  $('#anonym-profile').click(function(){
+  $(document).on('click', '#anonym-profile', function(){
     $('.popoverInfoMeModal.other').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
   });
   $("#menu-close-anonym").click(function(e) {
@@ -83,7 +83,7 @@ $(function(){
   $('#menu-close-anonym, #conversation , .navbar .container , .wraper-chat , .infomodel a').click(function(){
     $('.popoverInfoMeModal').css('width','0');
   });
-  $('#popoverInfoMe').on('click', function(){
+  $(document).on('click', '#popoverInfoMe', function(){
     $('.popoverInfoMeModal.me').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
     $('#anonym-popup').css('display','none');
   });
@@ -107,8 +107,6 @@ $(function(){
   tag.src = "https://www.youtube.com/player_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  $('#locationgeo').geocomplete();
 
   emo_set_load('simple', emo_set_onload);
 
