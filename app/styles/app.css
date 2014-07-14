@@ -497,9 +497,9 @@ textarea#about {
 }
 #sidebar-wrapper-anonym div.profile div.inside form fieldset ul {
   background: rgba(50, 118, 177, 0.7);
-  width: 26px;
-  padding: 4px 6px;
-  border-radius: 11px;
+  width: 22px;
+  padding: 2px 4px;
+  border-radius: 0;
   position: absolute;
   top: 0px;
   left: -10px;
@@ -507,6 +507,9 @@ textarea#about {
 input.upload-file{
   position: absolute;
   left: -9999px;
+}
+#videoButtons{
+  text-align: center;
 }
 #sidebar-wrapper-anonym div.profile div.inside form fieldset ul li {
   list-style: none;

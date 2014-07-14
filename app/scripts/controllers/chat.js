@@ -19,6 +19,7 @@
 /*global onYouTubePlayerAPIReady:false */
 /*global hasCamera:false */
 /*global hideAnonymImageAndCamera:false */
+/*global connect:false*/
 
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
@@ -47,6 +48,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     //<editor-fold desc="Scope emit functions">
     $scope.emitSessionDescription = function(sessionDescription){
       socket.emit('sessionDescription', sessionDescription);
+    };
+
+    $scope.emitSendVideoNotification = function(){
+      socket.emit('newVideoChat2');
     };
 
     $scope.emitAddUser = function(user, type){
@@ -170,8 +175,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
       });
 
-      $('#extra-buttons').on('click', '#newVideoChat', function(){
-        socket.emit('newVideoChat');
+      $('#videoButtons').on('click', '#connectVideoChat', function(){
+        connect();
+      });
+
+      $('#videoButtons').on('click', '#newVideoChat', function(){
+        socket.emit('newVideoChat', 'text');
       });
 
       $('#extra-buttons').on('click', '#exitVideoChat', function(){
@@ -210,10 +219,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     function onInitialText(){
       socket.emit('nextText');
     }
-    function onInitialVideo (){
+    function onInitialVideo (data, type){
       window.channelReady = true;
       startVideo();
-      socket.emit('nextVideo');
+
+      if (type && type === 'video'){
+        socket.emit('nextVideo');
+      }
     }
     function onEmpty (){}
     function onShowWriting (){
@@ -260,7 +272,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             new PNotify({
               title: 'Woa',
-              text: 'Looks like the user left'
+              text: 'Looks like the user left',
+              remove: true
             });
             break;
 
@@ -277,25 +290,38 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             new PNotify({
               title: 'Welcome',
               text: data,
-              type: 'success'
+              type: 'success',
+              remove: true
             });
             break;
 
           case 'showMessageVideoMe':
-            $('#extra-buttons #newVideoChat').remove();
+            $('#videoButtons #newVideoChat').remove();
             $('#extra-buttons').append('<input type="button" id="exitVideoChat" class="btn btn-primary log" value="Cancel video chat">');
-            $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>you want to star a videochat</span></div><div class=\'clear\'></div>');
+
+            new PNotify({
+              title: 'Video Chat',
+              text: 'You want to start a videochat',
+              type: 'success',
+              remove: true
+            });
             break;
 
           case 'showMessageVideoAnonym':
-            $('#conversation').append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>');
+            new PNotify({
+              title: 'Video Chat',
+              text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
+              type: 'success',
+              remove: true
+            });
             break;
 
           case 'succesMessageVideoMe':
             $('#conversation .startChatNow').remove();
             new PNotify({
               title: 'Success',
-              text: 'You are now both on video'
+              text: 'You are now both on video',
+              remove: true
             });
             break;
 
@@ -303,33 +329,36 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             $('#conversation .startChatNow').remove();
             new PNotify({
               title: 'Success',
-              text: 'You are now both on video'
+              text: 'You are now both on video',
+              remove: true
             });
             break;
 
           case 'failMessageVideoMe':
             new PNotify({
               title: 'Fail',
-              text: 'The video failed to initialize'
+              text: 'The video failed to initialize',
+              remove: true
             });
             break;
 
           case 'failMessageVideoAnonym':
             new PNotify({
               title: 'Fail',
-              text: 'The video failed to initialize'
+              text: 'The video failed to initialize',
+              remove: true
             });
             break;
 
           case 'cancelMessageVideoMe':
             $('#exitVideoChat').remove();
-            $('#extra-buttons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+            $('#videoButtons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
             break;
 
           case 'cancelMessageVideoAnonym':
             $('#exitVideoChat').remove();
-            $('#extra-buttons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
+            $('#videoButtons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
             break;
 
@@ -511,9 +540,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               //User info and User birth in format (dd/MM/yyyy)
               $scope.userInformation.birth = new Date();
               $scope.userInformation = response;
-
-              console.log('$scope.userInformation');
-              console.log($scope.userInformation);
 
               callback($scope.userInformation.username);
 

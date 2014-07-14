@@ -96,6 +96,13 @@ function startVideo() {
       try {
         sourcevid.src = window.URL.createObjectURL(stream);
         sourcevid.play();
+
+        var scope = angular.element($('.view.ng-scope')).scope();
+
+        scope.$apply(function(){
+          scope.emitSendVideoNotification();
+        });
+
       } catch(e) {
         //Error setting video
       }
