@@ -55,6 +55,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       socket.emit('newVideoChat2');
     };
 
+    $scope.emitVideoStart = function(){
+      socket.emit('nextVideo');
+    };
+
     $scope.emitSendVideoNotificationAnonym = function(){
       hideMyImageShowCamera();
       hideAnonymImageShowCamera();
@@ -94,10 +98,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if (isVideoChat){
         $('html').addClass('chat');
         $('html').addClass('video');
+        $('#videoButtons #newVideoChat').hide();
+        $('#videoButtons #exitVideoChat').hide();
       }
       else{
         $('html').addClass('chat');
         $('html').removeClass('video');
+        $('#videoButtons #newVideoChat').show();
+        $('#videoButtons #exitVideoChat').hide();
       }
 
       socket.on('connect', $scope.loadInfo(onConnect));
@@ -235,11 +243,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     }
     function onInitialVideo (data, type, user){
       window.channelReady = true;
-      startVideo(user);
-
-      if (type && type === 'video'){
-        socket.emit('nextVideo');
-      }
+      startVideo(user, type);
     }
     function onEmpty (){}
     function onShowWriting (){
@@ -260,7 +264,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         });
       }
     }
-    function onUpdateChat (username, data, type, user, file , sound){
+    function onUpdateChat (username, data, type, user, file , sound, typeUser){
       if (type !== undefined){
         var videoExist = false;
         var countPlayer;
@@ -299,6 +303,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             }
             else{
               hideAnonymImageShowCamera();
+            }
+
+            if (typeUser && typeUser === 'me'){
+              connect();
             }
 
             new PNotify({
@@ -382,7 +390,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             showAnonymImageHideCamera();
             $('#exitVideoChat').hide();
             $('#newVideoChat').show();
-            $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
             break;
 
           case 'cancelMessageVideoAnonym':
@@ -392,7 +399,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             showAnonymImageHideCamera();
             $('#exitVideoChat').hide();
             $('#newVideoChat').show();
-            $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
             break;
 
           case 'message':
