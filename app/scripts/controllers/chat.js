@@ -577,7 +577,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             if(avatar.image){$scope.avatar = avatar.image;}else{$scope.avatar = '/images/uploads/images/avatars/default.jpg';}
 
             if (response._id !== null && response._id !== undefined){
-              $scope.logoutBtn = true;
               //User info and User birth in format (dd/MM/yyyy)
               $scope.userInformation.birth = new Date();
               $scope.userInformation = response;
@@ -642,7 +641,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.deleteAccount = function(){
       User.delete({username : $scope.userInformation._id},
           function(){
-            //Exito
+            Session.delete(function() {
+              $location.path('/');
+              $window.location.reload();
+            });
           },
           function(){
             //Error
@@ -739,14 +741,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         $scope.otherUserInfo.avatar = '/images/uploads/images/avatars/default.jpg';
         $scope.otherUserInfo.username = 'Anonym';
       }
-    };
-
-    //logout
-    $scope.logout = function(){
-      Session.delete(function() {
-        $location.path('/');
-        $window.location.reload();
-      });
     };
 
     //Here is where the users update function is called when needed

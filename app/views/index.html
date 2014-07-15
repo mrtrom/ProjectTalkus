@@ -35,15 +35,22 @@
 </head>
 <body ng-app="talkusApp" id="page-top" data-spy="scroll" data-target=".navbar-custom">
 <div class="mainnavbar">
-  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="MenuController">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href >
           <img src="images/mitbip.png" alt="logo" title="mitbip" />
         </a>
-        <a class="navbar-status" href data-toggle="modal" data-target="#modMain" >
-          <i class="fa fa-play-circle"></i>  <span class="light">Sign in / up</span>
-        </a>
+        <div ng-show="LoginValidations.showLogin" >
+          <a class="navbar-status" href data-toggle="modal" data-target="#modMain" >
+            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title}}</span>
+          </a>
+        </div>
+        <div ng-hide="LoginValidations.showLogin" >
+          <a class="navbar-status" href ng-click="logout()" >
+            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title}}</span>
+          </a>
+        </div>
         <a id="menu-toggle-anonym" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
       </div>
     </div>
@@ -120,6 +127,7 @@
 <script src="scripts/controllers/chat.js"></script>
 <script src="scripts/controllers/upload.js"></script>
 <script src="scripts/controllers/login.js"></script>
+<script src="scripts/controllers/menu.js"></script>
 <!-- endbuild -->
 
 <!-- External scripts -->

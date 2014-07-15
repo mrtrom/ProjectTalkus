@@ -4,7 +4,7 @@
 /*global $:false */
 /*global loadImage:false */
 
-Modules.controllers.controller('UploadChat', ['$rootScope', '$scope', 'upload','User','uploadget',
+Modules.controllers.controller('UploadController', ['$rootScope', '$scope', 'upload',
   function($rootScope, $scope, upload) {
 
     function canvasToBlob(canvas){

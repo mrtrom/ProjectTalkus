@@ -619,6 +619,19 @@ div.navtriangle {
   font-size: 34px;
   padding: 0 10px;
 }
+div.delete-account {
+  color: #5b687b;
+  font-family: helvetica;
+}
+div.delete-account p {
+  font-size: 13px;
+  padding-top: 20px;
+  margin: 0;
+}
+div.delete-account a {
+  color: #428bca;
+  font-weight: bold;
+}
 div.mainnavbar {
    z-index: 1033;
    position: relative;

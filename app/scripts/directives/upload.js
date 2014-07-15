@@ -9,6 +9,6 @@ angular.module('talkusApp')
         return {
             restrict: 'E',
             templateUrl: '/partials/upload',
-            controller: 'UploadChat'
+            controller: 'UploadController'
         };
     });
