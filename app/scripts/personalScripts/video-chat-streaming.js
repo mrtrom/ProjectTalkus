@@ -53,7 +53,7 @@ function hasCamera(){
 }
 
 //Set local video
-function startVideo() {
+function startVideo(user) {
 
   //Choose kind of browser
   if (navigator.getUserMedia){
@@ -99,9 +99,16 @@ function startVideo() {
 
         var scope = angular.element($('.view.ng-scope')).scope();
 
-        scope.$apply(function(){
-          scope.emitSendVideoNotification();
-        });
+        if (!user){
+          scope.$apply(function(){
+            scope.emitSendVideoNotification();
+          });
+        }
+        else{
+          scope.$apply(function(){
+            scope.emitSendVideoNotificationAnonym();
+          });
+        }
 
       } catch(e) {
         //Error setting video
@@ -162,17 +169,11 @@ function hangUp() {
 }
 
 function stop() {
-  peerConn.close();
+  if (peerConn){
+    peerConn.close();
+  }
   peerConn = null;
   started = false;
-}
-
-function onChannelOpened(username) {
-  var scope = angular.element($('.view.ng-scope')).scope();
-
-  scope.$apply(function(){
-    scope.emitAddUser(username, 'video');
-  });
 }
 
 function createAnswerFailed() {

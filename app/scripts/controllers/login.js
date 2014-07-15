@@ -5,18 +5,6 @@
 Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
 	function($rootScope, $scope, $http, $window, $location, $modal, Session, Mails, Remember, User, Valid) {
 
-		//Redireccion si ya está logueado
-		Session.get(function(response) {
-			if ((response !== null ? response._id : void 0) !== null) {
-				if (response._id !== null && response._id !== undefined){
-					$scope.loginValidations.userSessionExist = true;
-					$location.path('/');
-				}
-			}
-		}, function() {
-			//error
-		});
-
 		//Checks if any string was send via url
 		if(($location.search()).idValid !== undefined && ($location.search()).idValid !== null && ($location.search()).idValid !== ''){
 			$scope.Valid = new Valid();

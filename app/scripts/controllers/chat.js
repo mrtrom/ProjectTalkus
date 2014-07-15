@@ -7,7 +7,6 @@
 /*global onMessage:false */
 /*global loadImage:false */
 /*global hideMyImageShowCamera:false */
-/*global onChannelOpened:false */
 /*global showMyImageHideCamera:false */
 /*global startVideo:false */
 /*global PNotify:false */
@@ -20,6 +19,8 @@
 /*global hasCamera:false */
 /*global hideAnonymImageAndCamera:false */
 /*global connect:false*/
+/*global stopVideo:false*/
+/*global hangUp:false*/
 
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
@@ -52,6 +53,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     $scope.emitSendVideoNotification = function(){
       socket.emit('newVideoChat2');
+    };
+
+    $scope.emitSendVideoNotificationAnonym = function(){
+      hideMyImageShowCamera();
+      hideAnonymImageShowCamera();
+      $('#videoButtons #newVideoChat').hide();
+      $('#videoButtons #exitVideoChat').show();
+      connect();
     };
 
     $scope.emitAddUser = function(user, type){
@@ -211,7 +220,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
       if (isVideoChat){
         hideMyImageShowCamera();
-        onChannelOpened(username);
+        socket.emit('adduser', username, 'video');
       }
       else{
         showMyImageHideCamera();
@@ -224,9 +233,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     function onInitialText(){
       socket.emit('nextText');
     }
-    function onInitialVideo (data, type){
+    function onInitialVideo (data, type, user){
       window.channelReady = true;
-      startVideo();
+      startVideo(user);
 
       if (type && type === 'video'){
         socket.emit('nextVideo');
@@ -304,12 +313,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             $('#videoButtons #newVideoChat').hide();
             $('#videoButtons #exitVideoChat').show();
 
-            new PNotify({
-              title: 'Video Chat',
-              text: 'You want to start a videochat',
-              type: 'success',
-              remove: true
-            });
+            hideMyImageShowCamera();
+
+            /*new PNotify({
+             title: 'Video Chat',
+             text: 'You want to start a videochat',
+             type: 'success',
+             remove: true
+             });*/
             break;
 
           case 'showMessageVideoAnonym':
@@ -322,24 +333,29 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'succesMessageVideoMe':
-            $('#conversation .startChatNow').hide();
-            new PNotify({
-              title: 'Success',
-              text: 'You are now both on video',
-              remove: true
-            });
+            socket.emit('newVideoChat', 'text', 'Anonym');
+
+            /*new PNotify({
+             title: 'Success',
+             text: 'Me: You are now both on video',
+             remove: true
+             });*/
             break;
 
           case 'succesMessageVideoAnonym':
-            $('#conversation .startChatNow').hide();
-            new PNotify({
-              title: 'Success',
-              text: 'You are now both on video',
-              remove: true
-            });
+            hideAnonymImageShowCamera();
+            /*new PNotify({
+             title: 'Success',
+             text: 'Anonym: You are now both on video',
+             remove: true
+             });*/
             break;
 
           case 'failMessageVideoMe':
+            hangUp();
+            stopVideo();
+            showMyImageHideCamera();
+            showAnonymImageHideCamera();
             new PNotify({
               title: 'Fail',
               text: 'The video failed to initialize',
@@ -348,6 +364,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'failMessageVideoAnonym':
+            hangUp();
+            stopVideo();
+            showMyImageHideCamera();
+            showAnonymImageHideCamera();
             new PNotify({
               title: 'Fail',
               text: 'The video failed to initialize',
@@ -356,13 +376,20 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'cancelMessageVideoMe':
+            hangUp();
+            stopVideo();
+            showMyImageHideCamera();
+            showAnonymImageHideCamera();
             $('#exitVideoChat').hide();
             $('#newVideoChat').show();
-            $('#videoButtons').append('<input type="button" id="newVideoChat" class="btn btn-primary log" value="video chat">');
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Sorry :(</span></div><div class=\'clear\'></div>');
             break;
 
           case 'cancelMessageVideoAnonym':
+            hangUp();
+            stopVideo();
+            showMyImageHideCamera();
+            showAnonymImageHideCamera();
             $('#exitVideoChat').hide();
             $('#newVideoChat').show();
             $('#conversation').append('<div class=\'clear\'></div><div class=\'serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Perv!</span></div><div class=\'clear\'></div>');
@@ -472,10 +499,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.changeRoom = function(){
       if (isVideoChat){
         $location.path('/chat');
+        //$window.location.reload();
       }
       else{
         if ($scope.userHasCamera){
           $location.path('/video-chat');
+          //$window.location.reload();
         }
         else{
           //Show lightbox showing info (don't have camera)
@@ -719,16 +748,16 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       User.update($scope.userInformation,
           function () {
             Session.update({userObject: $scope.userInformation},
-            function(){
-              $scope.alerts = [
-                { type: 'success', msg: 'Profile Updated!' }
-              ];
-            },
-            function(){
-              $scope.alerts = [
-                { type: 'danger', msg: 'Error while updating please try again later' }
-              ];
-            });
+                function(){
+                  $scope.alerts = [
+                    { type: 'success', msg: 'Profile Updated!' }
+                  ];
+                },
+                function(){
+                  $scope.alerts = [
+                    { type: 'danger', msg: 'Error while updating please try again later' }
+                  ];
+                });
           }, function () {
             $scope.alerts = [
               { type: 'danger', msg: 'Error while updating please try again later' }

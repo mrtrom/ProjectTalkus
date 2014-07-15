@@ -26,8 +26,9 @@
 
               <div class="row-fluid profilepic">
                 <div class="span12">
-                  <img id="{{validations.anonymUser === false ? 'popoverInfoMe' : 'popoverInfoAnonym'}}"
-                       ng-src="{{avatar}}" class="img-rounded" width="160" height="160"
+                  <img class="{{validations.anonymUser === false ? 'popoverInfoMeClass img-rounded' : 'popoverInfoAnonymClass img-rounded'}}"
+                       id="popoverInfoMe"
+                       ng-src="{{avatar}}" width="160" height="160"
                        data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}"
                        data-target="{{validations.anonymUser === true ? '#modMain' : ''}}"/>
                   <video id="webrtc-sourcevid" muted autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
@@ -56,8 +57,9 @@
             <legend class="sidebar-brand">Anonym</legend>
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
-              <img id="{{validations.anonymUser === false ? 'anonym-profile' : 'anonym-profileAnonym'}}"
-                   ng-src="{{otherUserInfo.avatar}}" class="img-rounded" width="160" height="160"
+              <img class="{{validations.anonymUser === false ? 'anonym-profileClass img-rounded' : 'anonym-profileAnonymClass img-rounded'}}"
+                   id="anonym-profile"
+                   ng-src="{{otherUserInfo.avatar}}" width="160" height="160"
                    data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}"
                    data-target="{{validations.anonymUser === true ? '#modMain' : ''}}"/>
               <video id="webrtc-remotevid" controls autoplay="" style="width: 320px; height: 240px; border: 1px solid black;"></video>
@@ -184,7 +186,7 @@
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Birth">
       <label>Birth</label>
-      <label>{{otherUserInfo.birth}}</label>
+      <label>{{otherUserInfo.birth | date:'MMM - d, yyyy'}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Email">
       <label>Email</label>
