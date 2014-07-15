@@ -14,7 +14,11 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
       $scope.Valid.$save(function(res) {
             $rootScope.user = res;
             $scope.permissions.invalidUserInfo = false;
-            $location.path('/');
+            new PNotify({
+              title: 'Nice!',
+              text: 'You are now verified, login in order to acces to your account <a href data-toggle="modal" data-target="#modMain" ><span>Sign in/up</span></a>',
+              remove: true
+            });
           },
           function(){
             //Error

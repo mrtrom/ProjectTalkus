@@ -6,7 +6,7 @@ Modules.controllers.controller('MenuController', ['$rootScope', '$scope', 'Sessi
   function($rootScope, $scope, Session, $location, $window) {
 
     $scope.LoginMenu = {
-      title: 'Sign in /up'
+      title: 'Sign in / up'
     };
 
     $scope.LoginValidations = {
