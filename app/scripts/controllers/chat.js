@@ -55,8 +55,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       socket.emit('newVideoChat2');
     };
 
-    $scope.emitVideoStart = function(){
-      socket.emit('nextVideo');
+    $scope.emitVideoStart = function(data){
+      socket.emit('nextVideo', data);
     };
 
     $scope.emitSendVideoNotificationAnonym = function(){
@@ -243,7 +243,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     }
     function onInitialVideo (data, type, user){
       window.channelReady = true;
-      startVideo(user, type);
+      startVideo(data, user, type);
     }
     function onEmpty (){}
     function onShowWriting (){

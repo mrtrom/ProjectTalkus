@@ -53,7 +53,7 @@ function hasCamera(){
 }
 
 //Set local video
-function startVideo(user, type) {
+function startVideo(data, user, type) {
 
   //Choose kind of browser
   if (navigator.getUserMedia){
@@ -113,7 +113,7 @@ function startVideo(user, type) {
         }
         else{
           scope.$apply(function(){
-            scope.emitVideoStart();
+            scope.emitVideoStart(data);
           });
         }
 
