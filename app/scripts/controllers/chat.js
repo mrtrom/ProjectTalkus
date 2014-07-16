@@ -46,6 +46,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         socket = io.connect(hostURL, {port: portURL});
     //</editor-fold>
 
+    //<editor-fold desc="jQuery Variables">
+    var jQHtml = $('html'),
+        jQExitVideoChat = $('#exitVideoChat');
+    //</editor-fold>
+
     //<editor-fold desc="Scope emit functions">
     $scope.emitSessionDescription = function(sessionDescription){
       socket.emit('sessionDescription', sessionDescription);
@@ -62,8 +67,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.emitSendVideoNotificationAnonym = function(){
       hideMyImageShowCamera();
       hideAnonymImageShowCamera();
-      $('#videoButtons #newVideoChat').hide();
-      $('#videoButtons #exitVideoChat').show();
+      $('#newVideoChat').hide();
+      jQExitVideoChat.show();
       connect();
     };
 
@@ -96,16 +101,16 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       });
 
       if (isVideoChat){
-        $('html').addClass('chat');
-        $('html').addClass('video');
+        jQHtml.addClass('chat');
+        jQHtml.addClass('video');
         $('#videoButtons #newVideoChat').hide();
-        $('#videoButtons #exitVideoChat').hide();
+        jQExitVideoChat.hide();
       }
       else{
-        $('html').addClass('chat');
-        $('html').removeClass('video');
+        jQHtml.addClass('chat');
+        jQHtml.removeClass('video');
         $('#videoButtons #newVideoChat').show();
-        $('#videoButtons #exitVideoChat').hide();
+        jQExitVideoChat.hide();
       }
 
       socket.on('connect', $scope.loadInfo(onConnect));
@@ -117,6 +122,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       socket.on('updatechat', onUpdateChat);
       socket.on('updateAnonymInfo', onUpdateAnonymInfo);
       socket.on('initialText', onInitialText);
+      socket.on('disconnectPartner', onDisconnectPartner);
+      socket.on('disconnectMe', onDisconnectMe);
 
       //Send text chat to room via click
       $('#datasend').on('click', function() {
@@ -236,14 +243,20 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
 
       hideAnonymImageAndCamera();
-      $('#exitVideoChat').hide();
+      jQExitVideoChat.hide();
     }
     function onInitialText(data){
       socket.emit('nextText', data);
     }
-    function onInitialVideo (data, type, user){
+    function onInitialVideo (data, type, user, start){
       window.channelReady = true;
-      startVideo(data, user, type);
+
+      if (start){
+        startVideo(data, user, type);
+      }
+      else{
+        socket.emit('nextVideo', data);
+      }
     }
     function onEmpty (){}
     function onShowWriting (){
@@ -319,7 +332,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
           case 'showMessageVideoMe':
             $('#videoButtons #newVideoChat').hide();
-            $('#videoButtons #exitVideoChat').show();
+            jQExitVideoChat.show();
 
             hideMyImageShowCamera();
 
@@ -388,7 +401,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             stopVideo();
             showMyImageHideCamera();
             showAnonymImageHideCamera();
-            $('#exitVideoChat').hide();
+            jQExitVideoChat.hide();
             $('#newVideoChat').show();
             break;
 
@@ -397,7 +410,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             stopVideo();
             showMyImageHideCamera();
             showAnonymImageHideCamera();
-            $('#exitVideoChat').hide();
+            jQExitVideoChat.hide();
             $('#newVideoChat').show();
             break;
 
@@ -482,6 +495,37 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $('#datasend').attr('disabled', false);
       $('.fieldsetProfile').show();
     }
+    function onDisconnectPartner(data, type){
+      hideAnonymImageAndCamera();
+      jQExitVideoChat.hide();
+      $('#newVideoChat').hide();
+
+      if (type === 'text'){
+        showMyImageHideCamera();
+      }
+      else{
+        hangUp();
+      }
+
+      //show info "waiting"
+
+    }
+    function onDisconnectMe(data, type){
+      hideAnonymImageAndCamera();
+      jQExitVideoChat.hide();
+      $('#newVideoChat').hide();
+
+      if (type === 'text'){
+        hangUp();
+        stopVideo();
+        showMyImageHideCamera();
+        onInitialText(data);
+      }
+      else{
+        hangUp();
+        onInitialVideo(data, type, data.username, false);
+      }
+    }
     //</editor-fold>
 
     //<editor-fold desc="User info section">
@@ -495,7 +539,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $('#firstlight').modal('show');
     }
     $scope.newRoom = function(){
-      $route.reload();
+      if (isVideoChat){
+        socket.emit('disconnectPartners', 'video');
+      }
+      else{
+        socket.emit('disconnectPartners', 'text');
+      }
     };
 
     $scope.closeAlert = function(index) {
