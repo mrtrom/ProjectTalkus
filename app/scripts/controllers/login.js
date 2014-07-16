@@ -1,6 +1,7 @@
 'use strict';
 
 /*global Modules:false */
+/*global PNotify:false*/
 
 Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
   function($rootScope, $scope, $http, $window, $location, $modal, Session, Mails, Remember, User, Valid) {

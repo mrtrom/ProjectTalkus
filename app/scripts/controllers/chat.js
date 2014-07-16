@@ -238,8 +238,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       hideAnonymImageAndCamera();
       $('#exitVideoChat').hide();
     }
-    function onInitialText(){
-      socket.emit('nextText');
+    function onInitialText(data){
+      socket.emit('nextText', data);
     }
     function onInitialVideo (data, type, user){
       window.channelReady = true;
