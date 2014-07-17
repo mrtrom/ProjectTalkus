@@ -306,6 +306,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               text: 'Looks like the user left',
               remove: true
             });
+
+            $('#conversation').empty();
             break;
 
           case 'connect':
@@ -457,10 +459,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                   if (videoExist){
                     onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                   }
-
                 }
               }
-
             }
             else{
               if(file){
@@ -483,7 +483,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                   }
                 }
               }
-
             }
             break;
         }
@@ -499,6 +498,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       hideAnonymImageAndCamera();
       jQExitVideoChat.hide();
       $('#newVideoChat').hide();
+      $('#conversation').empty();
 
       if (type === 'text'){
         showMyImageHideCamera();
@@ -514,6 +514,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       hideAnonymImageAndCamera();
       jQExitVideoChat.hide();
       $('#newVideoChat').hide();
+      $('#conversation').empty();
 
       if (type === 'text'){
         hangUp();
@@ -554,18 +555,20 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.changeRoom = function(){
       if (isVideoChat){
         $location.path('/chat');
-        //$window.location.reload();
       }
       else{
         if ($scope.userHasCamera){
           $location.path('/video-chat');
-          //$window.location.reload();
         }
         else{
           //Show lightbox showing info (don't have camera)
         }
       }
     };
+
+    $scope.$on('$routeChangeStart', function(next, current) {
+      $window.location.reload();
+    });
 
     //Calendar
     $scope.today = function() {
