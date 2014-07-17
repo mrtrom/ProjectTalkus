@@ -645,7 +645,7 @@ a.navbar-brand {
 a.navbar-brand img{
    position: absolute;
    z-index: 99999;
-   width: 99px;
+   width: 62px;
 }
 .chat #menu-toggle-anonym i {
   color: #fff;
@@ -1015,4 +1015,8 @@ h1{
     height: 400px;
     margin-top: 250px;
   }
+}
+div#sidebar-wrapper-anonym video {
+    height: auto !important;
+    width: 100% !important;
 }
