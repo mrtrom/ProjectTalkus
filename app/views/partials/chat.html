@@ -1,29 +1,20 @@
-
 <div>
-
   <div id="sidebar-wrapper-anonym">
-    <ul class="sidebar-nav">
-      <a id="menu-close-anonym" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-    </ul>
-
     <div class="profile">
       <div class="inside">
-
         <div class="info">
           <form name="registerForm">
             <fieldset id="registerFieldset">
               <legend>Me</legend>
               <input id="username" type="hidden" value="{{userInformation.username}}"/>
-
               <div ng-hide="validations.anonymUser" class="daysleftwrap">
                 <div ng-show="newpermit.days" class="daysleft">
                   <label><strong>You have <span class="text-error">{{days}} </span>days left to confirm your account via email. Click <span ng-click="resend()" class="text-error hereclick">here</span> to resend it to your email</strong></label>
                 </div>
               </div>
-              <div class="alert alert-success" ng-show="newpermit.email" class="daysleft">
+              <div class="alert alert-success daysleft" ng-show="newpermit.email">
                 Email has been send
               </div>
-
               <div class="row-fluid profilepic">
                 <div class="span12">
                   <img class="{{validations.anonymUser === false ? 'popoverInfoMeClass img-rounded' : 'popoverInfoAnonymClass img-rounded'}}"
@@ -49,7 +40,6 @@
       </div>
       <div ng-init="initchat()"></div>
     </div>
-
     <div class="user">
       <div class="inside">
         <form>
@@ -66,24 +56,17 @@
             </div>
           </fieldset>
         </form>
-
       </div>
     </div>
-
   </div>
-
   <div class="chatwrap">
     <div id="conversation" class="well well-lg">
-      <div class="container">
-
-      </div>
+      <div class="container"></div>
     </div>
-
     <div class="extra-buttons" id="extra-buttons">
       <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i>New room</button>
       <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i>Change room</button>
     </div>
-
     <div class="wraper-chat">
       <form class="form-inline textChat">
         <div id="userTyping">
@@ -104,11 +87,11 @@
     </div>
   </div>
 </div>
-
-
 <div class="mypop popoverInfoMeModal me">
   <ul class="sidebar-nav infomodel">
-    <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    <li>
+      <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    </li>
   </ul>
   <h3 class="popover-title">My Profile</h3>
   <alert ng-repeat="alert in alerts" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -118,9 +101,9 @@
       <input ng-model="userInformation.name" type="text" placeholder="Name"/>
     </div>
     <div ng-hide="validations.anonymUser">
-      <label>Birthday</label>
+      <label for="datepicker-birthday">Birthday</label>
       <p class="input-group birth">
-        <input name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened"  close-text="Close" datepicker-append-to-body="true" />
+        <input id="datepicker-birthday" name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened"  close-text="Close" datepicker-append-to-body="true" />
           <span class="input-group-btn">
             <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
@@ -151,8 +134,6 @@
           <li id="other"> <a ng-click="userInformation.gender = 'Other';">Other</a></li>
         </ul>
       </div>
-
-
     </div>
     <div ng-hide="validations.anonymUser">
       <label ng-hide="validations.anonymUser">About you</label>
@@ -164,13 +145,13 @@
     <div class="delete-account">
       <p>If you want to delete your account, just click <a href ng-click="deleteAccount()">here</a></p>
     </div>
-
   </div>
 </div>
-
 <div class="mypop popoverInfoMeModal other">
   <ul class="sidebar-nav infomodel">
-    <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    <li>
+      <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    </li>
   </ul>
   <h3 class="popover-title">Anonym info</h3>
   <div class="popover-content">
@@ -237,7 +218,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal fade" id="firstlight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

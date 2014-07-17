@@ -134,8 +134,10 @@ function stopVideo() {
     sourcevid.mozSrcObject.stop();
     sourcevid.src = null;
   } else {
-    sourcevid.src = "";
-    localStream.stop();
+    if (localStream){
+      localStream.stop();
+      sourcevid.src = "";
+    }
   }
 }
 
