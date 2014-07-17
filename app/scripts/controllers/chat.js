@@ -696,27 +696,27 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //user delete account
     $scope.deleteAccount = function(){
-      User.delete({username : $scope.userInformation._id},
-          function(){
-            Session.delete(function() {
-              $location.path('/');
-              $window.location.reload();
+        Mails.delete(
+            {id:$scope.userInformation._id},
+            function() {
+                Session.delete(function() {
+                    $location.path('/');
+                    $window.location.reload();
+                });
+            },
+            function () {
+                //error
             });
-          },
-          function(){
-            //Error
-          });
     };
 
     //email resend
     $scope.resend = function(){
-      Mails.delete(function() {
-            //exito
-          },
-          function () {
-            //error
-          });
-      $scope.newpermit.email = true;
+        var user = $scope.userInformation;
+        Mails.update({user:user},
+            function(){
+                $scope.newpermit.email = true;
+        });
+
     };
 
 
