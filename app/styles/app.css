@@ -632,6 +632,9 @@ div.delete-account a {
   color: #428bca;
   font-weight: bold;
 }
+ul.sidebar-nav.infomodel li{
+  list-style: none;
+}
 div.mainnavbar {
    z-index: 1033;
    position: relative;

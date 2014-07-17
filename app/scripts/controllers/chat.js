@@ -48,7 +48,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //<editor-fold desc="jQuery Variables">
     var jQHtml = $('html'),
-        jQExitVideoChat = $('#exitVideoChat');
+        jQExitVideoChat = $('#exitVideoChat'),
+        jQNewVideoChat = $('#newVideoChat'),
+        jQConversation = $('#conversation'),
+        jQUserTyping = $('#userTyping'),
+        jQVideoButtons = $('#videoButtons'),
+        jQData = $('#data');
     //</editor-fold>
 
     //<editor-fold desc="Scope emit functions">
@@ -67,7 +72,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.emitSendVideoNotificationAnonym = function(){
       hideMyImageShowCamera();
       hideAnonymImageShowCamera();
-      $('#newVideoChat').hide();
+      jQNewVideoChat.hide();
       jQExitVideoChat.show();
       connect();
     };
@@ -103,13 +108,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if (isVideoChat){
         jQHtml.addClass('chat');
         jQHtml.addClass('video');
-        $('#videoButtons #newVideoChat').hide();
+        jQNewVideoChat.hide();
         jQExitVideoChat.hide();
       }
       else{
         jQHtml.addClass('chat');
         jQHtml.removeClass('video');
-        $('#videoButtons #newVideoChat').show();
+        jQNewVideoChat.show();
         jQExitVideoChat.hide();
       }
 
@@ -128,7 +133,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       //Send text chat to room via click
       $('#datasend').on('click', function() {
         var cadenaAEliminar = /(<([^>]+)>)/gi,
-            elementoEtiquetas = $('#data'),
+            elementoEtiquetas = jQData,
             etiquetas = elementoEtiquetas.val(),
             mensaje;
 
@@ -137,13 +142,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         mensaje = elementoEtiquetas.val();
         mensaje = emotify(mensaje);
 
-        $('#data').val('');
+        jQData.val('');
 
         socket.emit('sendchat', mensaje);
       });
 
       //Send text chat to room via enter
-      $('#data').keydown(function(e) {
+      jQData.keydown(function(e) {
         if(e.keyCode === 8 || e.keyCode === 46){
           if ($(this).val().length <= 1){
             socket.emit('userNotWriting');
@@ -156,19 +161,19 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         }
       });
 
-      $('#data').keypress(function(e) {
+      jQData.keypress(function(e) {
         if (e.keyCode === 13){
           if ($(this).val().length !== 0){
             $(this).blur();
             $('#datasend').focus().click();
-            $('#data').focus();
+            jQData.focus();
           }
           socket.emit('userNotWriting');
         }
       });
 
       $('.glyphicon.glyphicon-camera.mycam').click(function(){
-        if($('#data').attr('disabled') !== 'disabled'){
+        if(jQData.attr('disabled') !== 'disabled'){
           $('#imagefile').click();
         }
       });
@@ -203,15 +208,15 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
       });
 
-      $('#videoButtons').on('click', '#connectVideoChat', function(){
+      jQVideoButtons.on('click', '#connectVideoChat', function(){
         connect();
       });
 
-      $('#videoButtons').on('click', '#newVideoChat', function(){
+      jQVideoButtons.on('click', '#newVideoChat', function(){
         socket.emit('newVideoChat', 'text');
       });
 
-      $('#videoButtons').on('click', '#exitVideoChat', function(){
+      jQVideoButtons.on('click', '#exitVideoChat', function(){
         socket.emit('cancelVideoChat');
         setTimeout(function(){socket.emit('cancelPusblish');}, 300);
       });
@@ -260,8 +265,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     }
     function onEmpty (){}
     function onShowWriting (){
-      if ($('#userTyping').css('display') === 'none'){
-        $('#userTyping').show();
+      if (jQUserTyping.css('display') === 'none'){
+        jQUserTyping.show();
         document.title = 'User Typing..';
         $(window).focus(function() {
           document.title = 'Talkus';
@@ -269,8 +274,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
     }
     function onHideWriting (){
-      if ($('#userTyping').css('display') === 'block'){
-        $('#userTyping').hide();
+      if (jQUserTyping.css('display') === 'block'){
+        jQUserTyping.hide();
         document.title = 'New Message';
         $(window).focus(function() {
           document.title = 'Talkus';
@@ -285,7 +290,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         switch(type){
           case 'leave':
             //Disconect
-            $('#data').attr('disabled', true);
+            jQData.attr('disabled', true);
             $('#datasend').attr('disabled', true);
 
             $scope.validations.anonymOtherUserValidationFields.Email = true;
@@ -307,11 +312,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               remove: true
             });
 
-            $('#conversation').empty();
+            jQConversation.empty();
             break;
 
           case 'connect':
-            $('#conversation').empty();
+            jQConversation.empty();
 
             if (user === 'text'){
               showAnonymImageHideCamera();
@@ -333,7 +338,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'showMessageVideoMe':
-            $('#videoButtons #newVideoChat').hide();
+            jQNewVideoChat.hide();
             jQExitVideoChat.show();
 
             hideMyImageShowCamera();
@@ -404,7 +409,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             showMyImageHideCamera();
             showAnonymImageHideCamera();
             jQExitVideoChat.hide();
-            $('#newVideoChat').show();
+            jQNewVideoChat.show();
             break;
 
           case 'cancelMessageVideoAnonym':
@@ -413,7 +418,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             showMyImageHideCamera();
             showAnonymImageHideCamera();
             jQExitVideoChat.hide();
-            $('#newVideoChat').show();
+            jQNewVideoChat.show();
             break;
 
           case 'message':
@@ -443,19 +448,19 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             if(user === 'me'){
               if(file){
-                $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                jQConversation.append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
                 if (videoExist){
                   onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                 }
               }else{
                 if(sound){
-                  $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                  jQConversation.append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
                   if (videoExist){
                     onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                   }
                 }
                 else{
-                  $('#conversation').append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                  jQConversation.append('<div class=\'me\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
                   if (videoExist){
                     onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                   }
@@ -464,20 +469,20 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             }
             else{
               if(file){
-                $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
+                jQConversation.append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <a target="_blank" href="'+ data +'"><img src="' + data + '" alt="image" class="in-image" /></a></div>');
                 if (videoExist){
                   onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                 }
               }
               else{
                 if(sound){
-                  $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
+                  jQConversation.append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> <audio controls src="' + data + '" class="in-audio"></audio></div>');
                   if (videoExist){
                     onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                   }
                 }
                 else{
-                  $('#conversation').append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
+                  jQConversation.append('<div class=\'anonym\'><i class=\'icon-user\'></i> <span class=\'text-info\'>'+username + ':</span> ' + data + '</div>');
                   if (videoExist){
                     onYouTubePlayerAPIReady('390', '640', videoId, countPlayer);
                   }
@@ -490,15 +495,15 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     }
     function onUpdateAnonymInfo (){
       $('#confirm').click();
-      $('#data').attr('disabled', false);
+      jQData.attr('disabled', false);
       $('#datasend').attr('disabled', false);
       $('.fieldsetProfile').show();
     }
-    function onDisconnectPartner(data, type){
+    function onDisconnectPartner(type){
       hideAnonymImageAndCamera();
       jQExitVideoChat.hide();
-      $('#newVideoChat').hide();
-      $('#conversation').empty();
+      jQNewVideoChat.hide();
+      jQConversation.empty();
 
       if (type === 'text'){
         showMyImageHideCamera();
@@ -513,8 +518,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     function onDisconnectMe(data, type){
       hideAnonymImageAndCamera();
       jQExitVideoChat.hide();
-      $('#newVideoChat').hide();
-      $('#conversation').empty();
+      jQNewVideoChat.hide();
+      jQConversation.empty();
 
       if (type === 'text'){
         hangUp();
@@ -566,7 +571,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
     };
 
-    $scope.$on('$routeChangeStart', function(next, current) {
+    $scope.$on('$routeChangeStart', function() {
       $window.location.reload();
     });
 
