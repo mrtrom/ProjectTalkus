@@ -44,6 +44,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1] !== undefined ? window.location.host.split(':')[1] : 80,
         socket = io.connect(hostURL, {port: portURL});
+      socket.on('disconnect', function() {
+          new PNotify({
+              title: 'Oops',
+              text: 'Something went wrong , please reload the page or try again later',
+              type:'error',
+              hide: false
+          });
+      });
     //</editor-fold>
 
     //<editor-fold desc="jQuery Variables">

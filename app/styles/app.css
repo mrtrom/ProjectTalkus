@@ -288,7 +288,7 @@ div.controls button {
 }
 .alert-danger {
   color: rgb(169, 68, 66);
-  background-color: rgba(242, 222, 222, 0.5);
+  background-color: rgba(242, 222, 222, 1);
   border: none;
   border-radius: initial;
   width: 92%;
@@ -648,7 +648,7 @@ a.navbar-brand {
 a.navbar-brand img{
    position: absolute;
    z-index: 99999;
-   width: 62px;
+   width: 92px;
 }
 .chat #menu-toggle-anonym i {
   color: #fff;
