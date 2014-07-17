@@ -99,6 +99,9 @@ function startVideo(data, user, type) {
 
         var scope = angular.element($('.view.ng-scope')).scope();
 
+        $('#sidebar-wrapper-anonym').css('width', '370px');
+        $('#sidebar-wrapper-anonym').css('margin-right', '-370px');
+
         if (type && type === 'text'){
           if (!user){
             scope.$apply(function(){
@@ -133,10 +136,16 @@ function stopVideo() {
   if (sourcevid.mozSrcObject) {
     sourcevid.mozSrcObject.stop();
     sourcevid.src = null;
+
+    $('#sidebar-wrapper-anonym').css('width', '250px');
+    $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
   } else {
     if (localStream){
       localStream.stop();
       sourcevid.src = "";
+
+      $('#sidebar-wrapper-anonym').css('width', '250px');
+      $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
     }
   }
 }

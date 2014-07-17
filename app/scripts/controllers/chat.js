@@ -44,14 +44,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1] !== undefined ? window.location.host.split(':')[1] : 80,
         socket = io.connect(hostURL, {port: portURL});
-      socket.on('disconnect', function() {
-          new PNotify({
-              title: 'Oops',
-              text: 'Something went wrong , please reload the page or try again later',
-              type:'error',
-              hide: false
-          });
-      });
     //</editor-fold>
 
     //<editor-fold desc="jQuery Variables">
@@ -116,15 +108,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if (isVideoChat){
         jQHtml.addClass('chat');
         jQHtml.addClass('video');
-        jQNewVideoChat.hide();
-        jQExitVideoChat.hide();
       }
       else{
         jQHtml.addClass('chat');
         jQHtml.removeClass('video');
-        jQNewVideoChat.show();
-        jQExitVideoChat.hide();
       }
+
+      jQNewVideoChat.hide();
+      jQExitVideoChat.hide();
 
       socket.on('connect', $scope.loadInfo(onConnect));
       socket.on('message', onMessage);
@@ -137,6 +128,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       socket.on('initialText', onInitialText);
       socket.on('disconnectPartner', onDisconnectPartner);
       socket.on('disconnectMe', onDisconnectMe);
+      socket.on('disconnect', function() {
+        jQConversation.append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>oops, something went wrong, try again</span></div></div><div class=\'clear\'></div>');
+      });
 
       //Send text chat to room via click
       $('#datasend').on('click', function() {
@@ -314,6 +308,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             $('.fieldsetProfile').hide();
 
+            jQExitVideoChat.hide();
+            jQNewVideoChat.hide();
+
             new PNotify({
               title: 'Woa',
               text: 'Looks like the user left',
@@ -328,9 +325,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             if (user === 'text'){
               showAnonymImageHideCamera();
+              jQNewVideoChat.show();
             }
             else{
               hideAnonymImageShowCamera();
+              jQExitVideoChat.hide();
+              jQNewVideoChat.hide();
             }
 
             if (typeUser && typeUser === 'me'){
@@ -370,21 +370,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
           case 'succesMessageVideoMe':
             socket.emit('newVideoChat', 'text', 'Anonym');
-
-            /*new PNotify({
-             title: 'Success',
-             text: 'Me: You are now both on video',
-             remove: true
-             });*/
             break;
 
           case 'succesMessageVideoAnonym':
             hideAnonymImageShowCamera();
-            /*new PNotify({
-             title: 'Success',
-             text: 'Anonym: You are now both on video',
-             remove: true
-             });*/
             break;
 
           case 'failMessageVideoMe':
