@@ -94,6 +94,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.initchat = function(){
 
       setTimeout(function(){
+
+        $scope.userHasCamera = hasCamera();
+
         if (isVideoChat){
           if (!$scope.userHasCamera){
             //Show lightbox showing info (don't have camera)
@@ -304,6 +307,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             if ($scope.otherUserInfo !== undefined){
               $scope.otherUserInfo.username = '';
+            }
+
+            if (isVideoChat){
+              hangUp();
+              stopVideo();
+              showMyImageHideCamera();
             }
 
             $('.fieldsetProfile').hide();
@@ -618,7 +627,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     $scope.userInformation = new User();
     $scope.otherUserInfo = new User();
-    $scope.userHasCamera = hasCamera();
 
     var googleBool = false;
 

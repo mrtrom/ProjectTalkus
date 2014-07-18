@@ -10,45 +10,92 @@ var mediaConstraints = {'mandatory': {
 var RTCPeerConnection;
 var RTCSessionDescription;
 
-//Camera status
-function hasCamera(){
-  var scope = angular.element($('.view.ng-scope')).scope();
-
-  if (!MediaStreamTrack) {
-    //You must use one of these browsers: Chrome, Firefox or Opera
-    scope.$apply(function(){
-      scope.userHasCamera = false;
-    });
+function getBrowser(){
+  if (navigator.userAgent.toLowerCase().indexOf('opr') > -1){
+    return 'opera';
   }
-  else {
-    var videoSources = [];
-
-    MediaStreamTrack.getSources(function (media_sources) {
-      if (media_sources.length > 0){
-        media_sources.forEach(function (media_source) {
-          if (media_source.kind === 'video') {
-            videoSources.push(media_source);
-          }
-        });
-        if (videoSources.length > 0){
-          scope.$apply(function(){
-            scope.userHasCamera = true;
-          });
-        }
-        else{
-          //No tiene sources de video
-          scope.$apply(function(){
-            scope.userHasCamera = false;
-          });
-        }
+  else{
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+      return 'firefox';
+    }
+    else{
+      if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1){
+        return 'chrome';
       }
       else{
-        //No tiene sources
-        scope.$apply(function(){
-          scope.userHasCamera = false;
-        });
+        if (navigator.userAgent.toLowerCase().indexOf('safari') > -1){
+          return 'safari';
+        }
+        else{
+          return 'ie';
+        }
       }
-    });
+    }
+  }
+}
+
+//Camera status
+function hasCamera(){
+
+  var browserName = getBrowser();
+  var scope = angular.element($('.view.ng-scope')).scope();
+
+  if (browserName && browserName === 'chrome') {
+
+    if (!MediaStreamTrack) {
+      scope.$apply(function () {
+        scope.userHasCamera = false;
+      });
+      $('#newVideoChat').attr("disabled", "disabled");
+    }
+    else {
+      var videoSources = [];
+
+      MediaStreamTrack.getSources(function (media_sources) {
+        if (media_sources.length > 0) {
+          media_sources.forEach(function (media_source) {
+            if (media_source.kind === 'video') {
+              videoSources.push(media_source);
+            }
+          });
+          if (videoSources.length > 0) {
+            scope.$apply(function () {
+              scope.userHasCamera = true;
+            });
+            $('#newVideoChat').removeAttr("disabled");
+          }
+          else {
+            //No tiene sources de video
+            scope.$apply(function () {
+              scope.userHasCamera = false;
+            });
+            $('#newVideoChat').attr("disabled", "disabled");
+          }
+        }
+        else {
+          //No tiene sources
+          scope.$apply(function () {
+            scope.userHasCamera = false;
+          });
+          $('#newVideoChat').attr("disabled", "disabled");
+        }
+      });
+    }
+  }
+  else{
+    if (browserName && browserName === 'safari'){
+      scope.$apply(function () {
+        scope.userHasCamera = false;
+      });
+      $('#newVideoChat').attr("disabled", "disabled");
+    }
+    else{
+      //We put true, because we are gonna validate the camera in the Video Chat button too.
+      scope.$apply(function () {
+        scope.userHasCamera = true;
+      });
+      $('#newVideoChat').removeAttr("disabled");
+    }
   }
 }
 
@@ -126,6 +173,7 @@ function startVideo(data, user, type) {
     }
   }
   function errorCallback(error) {
+    console.log('error');
     //Error error.code
     return;
   }
