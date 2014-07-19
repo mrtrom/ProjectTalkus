@@ -173,7 +173,15 @@ function startVideo(data, user, type) {
     }
   }
   function errorCallback(error) {
-    console.log('error');
+    var scope = angular.element($('.view.ng-scope')).scope();
+
+    scope.$apply(function () {
+      scope.userHasCamera = false;
+      scope.noCameraNotification();
+    });
+
+    $('#newVideoChat').attr("disabled", "disabled");
+
     //Error error.code
     return;
   }
@@ -194,6 +202,37 @@ function stopVideo() {
 
       $('#sidebar-wrapper-anonym').css('width', '250px');
       $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+    }
+  }
+}
+
+//Stop local video
+function stopStreamingNoCamera() {
+  if (sourcevid.mozSrcObject) {
+    sourcevid.mozSrcObject.stop();
+    sourcevid.src = null;
+
+    $('#sidebar-wrapper-anonym').css('width', '250px');
+    $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+
+    new PNotify({
+      title: 'Fail',
+      text: "User doesn't have a camera",
+      remove: true
+    });
+  } else {
+    if (localStream){
+      localStream.stop();
+      sourcevid.src = "";
+
+      $('#sidebar-wrapper-anonym').css('width', '250px');
+      $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+
+      new PNotify({
+        title: 'Fail',
+        text: "User doesn't have a camera",
+        remove: true
+      });
     }
   }
 }

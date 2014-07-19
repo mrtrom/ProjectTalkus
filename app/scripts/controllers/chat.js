@@ -21,6 +21,7 @@
 /*global connect:false*/
 /*global stopVideo:false*/
 /*global hangUp:false*/
+/*global stopStreamingNoCamera:false*/
 
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
@@ -77,6 +78,16 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       connect();
     };
 
+    $scope.noCameraNotification = function(){
+      new PNotify({
+        title: 'Woa',
+        text: "Looks like you don't have a camera",
+        remove: true
+      });
+
+      socket.emit('userNoCamera');
+    };
+
     $scope.emitAddUser = function(user, type){
       socket.emit('adduser', user, type);
     };
@@ -131,6 +142,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       socket.on('initialText', onInitialText);
       socket.on('disconnectPartner', onDisconnectPartner);
       socket.on('disconnectMe', onDisconnectMe);
+      socket.on('partnerNoCamera', onPartnerNoCamera);
       socket.on('disconnect', function() {
         jQConversation.append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>oops, something went wrong, try again</span></div></div><div class=\'clear\'></div>');
       });
@@ -325,8 +337,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               text: 'Looks like the user left',
               remove: true
             });
-
-            jQConversation.empty();
             break;
 
           case 'connect':
@@ -537,6 +547,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         hangUp();
         onInitialVideo(data, type, data.username, false);
       }
+    }
+    function onPartnerNoCamera(){
+      stopStreamingNoCamera();
     }
     //</editor-fold>
 
