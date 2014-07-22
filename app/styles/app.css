@@ -168,33 +168,12 @@ a:focus {
   margin-top: 16px;
   width: 100%;
 }
-#myModal div.modal-header h3 {
-  color: #464646;
-  text-transform: none;
-  margin: 0;
-  font-weight: 100;
-  font-size: 19px;
-  font-family: helvetica;
-}
-#myModal div.modal-header {
-  min-height: 16px;
-  padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
-  background: #f0f0f0;
-}
-#myModal div.modal-header .close {
-  margin-top: -20px;
-}
-.modal-body {
-  position: relative;
-  padding: 0 20px;
-}
 .btn-huge {
   padding: 25px;
   font-size: 26px;
 }
 .centerform a {
-  color: #000;
+  color: #5b687b;
   display: block;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -345,7 +324,6 @@ div.controls button {
   transition: all 0.4s ease 0s;
   margin-right: -250px !important;
 }
-
 #sidebar-wrapper-anonym .toggle {
   margin: 5px 5px 0 0;
   border: 2px solid #fff;
@@ -881,9 +859,6 @@ div.extra-buttons .btn i {
 div.centerform{
   width: 166px;
 }
-.modal-dialog {
-  margin: 50px auto !important;
-}
 .centerform input[type] {
   background: rgba(0,0,0,0.1);
 }
@@ -894,12 +869,6 @@ home {
   width: 415px;
 }
 h1{
-  color: #428bca;
-}
-#firstlight p{
-  color: #000;
-}
-#firstlight p span{
   color: #428bca;
 }
 @media(min-width:767px) {
@@ -1023,4 +992,74 @@ h1{
 div#sidebar-wrapper-anonym video {
     height: auto !important;
     width: 100% !important;
+}
+.modal-content {
+  box-shadow: none;
+  border: 1px solid #428bca;
+  border-radius: 0;
+}
+#myModal div.modal-header h3 {
+  color: #464646;
+  text-transform: none;
+  margin: 0;
+  font-weight: 100;
+  font-size: 19px;
+  font-family: helvetica;
+}
+#myModal div.modal-header {
+  min-height: 16px;
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #f0f0f0;
+}
+#myModal div.modal-header .close {
+  margin-top: -20px;
+}
+.modal-dialog {
+  margin: 60px auto !important;
+}
+.modal-header {
+  background: rgba(66, 139, 202, 1);
+  position: relative;
+}
+.modal-header h3 {
+  color: #fff !important;
+  font-size: 18px;
+}
+.modal-body {
+  position: relative;
+  padding: 15px;
+}
+.modal-body p {
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #5b687b;
+  font-size: 17px;
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+}
+.modal-header .close {
+  position: absolute;
+  top: 30%;
+  right: 4%;
+}
+#firstlight p a{
+  color: #428bca;
+  cursor: pointer;
+}
+.terms {
+  padding-top: 60px;
+}
+.terms p {
+  font-size: 11px;
+  text-align: center;
+}
+.divhelp p {
+  color: #5b687b;
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 17px;
+}
+.divhelp p.help a{
+  color: #428bca;
+  cursor: pointer;
 }

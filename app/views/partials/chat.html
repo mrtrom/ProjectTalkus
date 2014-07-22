@@ -179,6 +179,10 @@
       <label>About me</label>
       <label>{{otherUserInfo.description}}</label>
     </div>
+    <div ng-show="otherUserInfo.username === 'Anonym'" class="divhelp">
+      <p class="prehelp">Sorry :( this is an Anonym user and doesn't have info for us.</p>
+      <p class="help">Help Sharing with your friends! <a>Share!</a></p>
+    </div>
   </div>
 </div>
 <!-- modal home password -->
@@ -186,7 +190,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        Welcome
+        <h3 style="color: #000;margin: 0;padding: 0">Welcome</h3>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
@@ -201,7 +205,7 @@
     <div class="modal-content">
       <form ng-submit="forgotpass()">
         <div class="modal-header">
-          <h3  ><%= __('EnterEmail') %></h3>
+          <h3  style="color: #000;margin: 0;padding: 0"><%= __('EnterEmail') %></h3>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
         <div class="modal-body">
@@ -218,6 +222,7 @@
     </div>
   </div>
 </div>
+<!-- first modal -->
 <div class="modal fade" id="firstlight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -225,7 +230,24 @@
         <h3 style="color: #000;margin: 0;padding: 0">Hi there!</h3>
       </div>
       <div class="modal-body">
-        <p>Welcome to talkus! here we can put what ever or click <span ng-click="getlog()">Here</span> to sign up</p>
+        <p>Welcome to talkus! click <a ng-click="getLog()">here</a> to sign up or login; or just click <a ng-click="chatNow()">here</a> if you wanna chat NOW!</p>
+        <div class="terms">
+          <p>When you click in "chat" or "sign up / login" you are accepting <a ng-click="openTerms()">this</a> terms</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal terms -->
+<div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Terms</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <p>Welcome to talkus!</p>
       </div>
     </div>
   </div>

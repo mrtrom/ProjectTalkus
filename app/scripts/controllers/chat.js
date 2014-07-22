@@ -44,7 +44,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     //<editor-fold desc="Variables">
     var hostURL = window.location.host.split(':')[0],
         portURL = window.location.host.split(':')[1] !== undefined ? window.location.host.split(':')[1] : 80,
-        socket = io.connect(hostURL, {port: portURL});
+        socket = io.connect(hostURL, {port: portURL}),
+        openByModal = false;
     //</editor-fold>
 
     //<editor-fold desc="jQuery Variables">
@@ -131,7 +132,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQNewVideoChat.hide();
       jQExitVideoChat.hide();
 
-      socket.on('connect', $scope.loadInfo(onConnect));
+      socket.on('connect', $scope.addUserToChat);
       socket.on('message', onMessage);
       socket.on('initialVideo', onInitialVideo);
       socket.on('empty', onEmpty);
@@ -268,7 +269,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
     }
     function onInitialText(data){
+
       socket.emit('nextText', data);
+
     }
     function onInitialVideo (data, type, user, start){
       window.channelReady = true;
@@ -555,14 +558,50 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //<editor-fold desc="User info section">
 
-    $scope.getlog = function(){
+    $scope.getLog = function(){
       $('#firstlight').modal('hide');
+      openByModal = true;
       $('#modMain').modal('show');
     };
-    if(!$cookies.myshow){
-      $cookies.myshow = 'true';
+
+    $scope.openTerms = function(){
+      $('#firstlight').modal('hide');
+      $('#terms').modal('show');
+    };
+
+    $scope.chatNow = function(){
+      $('#firstlight').modal('hide');
+      $scope.loadInfo(onConnect);
+    };
+
+    $scope.addUserToChat = function(){
+      if(!$cookies.myshow){
+        $cookies.myshow = 'true';
+        $('#firstlight').modal({
+          keyboard: false,
+          backdrop: 'static',
+          show: true
+        });
+      }
+      else{
+        $scope.loadInfo(onConnect);
+      }
+    };
+
+    //Modal Events
+    $('#terms').on('hide.bs.modal', function () {
       $('#firstlight').modal('show');
-    }
+    });
+
+    $('#modMain').on('hidden.bs.modal', function () {
+      if (openByModal){
+        setTimeout(function() {
+          $scope.loadInfo(onConnect);
+          openByModal = false;
+        }, 500);
+      }
+    });
+
     $scope.newRoom = function(){
       if (isVideoChat){
         socket.emit('disconnectPartners', 'video');
