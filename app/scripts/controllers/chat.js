@@ -22,6 +22,7 @@
 /*global stopVideo:false*/
 /*global hangUp:false*/
 /*global stopStreamingNoCamera:false*/
+/*global getBrowser:false*/
 
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
@@ -80,11 +81,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     };
 
     $scope.noCameraNotification = function(){
-      new PNotify({
-        title: 'Woa',
-        text: "Looks like you don't have a camera",
-        remove: true
-      });
+      $('#cameraModal').modal('show');
 
       socket.emit('userNoCamera');
     };
@@ -111,7 +108,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
         if (isVideoChat){
           if (!$scope.userHasCamera){
-            //Show lightbox showing info (don't have camera)
+            $('#camera2Modal').modal('show');
           }
         }
       }, 1000);
@@ -574,7 +571,22 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $scope.loadInfo(onConnect);
     };
 
+    $scope.goChat = function(){
+      $location.path('/chat');
+    };
+
     $scope.addUserToChat = function(){
+
+      var browserNameA = getBrowser();
+
+      if (isVideoChat && browserNameA && browserNameA === 'safari'){
+        $('#safariModal').modal({
+          keyboard: false,
+          backdrop: 'static',
+          show: true
+        });
+      }
+
       if(!$cookies.myshow){
         $cookies.myshow = 'true';
         $('#firstlight').modal({
@@ -624,7 +636,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
           $location.path('/video-chat');
         }
         else{
-          //Show lightbox showing info (don't have camera)
+          $('#cameraModal').modal('show');
         }
       }
     };
