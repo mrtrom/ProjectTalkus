@@ -383,7 +383,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               title: 'Video Chat',
               text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
               type: 'success',
-              remove: true
+              remove: false
             });
             break;
 

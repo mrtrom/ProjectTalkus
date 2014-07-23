@@ -841,7 +841,7 @@ ul.sidebar-nav.infomodel {
 }
 a.navbar-status {
   position: absolute;
-  right: 5%;
+  right: 56px;
   font-size: 16px;
   top: 13px;
 }
@@ -1062,4 +1062,20 @@ div#sidebar-wrapper-anonym video {
 .divhelp p.help a{
   color: #428bca;
   cursor: pointer;
+}
+.ui-pnotify{
+    top:53px !important;
+}
+@media all and (max-width: 992px) {
+    a.navbar-brand{
+        left: 11px;
+    }
+    a.navbar-brand img{
+        width: 62px;
+    }
+}
+@media all and (max-width: 568px) {
+    #sidebar-wrapper-anonym.active{
+        width: 100% !important;
+    }
 }
