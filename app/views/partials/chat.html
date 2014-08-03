@@ -47,11 +47,15 @@
             <legend class="sidebar-brand">Anonym</legend>
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
+
               <img class="{{validations.anonymUser === false ? 'anonym-profileClass img-rounded' : 'anonym-profileAnonymClass img-rounded'}}"
                    id="anonym-profile"
                    ng-src="{{otherUserInfo.avatar}}" width="160" height="160"
                    data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}"
                    data-target="{{validations.anonymUser === true ? '#modMain' : ''}}"/>
+                <button ng-disabled="readyLiked" ng-show="otherUserInfo" ng-click="biped()" type="button" class="btn btn-primary" style="margin: 0 auto 20px auto;display: block;">
+                    <span class="glyphicon glyphicon-thumbs-up"></span> {{likes}} Mips!
+                </button>
               <video id="webrtc-remotevid" controls autoplay="" style="width: 320px; height: 240px;"></video>
             </div>
           </fieldset>

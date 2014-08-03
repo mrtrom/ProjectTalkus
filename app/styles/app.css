@@ -475,7 +475,7 @@ textarea#about {
   width: 100%;
 }
 #sidebar-wrapper-anonym div.profile div.inside form fieldset ul {
-  background: rgba(50, 118, 177, 0.7);
+  background: #428bca;
   width: 22px;
   padding: 2px 4px;
   border-radius: 0;
@@ -1078,4 +1078,14 @@ div#sidebar-wrapper-anonym video {
     #sidebar-wrapper-anonym.active{
         width: 100% !important;
     }
+}
+p.likes{
+    color: #5b687b;
+    font-family: helvetica;
+    margin: 0;
+    display: block;
+    text-align: center;
+}
+.btn{
+    border-radius: 0;
 }

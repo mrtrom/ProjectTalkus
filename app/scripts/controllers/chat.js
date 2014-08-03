@@ -25,8 +25,8 @@
 /*global getBrowser:false*/
 
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat',
-  function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat) {
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat','bip',
+  function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat, bip) {
 
     document.title = "Talkus";
 
@@ -667,7 +667,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
       $scope.opened = true;
     };
-
+      $scope.biped = function(){
+          bip.save({user:$scope.otherUserInfo},function(suc){
+              bip.get({id:$scope.otherUserInfo._id},function(res){
+                  $scope.likes = res.likes;
+                  $scope.readyLiked = true;
+              });
+          });
+      };
     $scope.format = 'dd/MM/yyyy';
 
     $scope.newpermit = {
@@ -811,7 +818,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if($scope.userInformation.username !== undefined && $scope.userInformation.username !== ''){
         ChatUser.get({username: $scope.userInformation.socketId},
             function(response) {
-
+              bip.get({id:response._id},function(res){
+                  $scope.likes = res.likes;
+              });
               $scope.validations.anonymOtherUser = false;
               $scope.otherUserInfo.birth = new Date();
               $scope.otherUserInfo = response;
