@@ -5,7 +5,13 @@
         <div class="info">
           <form name="registerForm">
             <fieldset id="registerFieldset">
-              <legend>Me</legend>
+              <legend>Me
+                  <div class="language">
+                  <a ng-click="lang('es')" ng-href=""><img src="images/flags/spain.png" alt=""/></a>
+                  <a ng-click="lang('en')" ng-href=""><img src="images/flags/uk.png" alt=""/></a>
+              </div>
+              </legend>
+
               <input id="username" type="hidden" value="{{userInformation.username}}"/>
               <div ng-hide="validations.anonymUser" class="daysleftwrap">
                 <div ng-show="newpermit.days" class="daysleft">

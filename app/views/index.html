@@ -44,15 +44,16 @@
         </a>
         <div ng-show="LoginValidations.showLogin" >
           <a class="navbar-status" href data-toggle="modal" data-target="#modMain" >
-            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title}}</span>
+            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title | translate}}</span>
           </a>
         </div>
         <div ng-hide="LoginValidations.showLogin" >
           <a class="navbar-status" href ng-click="logout()" >
-            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title}}</span>
+            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title | translate}}</span>
           </a>
         </div>
         <a id="menu-toggle-anonym" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
+
       </div>
     </div>
     <!-- /.container -->
@@ -98,6 +99,8 @@
 <script src="bower_components/blueimp-load-image/js/load-image-exif.js"></script>
 <script src="bower_components/blueimp-load-image/js/load-image-exif-map.js"></script>
 <script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
 <script src="bower_components/pnotify/pnotify.core.js"></script>
 <script src="bower_components/pnotify/pnotify.buttons.js"></script>
 <script src="bower_components/pnotify/pnotify.callbacks.js"></script>
@@ -113,6 +116,8 @@
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/theme/en.js"></script>
+<script src="scripts/theme/es.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/directives/appversion.js"></script>
 <script src="scripts/directives/upload.js"></script>

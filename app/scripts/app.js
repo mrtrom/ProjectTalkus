@@ -17,13 +17,20 @@ var App = angular.module('talkusApp', [
   'ngRoute',
   'angularFileUpload',
   'ui.bootstrap',
+  'pascalprecht.translate',
   'talkusApp.controllers',
   'talkusApp.directives',
   'talkusApp.filters',
   'talkusApp.services'
 ]);
 
-App.config(function ($routeProvider, $locationProvider) {
+App.config(function ($routeProvider, $locationProvider, $translateProvider) {
+    $translateProvider.translations('es', language_es_CO);
+    $translateProvider.translations('en', language_en_US);
+
+    $translateProvider.preferredLanguage('en');
+
+    $translateProvider.useCookieStorage();
   $routeProvider
       .when('/', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return false;}}})
       .when('/chat', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return false;}}})

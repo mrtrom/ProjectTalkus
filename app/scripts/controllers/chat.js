@@ -25,9 +25,11 @@
 /*global getBrowser:false*/
 
 
-Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat','bip',
-  function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat, bip) {
-
+Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat', 'bip', '$translate',
+  function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat, bip, $translate) {
+      $scope.lang = function(lang){
+          $translate.use(lang);
+      };
     document.title = "Talkus";
 
     /*window.onbeforeunload = function (e) {

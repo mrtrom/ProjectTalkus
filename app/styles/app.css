@@ -1089,3 +1089,10 @@ p.likes{
 .btn{
     border-radius: 0;
 }
+.language img {
+    width: 26px;
+}
+.language {
+    float: right;
+    margin-top: -31px;
+}
