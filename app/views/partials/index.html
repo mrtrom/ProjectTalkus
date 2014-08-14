@@ -1,54 +1,54 @@
 <div class="centerform">
-    <h1 class="inew" ><%= __('SignUp') %></h1>
+    <h1 class="inew" >{{'Sign up' | translate}}</h1>
     <form name="registerForm" ng-submit="submitRegister()" class="form-horizontal front-form">
         <div ng-show="validations.invalidEmailFormat" class="alert alert-danger">
-            <p ><strong><%= __('Email') %></strong><%= __('FormatIncorrect') %></p>
+            <p ><strong>{{'Email' | translate}}</strong>{{'Incorrect' | translate}}</p>
         </div>
         <div ng-show="validations.invalidUsername" class="alert alert-danger">
-            <p ><strong ><%= __('Username') %></strong> <%= __('UsernameExists') %></p>
+            <p ><strong >{{'Username' | translate}}</strong> {{'Exist' | translate}}</p>
         </div>
         <div class="control-group">
             <div class="controls">
-                <input name="username" ng-model="userObject.user.username" type="text" placeholder="<%= __('Username') %>" required="required"/>
+                <input name="username" ng-model="userObject.user.username" type="text" placeholder="{{'Username' | translate}}" required="required"/>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                <input name="email" id="email" ng-model="userObject.user.email" type="text" placeholder="<%= __('Email') %>" required="required"/>
+                <input name="email" id="email" ng-model="userObject.user.email" type="text" placeholder="{{'Email' | translate}}" required="required"/>
             </div>
         </div>
         <div class="control-group password">
             <div class="controls">
-                <input name="password" ng-model="userObject.user.password" type="password" placeholder="<%= __('Password') %>" required="required"/>
+                <input name="password" ng-model="userObject.user.password" type="password" placeholder="{{'Password' | translate}}" required="required"/>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary log" ><%= __('SignUp') %></button>
+                <button type="submit" class="btn btn-primary log" >{{'Sign up' | translate}}</button>
             </div>
         </div>
     </form>
 </div>
 <div class="centerform">
-    <h1 class="inew" ><%= __('SignIn') %></h1>
+    <h1 class="inew" >{{'Sign in' | translate}}</h1>
     <form name="singInForm" ng-submit="submitLogin()" class="form-horizontal front-form">
         <div ng-show="permissions.invalidUserInfo" class="alert alert-danger">
-            <p ><strong ><%= __('Username') %></strong> <%= __('Or') %> <strong ><%= __('Password') %></strong> <%= __('Incorrect') %></p>
+            <p ><strong >{{'Username' | translate}}</strong> {{'Or' | translate}} <strong >{{'Password' | translate}}</strong> {{'incorrect' | translate}}</p>
         </div>
         <div class="control-group">
             <div class="controls">
-                <input name="username" ng-model="session.username" type="text" placeholder="<%= __('UsernameOrEmail') %>" required="required"/>
+                <input name="username" ng-model="session.username" type="text" placeholder="{{'Username or email' | translate}}" required="required"/>
             </div>
         </div>
         <div class="control-group password">
             <div class="controls">
-                <input name="password" ng-model="session.password" type="password" placeholder="<%= __('Password') %>" required="required"/>
+                <input name="password" ng-model="session.password" type="password" placeholder="{{'Password' | translate}}" required="required"/>
             </div>
-            <a href data-toggle="modal" data-target="#myModal" ><%= __('ForgotPassword') %></a>
+            <a href data-toggle="modal" data-target="#myModal" >{{'Forgot password' | translate}}</a>
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary log"  ><%= __('SignIn') %></button>
+                <button type="submit" class="btn btn-primary log"  >{{'Sign in' | translate}}</button>
             </div>
         </div>
     </form>

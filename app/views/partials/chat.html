@@ -215,18 +215,18 @@
     <div class="modal-content">
       <form ng-submit="forgotpass()">
         <div class="modal-header">
-          <h3  style="color: #000;margin: 0;padding: 0"><%= __('EnterEmail') %></h3>
+          <h3  style="color: #000;margin: 0;padding: 0">{{'Enter email' | translate}}</h3>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
         <div class="modal-body">
-          <div ng-show="password.remember" class="alert alert-success"  ><strong><%= __('Success') %> </strong><%= __('EmailHasBeenSent') %></div>
-          <div ng-show="password.remembererror" class="alert alert-danger"  ><strong  ><%= __('Oops') %> </strong><%= __('EmailDoesNotExist') %></div>
+          <div ng-show="password.remember" class="alert alert-success"  ><strong>{{'Success' | translate}} </strong>{{'Email has been sent' | translate}}</div>
+          <div ng-show="password.remembererror" class="alert alert-danger"  ><strong  >{{'Oops' | translate}} </strong>{{'This email does not exist' | translate}}</div>
           <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
-            <input type="email" placeholder="<%= __('Email') %>" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required"/>
+            <input type="email" placeholder="{{'Email' | translate}}" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required"/>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" ><%= __('Send') %></button>
+          <button type="submit" class="btn btn-primary" >{{'Send' | translate}}</button>
         </div>
       </form>
     </div>
