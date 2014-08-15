@@ -1096,3 +1096,20 @@ p.likes{
     float: right;
     margin-top: -31px;
 }
+.alert.ui-pnotify-container.ui-pnotify-shadow {
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    background-color: rgb(66, 139, 202);
+    color: rgb(255, 255, 255);
+}
+h4.ui-pnotify-title , .ui-pnotify-text{
+    font-style: normal;
+    font-weight: normal;
+}
+h4.ui-pnotify-title{
+    font-size: 16px;
+}
+div.ui-pnotify{
+    right: 0 !important;
+}
