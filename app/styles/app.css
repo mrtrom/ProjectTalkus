@@ -660,7 +660,6 @@ a.navbar-brand img{
   border-radius: 0;
   margin-left: 12px;
   margin-right: 12px;
-  box-shadow: 0 0 10px 0px #ccc;
   display: inline-block;
 }
 #data {
@@ -1064,7 +1063,7 @@ div#sidebar-wrapper-anonym video {
   cursor: pointer;
 }
 .ui-pnotify{
-    top:53px !important;
+    top:calc(100% - 130px);
 }
 @media all and (max-width: 992px) {
     a.navbar-brand{
@@ -1111,5 +1110,5 @@ h4.ui-pnotify-title{
     font-size: 16px;
 }
 div.ui-pnotify{
-    right: 0 !important;
+    right: calc(100% - 300px);
 }
