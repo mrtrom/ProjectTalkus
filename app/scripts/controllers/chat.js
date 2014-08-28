@@ -30,7 +30,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $scope.lang = function(lang){
           $translate.use(lang);
       };
-    document.title = "MitBip";
+    document.title = "Mitbip";
 
     /*window.onbeforeunload = function (e) {
      e = e || window.event;
@@ -288,7 +288,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQUserTyping.show();
         document.title = 'User Typing..';
         $(window).focus(function() {
-          document.title = 'MitBip';
+          document.title = 'Mitbip';
         });
       }
     }
@@ -297,7 +297,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQUserTyping.hide();
         document.title = 'New Message';
         $(window).focus(function() {
-          document.title = 'MitBip';
+          document.title = 'Mitbip';
         });
       }
     }
