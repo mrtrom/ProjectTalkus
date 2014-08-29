@@ -1063,7 +1063,8 @@ div#sidebar-wrapper-anonym video {
   cursor: pointer;
 }
 .ui-pnotify{
-    top:calc(100% - 130px);
+  top: auto !important;
+  bottom: 64px;
 }
 @media all and (max-width: 992px) {
     a.navbar-brand{
@@ -1111,4 +1112,62 @@ h4.ui-pnotify-title{
 }
 div.ui-pnotify{
     right: calc(100% - 300px);
+}
+.ui-pnotify-text .btn {
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  margin-right: 10px;
+  font-weight: 400;
+  font-style: normal;
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #5b687b;
+}
+.spinner {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  background-color: #428bca;
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+  } 50% {
+      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+    } 100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      }
+}
+.img-rounded{
+  border-radius: 0;
+}
+.looking p {
+  color: #5b687b;
+  font-weight: normal;
+  font-family: helvetica;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+.looking {
+  margin: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  text-align: center;
+  margin-left: -50px;
+  overflow: hidden;
 }

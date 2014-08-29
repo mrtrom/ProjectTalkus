@@ -99,6 +99,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.emitHangUp = function(data){
       socket.emit('hangUp', data);
     };
+    var videolight = null;
     //</editor-fold>
 
     //<editor-fold desc="InitChat">
@@ -240,10 +241,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
       $(document).on('click', '#startVideoChat',function(){
         socket.emit('succesNewVideoChat');
+        videolight.remove();
       });
 
       $(document).on('click', '#cancelVideoChat',function(){
         socket.emit('failNewVideoChat');
+        videolight.remove();
       });
     };
     //</editor-fold>
@@ -339,9 +342,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               text: 'Looks like the user left',
               remove: true
             });
+            $('div.looking').toggle();
             break;
 
           case 'connect':
+              $('div.looking').toggle();
             jQConversation.empty();
 
             if (user === 'text'){
@@ -364,6 +369,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               type: 'success',
               remove: true
             });
+
             break;
 
           case 'showMessageVideoMe':
@@ -381,11 +387,15 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'showMessageVideoAnonym':
-            new PNotify({
+            videolight = new PNotify({
               title: 'Video Chat',
-              text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span><input class=\'btn btn-primary log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn btn-primary log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
+              text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span></br><input class=\'btn log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
               type: 'success',
-              remove: false
+              hide: false,
+              buttons: {
+                closer: false,
+                sticker: false
+              }
             });
             break;
 
