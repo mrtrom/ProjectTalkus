@@ -5,7 +5,7 @@
         <div class="info">
           <form name="registerForm">
             <fieldset id="registerFieldset">
-              <legend>Me
+              <legend>{{'Me' | translate}}
                   <div class="language">
                   <a ng-click="lang('es')" ng-href=""><img src="images/flags/spain.png" alt=""/></a>
                   <a ng-click="lang('en')" ng-href=""><img src="images/flags/uk.png" alt=""/></a>
@@ -15,11 +15,11 @@
               <input id="username" type="hidden" value="{{userInformation.username}}"/>
               <div ng-hide="validations.anonymUser" class="daysleftwrap">
                 <div ng-show="newpermit.days" class="daysleft">
-                  <label><strong>You have <span class="text-error">{{days}} </span>days left to confirm your account via email. Click <span ng-click="resend()" class="text-error hereclick">here</span> to resend it to your email</strong></label>
+                  <label><strong>{{'You have' | translate}} <span class="text-error">{{days}} </span>{{'days left to confirm your account via email.' | translate}} Click <span ng-click="resend()" class="text-error hereclick">{{'here' | translate}}</span> {{'to resend it to your email' | translate}}</strong></label>
                 </div>
               </div>
               <div class="alert alert-success daysleft" ng-show="newpermit.email">
-                Email has been send
+                {{'Email has been send' | translate}}
               </div>
               <div class="row-fluid profilepic">
                 <div class="span12">
@@ -38,7 +38,7 @@
               </div>
               <div id="videoButtons">
                 <button class="btn btn-primary log" id="newVideoChat">video chat</button>
-                <button class="btn btn-primary log" id="exitVideoChat">cancel video chat</button>
+                <button class="btn btn-primary log" id="exitVideoChat">{{'cancel video chat' | translate}}</button>
               </div>
             </fieldset>
           </form>
@@ -50,7 +50,7 @@
       <div class="inside">
         <form>
           <fieldset class="fieldsetProfile">
-            <legend class="sidebar-brand">Anonym</legend>
+            <legend class="sidebar-brand">{{'Anonym' | translate}}</legend>
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none;"/>
             <div class="row-fluid profilepic">
 
@@ -71,7 +71,7 @@
   </div>
   <div class="looking">
     <div class="spinner"></div>
-    <p>looking for Bipers</p>
+    <p>{{'looking for Bipers' | translate}}</p>
   </div>
   <div class="chatwrap">
     <div id="conversation" class="well well-lg">
@@ -80,13 +80,13 @@
       </div>
     </div>
     <div class="extra-buttons" id="extra-buttons">
-      <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i>New room</button>
-      <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i>Change room</button>
+      <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i>{{'New room' | translate}}</button>
+      <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i>{{'Change room' | translate}}</button>
     </div>
     <div class="wraper-chat">
       <form class="form-inline textChat">
         <div id="userTyping">
-          <p class="text-info">User Typing...</p>
+          <p class="text-info">{{'User Typing...' | translate}}</p>
         </div>
         <div class="row-fluid">
           <div class="chatSendContainer">
@@ -109,7 +109,7 @@
       <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
     </li>
   </ul>
-  <h3 class="popover-title">My Profile</h3>
+  <h3 class="popover-title">{{'My Profile' | translate}}</h3>
   <alert ng-repeat="alert in alerts" close="closeAlert($index)">{{alert.msg}}</alert>
   <div class="popover-content" ng-hide="validations.anonymUser">
     <div ng-hide="validations.anonymUser">
@@ -117,7 +117,7 @@
       <input ng-model="userInformation.name" type="text" placeholder="Name"/>
     </div>
     <div ng-hide="validations.anonymUser">
-      <label for="datepicker-birthday">Birthday</label>
+      <label for="datepicker-birthday">{{'Birthday' | translate}}</label>
       <p class="input-group birth">
         <input id="datepicker-birthday" name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened"  close-text="Close" datepicker-append-to-body="true" />
           <span class="input-group-btn">
@@ -127,39 +127,39 @@
     </div>
     <div ng-hide="validations.anonymUser">
       <label ng-hide="validations.anonymUser">Email</label>
-      <input name="email" id="email" ng-model="userInformation.email" type="text" placeholder="Email contact"/>
+      <input name="email" id="email" ng-model="userInformation.email" type="text" placeholder="Email"/>
     </div>
     <div ng-hide="validations.anonymUser">
-      <label ng-hide="validations.anonymUser">Location</label>
-      <input id="locationgeo" type="text" placeholder="Where are you?" ng-model="userInformation.location" />
+      <label ng-hide="validations.anonymUser">{{'Location' | translate}}</label>
+      <input id="locationgeo" type="text" placeholder="{{'Where are you?' | translate}}" ng-model="userInformation.location" />
       <div class="share">
-        <label>Would you like to share your location?
+        <label>{{'Would you like to share your location?' | translate}}
           <input id="checklocation" type="checkbox" ng-model="confirmed" ng-change="locationBool();"/>
         </label>
       </div>
     </div>
     <div ng-hide="validations.anonymUser" class="sex">
-      <label>Gender</label>
+      <label>{{'Gender' | translate}}</label>
       <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           {{userInformation.gender}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu gender" role="menu">
-          <li id="male"> <a ng-click="userInformation.gender = 'Male';">Male</a></li>
-          <li id="female"> <a ng-click="userInformation.gender = 'Female';">Female</a></li>
-          <li id="other"> <a ng-click="userInformation.gender = 'Other';">Other</a></li>
+          <li id="male"> <a ng-click="userInformation.gender = 'Male';">M</a></li>
+          <li id="female"> <a ng-click="userInformation.gender = 'Female';">F</a></li>
+          <li id="other"> <a ng-click="userInformation.gender = 'Other';">n/a</a></li>
         </ul>
       </div>
     </div>
     <div ng-hide="validations.anonymUser">
-      <label ng-hide="validations.anonymUser">About you</label>
+      <label ng-hide="validations.anonymUser">{{'About you' | translate}}</label>
       <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description"></textarea>
     </div>
     <div>
-      <button ng-click="updateUsers()" class="btn btn-success">Save</button>
+      <button ng-click="updateUsers()" class="btn btn-success">{{'Save' | translate}}</button>
     </div>
     <div class="delete-account">
-      <p>If you want to delete your account, just click <a href ng-click="deleteAccount()">here</a></p>
+      <p>{{'If you want to delete your account, just click' | translate}} <a href ng-click="deleteAccount()">{{'here' | translate}}</a></p>
     </div>
   </div>
 </div>
@@ -169,14 +169,14 @@
       <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
     </li>
   </ul>
-  <h3 class="popover-title">Anonym info</h3>
+  <h3 class="popover-title">{{'Anonym info' | translate}}</h3>
   <div class="popover-content">
     <div ng-hide="validations.anonymOtherUserValidationFields.Name">
-      <label>Name</label>
+      <label>{{'Name' | translate}}</label>
       <label>{{otherUserInfo.name}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Birth">
-      <label>Birth</label>
+      <label>{{'Birth' | translate}}</label>
       <label>{{otherUserInfo.birth | date:'MMM - d, yyyy'}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Email">
@@ -184,20 +184,19 @@
       <label>{{otherUserInfo.email}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Location">
-      <label>Location</label>
+      <label>{{'Location' | translate}}</label>
       <label>{{otherUserInfo.location}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Gender">
-      <label>Gender</label>
+      <label>{{'Gender' | translate}}</label>
       <label>{{otherUserInfo.gender}}</label>
     </div>
     <div ng-hide="validations.anonymOtherUserValidationFields.Description">
-      <label>About me</label>
+      <label>{{'About me' | translate}}</label>
       <label>{{otherUserInfo.description}}</label>
     </div>
     <div ng-show="otherUserInfo.username === 'Anonym'" class="divhelp">
-      <p class="prehelp">Sorry :( this is an Anonym user and doesn't have info for us.</p>
-      <p class="help">Help Sharing with your friends! <a>Share!</a></p>
+      <p class="prehelp">{{'Sorry :( this is an Anonym user and doesnt have info for us.' | translate}}</p>
     </div>
   </div>
 </div>
@@ -243,12 +242,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: #000;margin: 0;padding: 0">Hi there!</h3>
+        <h3 style="color: #000;margin: 0;padding: 0">{{'Hi there!' | translate}}</h3>
       </div>
       <div class="modal-body">
-        <p>Welcome to mitbip! click <a ng-click="getLog()">here</a> to sign up or login; or just click <a ng-click="chatNow()">here</a> if you wanna chat NOW!</p>
+        <p>{{'Welcome to mitbip! click' | translate}} <a ng-click="getLog()">{{'here' | translate}}</a> {{'to sign up or login, or just click' | translate}} <a ng-click="chatNow()">{{'here' | translate}}</a> {{'if you wanna chat NOW!' | translate}}</p>
         <div class="terms">
-          <p>When you click in "chat" or "sign up / login" you are accepting <a ng-click="openTerms()">this</a> terms</p>
+          <p>{{'When you click in chat or sign up / login you are accepting' | translate}} <a ng-click="openTerms()">{{'this' | translate}}</a> {{'terms' | translate}}</p>
         </div>
       </div>
     </div>
@@ -259,11 +258,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: #000;margin: 0;padding: 0">Terms</h3>
+        <h3 style="color: #000;margin: 0;padding: 0">{{'Terms' | translate}}</h3>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
-        <p>Welcome to mitbip!</p>
+        <p>Lorem ipsum</p>
       </div>
     </div>
   </div>
@@ -276,7 +275,7 @@
         <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
       </div>
       <div class="modal-body">
-        <p>Sorry, but we don't support video chat in this browser. You can go back to the text chat clicking <a href ng-click="goChat()">here</a> or choose another browser :)</p>
+        <p>{{'Sorry, but we dont support video chat in this browser. You can go back to the text chat by clicking' | translate}} <a href ng-click="goChat()">{{'here' | translate}}</a></p>
       </div>
     </div>
   </div>
@@ -289,7 +288,7 @@
         <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
       </div>
       <div class="modal-body">
-        <p>Sorry, looks like you don't have a camera or you are using a unsupported browser</p>
+        <p>{{'Sorry, looks like you dont have a camera or you are using a unsupported browser' | translate}}</p>
       </div>
     </div>
   </div>
@@ -303,7 +302,7 @@
         <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
       </div>
       <div class="modal-body">
-        <p>Sorry, looks like you don't have a camera or you are using a unsupported browser. You can go back to the text chat clicking <a href ng-click="goChat()"></a> </p>
+          <p>{{'Sorry, but we dont support video chat in this browser. You can go back to the text chat by clicking' | translate}} <a href ng-click="goChat()">{{'here' | translate}}</a></p>
       </div>
     </div>
   </div>
