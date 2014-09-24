@@ -80,7 +80,6 @@
       </div>
     </div>
     <div class="extra-buttons" id="extra-buttons">
-      <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i>{{'New room' | translate}}</button>
       <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i>{{'Change room' | translate}}</button>
     </div>
     <div class="wraper-chat">
@@ -90,10 +89,12 @@
         </div>
         <div class="row-fluid">
           <div class="chatSendContainer">
+            <a ng-href="" class="new-room" ng-click="newRoomValidate()">{{userstatus | translate}}</a>
             <div class="input">
               <input id="data" placeholder="Press enter to send" type="text" disabled="disabled"/>
             </div>
-            <input id="datasend" type="button" value="send" disabled="disabled"/>
+            <button type="button" class="video-chat"><span class="glyphicon glyphicon-facetime-video"></span></button>
+            <!--<input style="opacity: 0;position: absolute;" id="datasend" type="button" value="send" disabled="disabled"/>-->
             <span class="glyphicon glyphicon-camera mycam"></span>
             <input type="file" id="imagefile" accept="image/*">
             <div id="btnEmoticon" class="btnEmoticon"></div>

@@ -30,6 +30,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $scope.lang = function(lang){
           $translate.use(lang);
       };
+
     document.title = "Mitbip";
 
     /*window.onbeforeunload = function (e) {
@@ -149,7 +150,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       });
 
       //Send text chat to room via click
-      $('#datasend').on('click', function() {
+      $scope.sendChat = function(){
         var cadenaAEliminar = /(<([^>]+)>)/gi,
             elementoEtiquetas = jQData,
             etiquetas = elementoEtiquetas.val(),
@@ -163,7 +164,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQData.val('');
 
         socket.emit('sendchat', mensaje);
-      });
+      };
 
       //Send text chat to room via enter
       jQData.keydown(function(e) {
@@ -183,7 +184,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         if (e.keyCode === 13){
           if ($(this).val().length !== 0){
             $(this).blur();
-            $('#datasend').focus().click();
+            $scope.sendChat();
             jQData.focus();
           }
           socket.emit('userNotWriting');
@@ -342,11 +343,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               text: 'Looks like the user left',
               remove: true
             });
-            $('div.looking').toggle();
+            $('div.looking').show();
             break;
 
           case 'connect':
-              $('div.looking').toggle();
+
             jQConversation.empty();
 
             if (user === 'text'){
@@ -369,7 +370,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               type: 'success',
               remove: true
             });
-
+            $('div.looking').hide();
             break;
 
           case 'showMessageVideoMe':
@@ -532,7 +533,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
       jQNewVideoChat.hide();
       jQConversation.empty();
-
+      $('div.looking').hide();
+      $scope.userstatusbool = false;
       if (type === 'text'){
         showMyImageHideCamera();
       }
@@ -566,6 +568,36 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     //</editor-fold>
 
     //<editor-fold desc="User info section">
+    $scope.userstatus = 'New room';
+    $scope.userstatusbool = true;
+    $scope.newRoomValidate = function(){
+      if($scope.userstatusbool){
+        $scope.userstatus = 'Leave?';
+        $scope.userstatusbool = false;
+      }
+      else{
+        $scope.newRoom();
+        $scope.userstatus = 'New room';
+        $scope.userstatusbool = true;
+      }
+    };
+    $(document).keyup(function(e) {
+      if (e.which === 27) {
+        if($scope.userstatusbool){
+          $scope.$apply(function () {
+            $scope.userstatus = 'Leave?';
+            $scope.userstatusbool = false;
+          });
+        }
+        else{
+          $scope.$apply(function () {
+            $scope.newRoom();
+            $scope.userstatus = 'New room';
+            $scope.userstatusbool = true;
+          });
+        }
+      }
+    });
 
     $scope.getLog = function(){
       $('#firstlight').modal('hide');
@@ -632,6 +664,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
       else{
         socket.emit('disconnectPartners', 'text');
+        $('div.looking').show();
       }
     };
 
