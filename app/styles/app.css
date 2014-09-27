@@ -1178,14 +1178,17 @@ a.new-room {
   width: 82px;
 }
 button.video-chat {
-  display: inline-block;
-  background: #fff;
+  background: #428bca;
   border: none;
-  text-align: center;
-  font-family: helvetica;
-  padding: 16px 15px;
+  color: #fff;
+  padding: 13px;
   position: relative;
-  color: #5b687b;
+  top: -1px;
+  left: -2px;
+}
+button.video-chat:hover {
+  background: #3276b1;
+  color: #fff;
 }
 ::-webkit-input-placeholder { /* WebKit browsers */
   color:    #5b687b;

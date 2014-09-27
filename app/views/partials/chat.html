@@ -90,10 +90,13 @@
         <div class="row-fluid">
           <div class="chatSendContainer">
             <a ng-href="" class="new-room" ng-click="newRoomValidate()">{{userstatus | translate}}</a>
+
             <div class="input">
               <input id="data" placeholder="Press enter to send" type="text" disabled="disabled"/>
             </div>
-            <button type="button" class="video-chat"><span class="glyphicon glyphicon-facetime-video"></span></button>
+            <button type="button" class="video-chat btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-facetime-video"></span>
+            </button>
             <!--<input style="opacity: 0;position: absolute;" id="datasend" type="button" value="send" disabled="disabled"/>-->
             <span class="glyphicon glyphicon-camera mycam"></span>
             <input type="file" id="imagefile" accept="image/*">
