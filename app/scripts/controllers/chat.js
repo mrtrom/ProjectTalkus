@@ -59,6 +59,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQConversation = $('#conversation'),
         jQUserTyping = $('#userTyping'),
         jQVideoButtons = $('#videoButtons'),
+        jQDataFalse = $('#dataFalse'),
         jQData = $('#data');
     //</editor-fold>
 
@@ -156,14 +157,19 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             etiquetas = elementoEtiquetas.val(),
             mensaje;
 
-        etiquetas = etiquetas.replace(cadenaAEliminar, '');
-        elementoEtiquetas.val(etiquetas);
-        mensaje = elementoEtiquetas.val();
-        mensaje = emotify(mensaje);
+        if (!jQDataFalse.val()){
+          etiquetas = etiquetas.replace(cadenaAEliminar, '');
+          elementoEtiquetas.val(etiquetas);
+          mensaje = elementoEtiquetas.val();
+          mensaje = emotify(mensaje);
 
-        jQData.val('');
+          jQData.val('');
 
-        socket.emit('sendchat', mensaje);
+          socket.emit('sendchat', mensaje);
+        }
+        else{
+          jQConversation.append('<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>Are you a bot? :(</span></div></div><div class=\'clear\'></div>');
+        }
       };
 
       //Send text chat to room via enter

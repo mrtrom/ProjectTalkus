@@ -6,10 +6,10 @@
           <form name="registerForm">
             <fieldset id="registerFieldset">
               <legend>{{'Me' | translate}}
-                  <div class="language">
+                <div class="language">
                   <a ng-click="lang('es')" ng-href=""><img src="images/flags/spain.png" alt=""/></a>
                   <a ng-click="lang('en')" ng-href=""><img src="images/flags/uk.png" alt=""/></a>
-              </div>
+                </div>
               </legend>
 
               <input id="username" type="hidden" value="{{userInformation.username}}"/>
@@ -59,9 +59,9 @@
                    ng-src="{{otherUserInfo.avatar}}" width="160" height="160"
                    data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}"
                    data-target="{{validations.anonymUser === true ? '#modMain' : ''}}"/>
-                <button ng-show="likes" ng-disabled="readyLiked" ng-click="biped()" type="button" class="btn btn-primary likes-style" style="margin: 0 auto 20px auto;display: block;">
-                    <span class="glyphicon glyphicon-thumbs-up"></span> {{likes}} Bips!
-                </button>
+              <button ng-show="likes" ng-disabled="readyLiked" ng-click="biped()" type="button" class="btn btn-primary likes-style" style="margin: 0 auto 20px auto;display: block;">
+                <span class="glyphicon glyphicon-thumbs-up"></span> {{likes}} Bips!
+              </button>
               <video id="webrtc-remotevid" controls autoplay="" style="width: 320px; height: 240px;"></video>
             </div>
           </fieldset>
@@ -93,11 +93,11 @@
 
             <div class="input">
               <input id="data" placeholder="Press enter to send" type="text" disabled="disabled"/>
+              <input id="dataFalse" type="text" hidden="hidden" />
             </div>
             <button type="button" class="video-chat btn btn-default btn-lg">
               <span class="glyphicon glyphicon-facetime-video"></span>
             </button>
-            <!--<input style="opacity: 0;position: absolute;" id="datasend" type="button" value="send" disabled="disabled"/>-->
             <span class="glyphicon glyphicon-camera mycam"></span>
             <input type="file" id="imagefile" accept="image/*">
             <div id="btnEmoticon" class="btnEmoticon"></div>
@@ -306,7 +306,7 @@
         <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
       </div>
       <div class="modal-body">
-          <p>{{'Sorry, but we dont support video chat in this browser. You can go back to the text chat by clicking' | translate}} <a href ng-click="goChat()">{{'here' | translate}}</a></p>
+        <p>{{'Sorry, but we dont support video chat in this browser. You can go back to the text chat by clicking' | translate}} <a href ng-click="goChat()">{{'here' | translate}}</a></p>
       </div>
     </div>
   </div>
