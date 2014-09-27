@@ -670,6 +670,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     });
 
     $scope.newRoom = function(){
+      $scope.userstatusbool = true;
       jQLoaderOther.hide();
       if (isVideoChat){
         socket.emit('disconnectPartners', 'video');
