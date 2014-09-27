@@ -6,7 +6,7 @@ Modules.controllers.controller('MenuController', ['$rootScope', '$scope', 'Sessi
   function($rootScope, $scope, Session, $location, $window) {
 
     $scope.LoginMenu = {
-      title: 'Sign in / up'
+      title: 'Join us'
     };
 
     $scope.LoginValidations = {
@@ -28,11 +28,11 @@ Modules.controllers.controller('MenuController', ['$rootScope', '$scope', 'Sessi
         }
       }
       else{
-        $scope.LoginMenu.title = 'Sign in / up';
+        $scope.LoginMenu.title = 'Join us';
         $scope.LoginValidations.showLogin = true;
       }
     }, function() {
-      $scope.LoginMenu.title = 'Sign in / up';
+      $scope.LoginMenu.title = 'Join us';
       $scope.LoginValidations.showLogin = true;
     });
 

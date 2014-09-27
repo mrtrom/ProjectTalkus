@@ -1,7 +1,5 @@
 window.language_en_US = {
-    'Sign in / up':'Sign in / up',
-	"MenuChat": "Chat",
-	"MenuVideoChat": "Video Chat",
+  'Join us':'Join us',
 	"PrincipalHeader": "Anyone Anywhere",
 	"SecondHeader": "A free, premium quality, responsive one page Bootstrap theme created by Start Bootstrap.",
 	"SignUp": "Sign up",

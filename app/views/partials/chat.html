@@ -15,11 +15,11 @@
               <input id="username" type="hidden" value="{{userInformation.username}}"/>
               <div ng-hide="validations.anonymUser" class="daysleftwrap">
                 <div ng-show="newpermit.days" class="daysleft">
-                  <label><strong>{{'You have' | translate}} <span class="text-error">{{days}} </span>{{'days left to confirm your account via email.' | translate}} Click <span ng-click="resend()" class="text-error hereclick">{{'here' | translate}}</span> {{'to resend it to your email' | translate}}</strong></label>
+                  <label><strong>{{'You have' | translate}} <span class="text-error">{{days}} </span>{{'days left to confirm your account via email.' | translate}} Click <span ng-click="resend()" class="text-error hereclick">{{'here' | translate}}</span> {{'to resend it.' | translate}}</strong></label>
                 </div>
               </div>
               <div class="alert alert-success daysleft" ng-show="newpermit.email">
-                {{'Email has been send' | translate}}
+                {{'Email has been sent' | translate}}
               </div>
               <div class="row-fluid profilepic">
                 <div class="span12">
@@ -67,7 +67,7 @@
   </div>
   <div class="looking">
     <div class="spinner"></div>
-    <p>{{'looking for Bipers' | translate}}</p>
+    <p>{{'Looking for Bipers' | translate}}</p>
   </div>
   <div class="otherlooking" style="display: none;">
     <p>{{'looks like the other user has left the conversation' | translate}}</p>
@@ -202,7 +202,7 @@
       <label>{{otherUserInfo.description}}</label>
     </div>
     <div ng-show="otherUserInfo.username === 'Anonym'" class="divhelp">
-      <p class="prehelp">{{'Sorry :( this is an Anonym user and doesnt have info for us.' | translate}}</p>
+      <p class="prehelp">{{'Sorry, this is an Anonym user and does not have info for us.' | translate}}</p>
     </div>
   </div>
 </div>
@@ -253,7 +253,7 @@
       <div class="modal-body">
         <p>{{'Welcome to mitbip! click' | translate}} <a ng-click="getLog()">{{'here' | translate}}</a> {{'to sign up or login, or just click' | translate}} <a ng-click="chatNow()">{{'here' | translate}}</a> {{'if you wanna chat NOW!' | translate}}</p>
         <div class="terms">
-          <p>{{'When you click in chat or sign up / login you are accepting' | translate}} <a ng-click="openTerms()">{{'this' | translate}}</a> {{'terms' | translate}}</p>
+          <p>{{'When you click in "chat" or "Join us" you are accepting' | translate}} <a ng-click="openTerms()">{{'this' | translate}}</a> {{'terms' | translate}}</p>
         </div>
       </div>
     </div>
