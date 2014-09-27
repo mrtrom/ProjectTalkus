@@ -67,6 +67,7 @@ function emo_set_onload( emoticons ) {
 
 $(function(){
   var intr;
+    var start = true;
   $("#menu-toggle-anonym").click(function(e) {
     e.preventDefault();
     $("#sidebar-wrapper-anonym").toggleClass("active");
@@ -87,8 +88,14 @@ $(function(){
     $('.popoverInfoMeModal.me').css('width',$('#sidebar-wrapper-anonym').width() + 'px');
     $('#anonym-popup').css('display','none');
   });
+    if(start){
+        intr = setInterval(function(){
+            $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
+        },350);
+    }
   $('#conversation').bind('scroll', function()
   {
+    start = false;
     window.clearInterval(intr);
     if($(this).scrollTop() +
         $(this).innerHeight()

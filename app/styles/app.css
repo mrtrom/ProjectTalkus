@@ -281,7 +281,7 @@ div.controls button {
 #sidebar-wrapper-anonym {
   margin-right: -250px;
   right: 0;
-  width: 250px;
+  width: 0px;
   background: #fff;
   position: fixed;
   height: 100%;
@@ -1105,7 +1105,6 @@ p.likes{
 }
 .language {
     float: right;
-    margin-top: -31px;
 }
 .alert.ui-pnotify-container.ui-pnotify-shadow {
     box-shadow: none;
@@ -1244,6 +1243,7 @@ a.new-room span.glyphicon-refresh {
 span.bool-text {
     font-size: 11px;
     display: block;
+    font-family: helvetica;
 }
 .glyphicon-refresh:before{
     display: block;
