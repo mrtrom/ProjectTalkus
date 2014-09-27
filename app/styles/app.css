@@ -1133,6 +1133,7 @@ div.ui-pnotify{
   font-style: normal;
   font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
   color: #5b687b;
+  padding: 6px 5px;
 }
 .spinner {
   width: 50px;
@@ -1290,4 +1291,10 @@ input:disabled {
 }
 button[disabled]#newVideoChat{
     background-color: inherit;
+}
+#sidebar-wrapper-anonym.active-chat.active {
+  width: 370px;
+}
+.chat .view.ng-scope.active-chat-wraper.slide-left {
+  width: calc(100% - 370px);
 }

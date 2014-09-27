@@ -369,7 +369,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             if (typeUser && typeUser === 'me'){
               connect();
             }
-
+            $('.ui-pnotify').remove();
             new PNotify({
               title: 'Welcome',
               text: data,
@@ -401,6 +401,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             break;
 
           case 'showMessageVideoAnonym':
+            $('.ui-pnotify').remove();
             videolight = new PNotify({
               title: 'Video Chat',
               text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span></br><input class=\'btn log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
@@ -426,6 +427,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             stopVideo();
             showMyImageHideCamera();
             showAnonymImageHideCamera();
+            $('.ui-pnotify').remove();
             new PNotify({
               title: 'Fail',
               text: 'The video failed to initialize',
@@ -438,6 +440,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             stopVideo();
             showMyImageHideCamera();
             showAnonymImageHideCamera();
+            $('.ui-pnotify').remove();
             new PNotify({
               title: 'Fail',
               text: 'The video failed to initialize',
