@@ -61,7 +61,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQDataFalse = $('#dataFalse'),
         jQData = $('#data'),
         jQInputs = $('.wraper-chat'),
-        jQLoader = $('div.looking');
+        jQLoader = $('div.looking'),
+        jQLoaderOther = $('div.otherlooking');
     //</editor-fold>
 
     //<editor-fold desc="Scope emit functions">
@@ -385,6 +386,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
                   $('.ui-pnotify').remove();
               });
             jQLoader.hide();
+            jQLoaderOther.hide();
             jQInputs.removeClass('hide-inputs');
             break;
 
@@ -552,6 +554,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $('#emoticonContainer').css('height', '0');
       jQInputs.addClass('hide-inputs');
       $scope.userstatusbool = false;
+      jQLoader.hide();
+      jQLoaderOther.show();
+
       if (type === 'text'){
         showMyImageHideCamera();
       }

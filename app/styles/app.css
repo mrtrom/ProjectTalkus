@@ -1184,6 +1184,29 @@ div.ui-pnotify{
   overflow: hidden;
     padding-top: 5px;
 }
+.otherlooking {
+  margin: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  text-align: center;
+  margin-left: -183px;
+  overflow: hidden;
+  padding-top: 5px;
+}
+.otherlooking p {
+  background: rgba(27, 188, 155, 0.2);
+  text-align: center;
+  margin-bottom: 8px;
+  font-family: helvetica;
+  padding: 13px 31px;
+  border-radius: 6px;
+  display: inline-block;
+  color: #666;
+  margin-bottom: 22px;
+  font-size: 14px;
+}
 a.new-room {
   background: #428BCA;
   border: none;
@@ -1200,6 +1223,17 @@ a.new-room {
   padding-right: 0px;
   padding-bottom: 7px;
   padding-left: 0px;
+}
+a.new-room.other{
+  margin: 0 auto;
+  float: none;
+  width: 100px;
+  height: 40px;
+  padding-top: 4px;
+}
+a.new-room.other span{
+  font-size: 16px;
+  padding-top: 5px;
 }
 a.new-room:hover{
     background-color: #3276B1;
