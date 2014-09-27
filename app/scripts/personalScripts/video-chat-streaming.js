@@ -173,10 +173,14 @@ function startVideo(data, user, type) {
     }
   }
   function errorCallback(error) {
+      console.log('error: ');
+      console.log(error.name);
+
     var scope = angular.element($('.view.ng-scope')).scope();
 
     scope.$apply(function () {
       scope.userHasCamera = false;
+      scope.errorCamera = error.name;
       scope.noCameraNotification();
     });
 

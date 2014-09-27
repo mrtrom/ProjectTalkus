@@ -87,7 +87,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     };
 
     $scope.noCameraNotification = function(){
-      $('#cameraModal').modal('show');
+      if($scope.errorCamera && $scope.errorCamera === 'PermissionDeniedError'){
+        $('#cameraModalPer').modal('show');
+      }
+      else{
+        $('#cameraModal').modal('show');
+      }
 
       socket.emit('userNoCamera');
     };
