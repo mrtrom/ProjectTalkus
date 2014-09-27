@@ -333,13 +333,17 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               $scope.otherUserInfo.username = '';
             }
 
-            if (isVideoChat){
+            /*if (isVideoChat){
               hangUp();
               stopVideo();
               showMyImageHideCamera();
-            }
+            }*/
 
             $('.fieldsetProfile').hide();
+
+            hangUp();
+            stopVideo();
+            showMyImageHideCamera();
 
             jQExitVideoChat.hide();
             jQNewVideoChat.hide();
@@ -549,6 +553,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $('#emoticonContainer').css('height', '0');
 
       if (type === 'text'){
+        hangUp();
+        stopVideo();
         showMyImageHideCamera();
       }
       else{
