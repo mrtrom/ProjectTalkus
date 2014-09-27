@@ -345,14 +345,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             jQExitVideoChat.hide();
             jQNewVideoChat.hide();
-
-            new PNotify({
-              title: 'Woa',
-              text: 'Looks like the user left',
-              remove: true
-            });
-            jQIcons.css('height' , '0px');
-            console.log(jQIcons);
             jQLoader.show();
             jQInputs.addClass('hide-inputs');
             jQConversation.empty();
