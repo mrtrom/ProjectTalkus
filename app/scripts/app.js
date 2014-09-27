@@ -2,6 +2,8 @@
 
 /*global Modules:true */
 /*exported Modules*/
+/*global language_es_CO:false*/
+/*global language_en_US:false*/
 
 var Modules = {
   controllers: angular.module('talkusApp.controllers', ['talkusApp.services']),
@@ -27,10 +29,9 @@ var App = angular.module('talkusApp', [
 App.config(function ($routeProvider, $locationProvider, $translateProvider) {
     $translateProvider.translations('es', language_es_CO);
     $translateProvider.translations('en', language_en_US);
-
     $translateProvider.preferredLanguage('en');
-
     $translateProvider.useCookieStorage();
+
   $routeProvider
       .when('/', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return false;}}})
       .when('/chat', {templateUrl: '/partials/chat', controller:  'ChatController', resolve:{isVideoChat: function() {return false;}}})
