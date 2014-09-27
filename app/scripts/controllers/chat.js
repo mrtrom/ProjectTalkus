@@ -61,8 +61,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQDataFalse = $('#dataFalse'),
         jQData = $('#data'),
         jQInputs = $('.wraper-chat'),
-        jQLoader = $('div.looking'),
-        jQIcons = angular.element( document.querySelector( '#emoticonContainer' ) );
+        jQLoader = $('div.looking');
     //</editor-fold>
 
     //<editor-fold desc="Scope emit functions">
@@ -550,7 +549,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQNewVideoChat.hide();
       jQConversation.empty();
       jQLoader.hide();
-      jQIcons.css('height' , '0px');
+      $('#emoticonContainer').css('height', '0');
       jQInputs.addClass('hide-inputs');
       $scope.userstatusbool = false;
       if (type === 'text'){
@@ -568,6 +567,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
       jQNewVideoChat.hide();
       jQConversation.empty();
+      $('#emoticonContainer').css('height', '0');
 
       if (type === 'text'){
         hangUp();
