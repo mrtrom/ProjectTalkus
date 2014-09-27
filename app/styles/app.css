@@ -1008,23 +1008,6 @@ div#sidebar-wrapper-anonym video {
   border: 1px solid #428bca;
   border-radius: 0;
 }
-#myModal div.modal-header h3 {
-  color: #464646;
-  text-transform: none;
-  margin: 0;
-  font-weight: 100;
-  font-size: 19px;
-  font-family: helvetica;
-}
-#myModal div.modal-header {
-  min-height: 16px;
-  padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
-  background: #f0f0f0;
-}
-#myModal div.modal-header .close {
-  margin-top: -20px;
-}
 .modal-dialog {
   margin: 60px auto !important;
 }
@@ -1112,6 +1095,7 @@ p.likes{
     border-radius: 0;
     background-color: rgb(66, 139, 202);
     color: rgb(255, 255, 255);
+    font-family: helvetica;
 }
 h4.ui-pnotify-title , .ui-pnotify-text{
     font-style: normal;
@@ -1281,6 +1265,10 @@ button.video-chat:hover {
 }
 input:disabled {
     background: inherit;
+}
+.centerform h1 {
+  font-size: 30px;
+  height: 35px;
 }
 .social-ico button {
     width: 40px;

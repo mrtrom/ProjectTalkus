@@ -3,8 +3,8 @@
 /*global Modules:false */
 /*global PNotify:false*/
 
-Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid',
-  function($rootScope, $scope, $http, $window, $location, $modal, Session, Mails, Remember, User, Valid) {
+Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', '$location','$modal', 'Session', 'Mails', 'Remember', 'User', 'Valid', '$translate',
+  function($rootScope, $scope, $http, $window, $location, $modal, Session, Mails, Remember, User, Valid, $translate) {
 
     //Checks if any string was send via url
     if(($location.search()).idValid !== undefined && ($location.search()).idValid !== null && ($location.search()).idValid !== ''){
@@ -15,11 +15,21 @@ Modules.controllers.controller('LoginController', ['$rootScope', '$scope', '$htt
       $scope.Valid.$save(function(res) {
             $rootScope.user = res;
             $scope.permissions.invalidUserInfo = false;
-            new PNotify({
-              title: 'Nice!',
-              text: 'You are now verified, login in order to acces to your account <a href data-toggle="modal" data-target="#modMain" ><span>Sign in/up</span></a>',
-              remove: true
-            });
+
+            if($translate.use() === 'en'){
+              new PNotify({
+                title: 'Nice!',
+                text: 'You are now verified, login in order to acces to your account',
+                remove: true
+              });
+            }
+            else{
+              new PNotify({
+                title: 'Qué bien!',
+                text: 'Has verificado tu cuenta, inicia sesión para acceder a tu cuenta',
+                remove: true
+              });
+            }
           },
           function(){
             //Error

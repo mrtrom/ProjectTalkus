@@ -119,8 +119,8 @@
   <alert ng-repeat="alert in alerts" close="closeAlert($index)">{{alert.msg}}</alert>
   <div class="popover-content" ng-hide="validations.anonymUser">
     <div ng-hide="validations.anonymUser">
-      <label>Name</label>
-      <input ng-model="userInformation.name" type="text" placeholder="Name"/>
+      <label>{{'Name' | translate}}</label>
+      <input ng-model="userInformation.name" type="text" placeholder="{{'Name' | translate}}"/>
     </div>
     <div ng-hide="validations.anonymUser">
       <label for="datepicker-birthday">{{'Birthday' | translate}}</label>
@@ -159,7 +159,7 @@
     </div>
     <div ng-hide="validations.anonymUser">
       <label ng-hide="validations.anonymUser">{{'About you' | translate}}</label>
-      <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description"></textarea>
+      <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="{{'Description' | translate}}"></textarea>
     </div>
     <div>
       <button ng-click="updateUsers()" class="btn btn-success">{{'Save' | translate}}</button>
