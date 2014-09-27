@@ -36,10 +36,6 @@
                 </div>
                 <upload></upload>
               </div>
-              <div id="videoButtons">
-                <button class="btn btn-primary log" id="newVideoChat">video chat</button>
-                <button class="btn btn-primary log" id="exitVideoChat">{{'cancel video chat' | translate}}</button>
-              </div>
             </fieldset>
           </form>
         </div>
@@ -100,9 +96,10 @@
               <input id="data" placeholder="Press enter to send" type="text" disabled="disabled"/>
               <input id="dataFalse" type="text" hidden="hidden" />
             </div>
-            <button type="button" class="video-chat btn btn-default btn-lg">
-              <span class="glyphicon glyphicon-facetime-video"></span>
-            </button>
+              <div id="videoButtons">
+                  <button class="video-chat btn btn-default btn-lg" id="newVideoChat"><span class="glyphicon glyphicon-facetime-video"></span></button>
+                  <button class="video-chat btn btn-default btn-lg" id="exitVideoChat"><span class="glyphicon glyphicon-remove"></span></button>
+              </div>
             <span class="glyphicon glyphicon-camera mycam"></span>
             <input type="file" id="imagefile" accept="image/*">
             <div id="btnEmoticon" class="btnEmoticon"></div>

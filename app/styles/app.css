@@ -1288,3 +1288,6 @@ input:disabled {
     top: 9px;
     right: 0px;
 }
+button[disabled]#newVideoChat{
+    background-color: inherit;
+}
