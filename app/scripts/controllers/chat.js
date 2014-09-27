@@ -374,9 +374,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               type: 'success',
               remove: true
             });
-              $('.ui-pnotify-closer').on('click', function(event) {
-                  $('.ui-pnotify').remove();
-              });
+
+            $('.ui-pnotify-closer').on('click', function(event) {
+                $('.ui-pnotify').remove();
+            });
+
             jQLoader.hide();
             jQLoaderOther.hide();
             jQInputs.removeClass('hide-inputs');
