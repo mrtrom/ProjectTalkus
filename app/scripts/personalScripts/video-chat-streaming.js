@@ -309,7 +309,7 @@ function onMessage(evt) {
 
 function createPeerConnection() {
   var pc_config = {"iceServers": [{"url": "stun:stun.l.google.com:19302"},
-    {"url":"turn:mitbip@<54.191.113.177>", "credential":"mitbipstunturnservice"}]};
+    {"url":"turn:mitbip@54.191.113.177", "credential":"mitbipstunturnservice"}]};
 
   try {
     peerConn = new RTCPeerConnection(pc_config);
