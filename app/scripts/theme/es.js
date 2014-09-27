@@ -43,5 +43,9 @@ window.language_es_CO ={
   'Terms':'Términos',
   'Sorry, but we dont support video chat in this browser. You can go back to the text chat by clicking':'Lo sentimos, tu navegador no soporta cámara web, puedes volver a chatear haciendo click',
   'Sorry, looks like you dont have a camera or you are using a unsupported browser':'Lo sentimos, no tienes cámara web o estás usando un navegador desactualizado',
-  'Sorry, we dont have permissions to control your camera': 'Lo sentimos, no tenemos permisos para ingresar a tu cámara'
+  'Sorry, we dont have permissions to control your camera': 'Lo sentimos, no tenemos permisos para ingresar a tu cámara',
+  'Press enter to send':'Para enviar, presiona enter',
+  'Leave?':'Aburrido?',
+  'Sure?':'Seguro?',
+  'user wants to do video chat':'El usuario quiere empesar video chatear contigo'
 };

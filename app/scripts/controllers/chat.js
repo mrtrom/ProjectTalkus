@@ -27,9 +27,10 @@
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat', 'bip', '$translate',
   function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat, bip, $translate) {
-    $scope.lang = function(lang){
+      $scope.lang = function(lang){
       $translate.use(lang);
     };
+
     document.title = "Mitbip";
 
     /*window.onbeforeunload = function (e) {
@@ -375,12 +376,22 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               connect();
             }
             $('.ui-pnotify').remove();
-            new PNotify({
-              title: 'Welcome',
-              text: data,
-              type: 'success',
-              remove: true
-            });
+              if($translate.use() === 'en'){
+                  new PNotify({
+                      title: 'Welcome',
+                      text: data,
+                      type: 'success',
+                      remove: true
+                  });
+              }
+              else{
+                  new PNotify({
+                      title: 'Bienvenido',
+                      text: data,
+                      type: 'success',
+                      remove: true
+                  });
+              }
 
             $('.ui-pnotify-closer').on('click', function() {
               $('.ui-pnotify').remove();
@@ -407,16 +418,31 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
           case 'showMessageVideoAnonym':
             $('.ui-pnotify').remove();
-            videolight = new PNotify({
-              title: 'Video Chat',
-              text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span></br><input class=\'btn log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
-              type: 'success',
-              hide: false,
-              buttons: {
-                closer: false,
-                sticker: false
+              if($translate.use() === 'en') {
+                  videolight = new PNotify({
+                      title: 'Video Chat',
+                      text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>user wants to do video chat</span></br><input class=\'btn log\' type=\'button\' value=\'Accept\' id=\'startVideoChat\' /><input class=\'btn log\' type=\'button\' value=\'Cancel\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
+                      type: 'success',
+                      hide: false,
+                      buttons: {
+                          closer: false,
+                          sticker: false
+                      }
+                  });
               }
-            });
+              else{
+                  videolight = new PNotify({
+                      title: 'Video Chat',
+                      text: '<div class=\'clear\'></div><div class=\'startChatNow serverchat\'><i class=\'icon-user\'></i><div><span class=\'muted\'>El usuario quiere video chatear</span></br><input class=\'btn log\' type=\'button\' value=\'Aceptar\' id=\'startVideoChat\' /><input class=\'btn log\' type=\'button\' value=\'Cancelar\' id=\'cancelVideoChat\' /></div></div><div class=\'clear\'></div>',
+                      type: 'success',
+                      hide: false,
+                      buttons: {
+                          closer: false,
+                          sticker: false
+                      }
+                  });
+              }
+
             break;
 
           case 'succesMessageVideoMe':
@@ -433,11 +459,21 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             showMyImageHideCamera();
             showAnonymImageHideCamera();
             $('.ui-pnotify').remove();
-            new PNotify({
-              title: 'Fail',
-              text: 'The video failed to initialize',
-              remove: true
-            });
+            if($translate.use() === 'en'){
+                new PNotify({
+                    title: 'Oops',
+                    text: 'The video failed to initialize',
+                    remove: true
+                });
+            }
+            else{
+                new PNotify({
+                    title: 'Oops',
+                    text: 'El video no se pudo inicializar',
+                    remove: true
+                });
+            }
+
             break;
 
           case 'failMessageVideoAnonym':
@@ -446,11 +482,20 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             showMyImageHideCamera();
             showAnonymImageHideCamera();
             $('.ui-pnotify').remove();
-            new PNotify({
-              title: 'Fail',
-              text: 'The video failed to initialize',
-              remove: true
-            });
+              if($translate.use() === 'en'){
+                  new PNotify({
+                      title: 'Oops',
+                      text: 'The video failed to initialize',
+                      remove: true
+                  });
+              }
+              else{
+                  new PNotify({
+                      title: 'Oops',
+                      text: 'El video no se pudo inicializar',
+                      remove: true
+                  });
+              }
             break;
 
           case 'cancelMessageVideoMe':

@@ -90,10 +90,10 @@
         </div>
         <div class="row-fluid">
           <div class="chatSendContainer">
-            <a ng-href="" class="new-room" ng-click="newRoomValidate()"><span ng-show="userstatusbool" class="glyphicon glyphicon-refresh"><span class="bool-text">Leave?</span></span><span ng-hide="userstatusbool">Sure?</span></a>
+            <a ng-href="" class="new-room" ng-click="newRoomValidate()"><span ng-show="userstatusbool" class="glyphicon glyphicon-refresh"><span class="bool-text">{{'Leave?' | translate}}</span></span><span ng-hide="userstatusbool">{{'Sure?' | translate}}</span></a>
 
             <div class="input">
-              <input id="data" placeholder="Press enter to send" type="text" disabled="disabled"/>
+              <input id="data" placeholder="{{'Press enter to send' | translate}}" type="text" disabled="disabled"/>
               <input id="dataFalse" type="text" hidden="hidden" />
             </div>
               <div id="videoButtons">
