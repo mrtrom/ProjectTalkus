@@ -27,9 +27,9 @@
 
 Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http', '$window', '$location', '$filter','$cookies', '$route', 'Session', 'User', 'Mails' , 'ChatUser', 'uploadget', 'isVideoChat', 'bip', '$translate',
   function($rootScope, $scope, $http, $window, $location, $filter, $cookies, $route, Session, User, Mails, ChatUser, uploadget, isVideoChat, bip, $translate) {
-      $scope.lang = function(lang){
-          $translate.use(lang);
-      };
+    $scope.lang = function(lang){
+      $translate.use(lang);
+    };
     document.title = "Mitbip";
 
     /*window.onbeforeunload = function (e) {
@@ -280,9 +280,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
     }
     function onInitialText(data){
-
       socket.emit('nextText', data);
-
     }
     function onInitialVideo (data, type, user, start){
       window.channelReady = true;
@@ -375,8 +373,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               remove: true
             });
 
-            $('.ui-pnotify-closer').on('click', function(event) {
-                $('.ui-pnotify').remove();
+            $('.ui-pnotify-closer').on('click', function() {
+              $('.ui-pnotify').remove();
             });
 
             jQLoader.hide();
@@ -544,11 +542,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
       jQNewVideoChat.hide();
       jQConversation.empty();
-      $('#emoticonContainer').css('height', '0');
       jQInputs.addClass('hide-inputs');
       $scope.userstatusbool = false;
       jQLoader.hide();
       jQLoaderOther.show();
+      $('#emoticonContainer').css('height', '0');
 
       if (type === 'text'){
         showMyImageHideCamera();
@@ -672,14 +670,16 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     $scope.newRoom = function(){
       $scope.userstatusbool = true;
       jQLoaderOther.hide();
+
       if (isVideoChat){
         socket.emit('disconnectPartners', 'video');
       }
       else{
         socket.emit('disconnectPartners', 'text');
         jQLoader.show();
-          jQInputs.addClass('hide-inputs');
+        jQInputs.addClass('hide-inputs');
       }
+      //$window.location.reload();
     };
 
     $scope.closeAlert = function(index) {
@@ -726,14 +726,14 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
       $scope.opened = true;
     };
-      $scope.biped = function(){
-          bip.save({user:$scope.otherUserInfo},function(suc){
-              bip.get({id:$scope.otherUserInfo._id},function(res){
-                  $scope.likes = res.likes;
-                  $scope.readyLiked = true;
-              });
-          });
-      };
+    $scope.biped = function(){
+      bip.save({user:$scope.otherUserInfo},function(){
+        bip.get({id:$scope.otherUserInfo._id},function(res){
+          $scope.likes = res.likes;
+          $scope.readyLiked = true;
+        });
+      });
+    };
     $scope.format = 'dd/MM/yyyy';
 
     $scope.newpermit = {
@@ -831,26 +831,26 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
     //user delete account
     $scope.deleteAccount = function(){
-        Mails.delete(
-            {id:$scope.userInformation._id},
-            function() {
-                Session.delete(function() {
-                    $location.path('/');
-                    $window.location.reload();
-                });
-            },
-            function () {
-                //error
+      Mails.delete(
+          {id:$scope.userInformation._id},
+          function() {
+            Session.delete(function() {
+              $location.path('/');
+              $window.location.reload();
             });
+          },
+          function () {
+            //error
+          });
     };
 
     //email resend
     $scope.resend = function(){
-        var user = $scope.userInformation;
-        Mails.update({user:user},
-            function(){
-                $scope.newpermit.email = true;
-        });
+      var user = $scope.userInformation;
+      Mails.update({user:user},
+          function(){
+            $scope.newpermit.email = true;
+          });
 
     };
 
@@ -878,7 +878,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         ChatUser.get({username: $scope.userInformation.socketId},
             function(response) {
               bip.get({id:response._id},function(res){
-                  $scope.likes = res.likes;
+                $scope.likes = res.likes;
               });
               $scope.validations.anonymOtherUser = false;
               $scope.otherUserInfo.birth = new Date();

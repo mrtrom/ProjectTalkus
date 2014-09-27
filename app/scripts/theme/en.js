@@ -22,4 +22,4 @@ window.language_en_US = {
 	"EmailDoesNotExist": "looks like that email does not exist on out servers.",
 	"Send": "Send",
 	"Test": "Test"
-}
+};
