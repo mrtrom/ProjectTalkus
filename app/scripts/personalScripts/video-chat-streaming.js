@@ -146,8 +146,8 @@ function startVideo(data, user, type) {
 
         var scope = angular.element($('.view.ng-scope')).scope();
 
-        $('#sidebar-wrapper-anonym').css('width', '370px');
-        $('#sidebar-wrapper-anonym').css('margin-right', '-370px');
+        $('#sidebar-wrapper-anonym').addClass('active-chat');
+        $('div.view').addClass('active-chat-wraper');
 
         if (type && type === 'text'){
           if (!user){
@@ -197,15 +197,15 @@ function stopVideo() {
     sourcevid.mozSrcObject.stop();
     sourcevid.src = null;
 
-    $('#sidebar-wrapper-anonym').css('width', '250px');
-    $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+    $('#sidebar-wrapper-anonym').removeClass('active-chat');
+    $('div.view').removeClass('active-chat-wraper');
   } else {
     if (localStream){
       localStream.stop();
       sourcevid.src = "";
 
-      $('#sidebar-wrapper-anonym').css('width', '250px');
-      $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+      $('#sidebar-wrapper-anonym').removeClass('active-chat');
+      $('div.view').removeClass('active-chat-wraper');
     }
   }
 }
@@ -216,8 +216,8 @@ function stopStreamingNoCamera() {
     sourcevid.mozSrcObject.stop();
     sourcevid.src = null;
 
-    $('#sidebar-wrapper-anonym').css('width', '250px');
-    $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+    $('#sidebar-wrapper-anonym').removeClass('active-chat');
+    $('div.view').removeClass('active-chat-wraper');
 
     new PNotify({
       title: 'Fail',
@@ -229,8 +229,8 @@ function stopStreamingNoCamera() {
       localStream.stop();
       sourcevid.src = "";
 
-      $('#sidebar-wrapper-anonym').css('width', '250px');
-      $('#sidebar-wrapper-anonym').css('margin-right', '-250px');
+      $('#sidebar-wrapper-anonym').removeClass('active-chat');
+      $('div.view').removeClass('active-chat-wraper');
 
       new PNotify({
         title: 'Fail',
