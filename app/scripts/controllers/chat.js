@@ -379,7 +379,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               if($translate.use() === 'en'){
                   new PNotify({
                       title: 'Welcome',
-                      text: data,
+                      text: 'A Biper has connected!',
                       type: 'success',
                       remove: true
                   });
@@ -387,7 +387,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               else{
                   new PNotify({
                       title: 'Bienvenido',
-                      text: data,
+                      text: 'Un Biper se ha conectado!',
                       type: 'success',
                       remove: true
                   });

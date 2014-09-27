@@ -47,5 +47,7 @@ window.language_es_CO ={
   'Press enter to send':'Para enviar, presiona enter',
   'Leave?':'Aburrido?',
   'Sure?':'Seguro?',
-  'user wants to do video chat':'El usuario quiere empesar video chatear contigo'
+  'user wants to do video chat':'El usuario quiere empesar video chatear contigo',
+  'looks like the other user has left the conversation':'Parece que tu compañero ha dejado la conversación',
+  'New room?':'Seguir buscando?'
 };

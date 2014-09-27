@@ -1195,14 +1195,15 @@ div.ui-pnotify{
   padding-top: 5px;
 }
 .otherlooking p {
-  background: #F2DEDE;
-  text-align: center;
-  font-family: helvetica;
-  padding: 13px 31px;
-  border-radius: 0px;
-  display: inline-block;
-  color: #666;
-  font-size: 14px;
+    background: #F2DEDE;
+    text-align: center;
+    font-family: helvetica;
+    padding: 13px 31px;
+    border-radius: 0px;
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 a.new-room {
   background: #428BCA;
@@ -1221,12 +1222,14 @@ a.new-room {
   padding-bottom: 7px;
   padding-left: 0px;
 }
-a.new-room.other{
-  margin: 0 auto;
-  float: none;
-  width: 100px;
-  height: 40px;
-  padding-top: 4px;
+a.new-room.other {
+    margin: 0 auto;
+    float: none;
+    width: auto;
+    height: 40px;
+    padding-top: 4px;
+    display: inline-block;
+    padding: 4px 10px;
 }
 a.new-room.other span{
   font-size: 16px;
