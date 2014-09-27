@@ -345,7 +345,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
 
             jQExitVideoChat.hide();
             jQNewVideoChat.hide();
-            jQLoader.show();
+            jQLoaderOther.show();
             jQInputs.addClass('hide-inputs');
             jQConversation.empty();
             break;
@@ -542,7 +542,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
       jQNewVideoChat.hide();
       jQConversation.empty();
-      jQLoader.hide();
       $('#emoticonContainer').css('height', '0');
       jQInputs.addClass('hide-inputs');
       $scope.userstatusbool = false;
@@ -669,6 +668,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     });
 
     $scope.newRoom = function(){
+      jQLoaderOther.hide();
       if (isVideoChat){
         socket.emit('disconnectPartners', 'video');
       }
