@@ -1278,3 +1278,13 @@ button.video-chat:hover {
 input:disabled {
     background: inherit;
 }
+.social-ico button {
+    width: 40px;
+    display: block;
+    border: none;
+}
+.social-ico {
+    position: absolute;
+    top: 9px;
+    right: 0px;
+}
