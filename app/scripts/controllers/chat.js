@@ -59,7 +59,10 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
         jQUserTyping = $('#userTyping'),
         jQVideoButtons = $('#videoButtons'),
         jQDataFalse = $('#dataFalse'),
-        jQData = $('#data');
+        jQData = $('#data'),
+        jQInputs = $('.wraper-chat'),
+        jQLoader = $('div.looking'),
+        jQIcons = angular.element( document.querySelector( '#emoticonContainer' ) );
     //</editor-fold>
 
     //<editor-fold desc="Scope emit functions">
@@ -348,8 +351,11 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               text: 'Looks like the user left',
               remove: true
             });
-            $('div.looking').show();
-            $('.wraper-chat').addClass('hide-inputs');
+            jQIcons.css('height' , '0px');
+            console.log(jQIcons);
+            jQLoader.show();
+            jQInputs.addClass('hide-inputs');
+            jQConversation.empty();
             break;
 
           case 'connect':
@@ -378,10 +384,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
             });
               $('.ui-pnotify-closer').on('click', function(event) {
                   $('.ui-pnotify').remove();
-                  console.log('ok');
               });
-            $('div.looking').hide();
-            $('.wraper-chat').removeClass('hide-inputs');
+            jQLoader.hide();
+            jQInputs.removeClass('hide-inputs');
             break;
 
           case 'showMessageVideoMe':
@@ -544,8 +549,9 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQExitVideoChat.hide();
       jQNewVideoChat.hide();
       jQConversation.empty();
-      $('div.looking').hide();
-      $('.wraper-chat').removeClass('hide-inputs');
+      jQLoader.hide();
+      jQIcons.css('height' , '0px');
+      jQInputs.addClass('hide-inputs');
       $scope.userstatusbool = false;
       if (type === 'text'){
         showMyImageHideCamera();
@@ -580,16 +586,13 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
     //</editor-fold>
 
     //<editor-fold desc="User info section">
-    $scope.userstatus = 'New room';
     $scope.userstatusbool = true;
     $scope.newRoomValidate = function(){
       if($scope.userstatusbool){
-        $scope.userstatus = 'Leave?';
         $scope.userstatusbool = false;
       }
       else{
         $scope.newRoom();
-        $scope.userstatus = 'New room';
         $scope.userstatusbool = true;
       }
     };
@@ -597,14 +600,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       if (e.which === 27) {
         if($scope.userstatusbool){
           $scope.$apply(function () {
-            $scope.userstatus = 'Leave?';
             $scope.userstatusbool = false;
           });
         }
         else{
           $scope.$apply(function () {
             $scope.newRoom();
-            $scope.userstatus = 'New room';
             $scope.userstatusbool = true;
           });
         }
@@ -676,8 +677,8 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       }
       else{
         socket.emit('disconnectPartners', 'text');
-        $('div.looking').show();
-          $('.wraper-chat').addClass('hide-inputs');
+        jQLoader.show();
+          jQInputs.addClass('hide-inputs');
       }
     };
 

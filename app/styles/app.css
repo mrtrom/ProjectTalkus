@@ -671,9 +671,12 @@ a.navbar-brand img{
     float: left;
 }
 #data {
-  margin: 0;
-  width: calc(100% - 56px);
-    padding: 16px 14px;
+    margin: 0;
+    width: calc(100% - 56px);
+    padding: 0px 14px;
+    font-size: 15px;
+    font-family: helvetica;
+    height: 52px;
 }
 #data:focus{
   outline:none;
@@ -1191,16 +1194,23 @@ a.new-room {
   width: 82px;
   font-size: 19px;
   float: left;
-    padding: 12px 0px;
+    padding: 7px 0px;
     cursor: pointer;
 }
 a.new-room:hover{
     background-color: #3276B1;
 }
-a.new-room span {
+a.new-room span.glyphicon-refresh {
     position: relative;
     top: 4px;
     left: -1px;
+}
+span.bool-text {
+    font-size: 11px;
+    display: block;
+}
+.glyphicon-refresh:before{
+    display: block;
 }
 button.video-chat {
     background: #428BCA;
