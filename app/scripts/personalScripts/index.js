@@ -1,5 +1,9 @@
 $(function() {
   //jQuery to collapse the navbar on scroll
+    $( ".ui-pnotify-closer" ).click(function() {
+
+    });
+
 	$(".navbar").removeClass("slide-left");
 	$(".view.ng-scope").removeClass("slide-left");
   $(window).scroll(function() {

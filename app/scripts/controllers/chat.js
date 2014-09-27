@@ -30,7 +30,6 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       $scope.lang = function(lang){
           $translate.use(lang);
       };
-
     document.title = "Mitbip";
 
     /*window.onbeforeunload = function (e) {
@@ -344,6 +343,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               remove: true
             });
             $('div.looking').show();
+            $('.wraper-chat').addClass('hide-inputs');
             break;
 
           case 'connect':
@@ -370,7 +370,12 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
               type: 'success',
               remove: true
             });
+              $('.ui-pnotify-closer').on('click', function(event) {
+                  $('.ui-pnotify').remove();
+                  console.log('ok');
+              });
             $('div.looking').hide();
+            $('.wraper-chat').removeClass('hide-inputs');
             break;
 
           case 'showMessageVideoMe':
@@ -534,6 +539,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       jQNewVideoChat.hide();
       jQConversation.empty();
       $('div.looking').hide();
+      $('.wraper-chat').removeClass('hide-inputs');
       $scope.userstatusbool = false;
       if (type === 'text'){
         showMyImageHideCamera();
@@ -665,6 +671,7 @@ Modules.controllers.controller('ChatController', ['$rootScope', '$scope', '$http
       else{
         socket.emit('disconnectPartners', 'text');
         $('div.looking').show();
+          $('.wraper-chat').addClass('hide-inputs');
       }
     };
 

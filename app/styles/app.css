@@ -228,11 +228,14 @@ div.centerform {
 }
 input[type] {
   border: none;
-  border-radius: 4px;
-  padding: 16px 9px;
+  border-radius: 0px;
+  padding: 10px 9px;
   color: rgb(102, 102, 102);
   font-style: italic;
   font-family: tahoma;
+}
+.front-form input[type] {
+    margin-bottom: 5px;
 }
 .modal-backdrop.in{
   opacity: 0;
@@ -639,6 +642,14 @@ a.navbar-brand img{
   bottom: 0;
   width: 100%;
   background: #428bca;
+    height: 52px;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+.chat #page-top div.wraper-chat.hide-inputs{
+    height: 0;
+    overflow: hidden;
 }
 .chat .view.ng-scope{
   transition: all 0.4s ease 0s;
@@ -653,14 +664,16 @@ a.navbar-brand img{
   margin-right: 15px;
 }
 .chatSendContainer div.input {
-  width: calc(100% - 134px);
-  background: #fff;
-  border-radius: 0;
-  display: inline-block;
+    width: calc(100% - 134px);
+    background: #FFF;
+    border-radius: 0;
+    display: block;
+    float: left;
 }
 #data {
   margin: 0;
   width: calc(100% - 56px);
+    padding: 16px 14px;
 }
 #data:focus{
   outline:none;
@@ -1166,25 +1179,38 @@ div.ui-pnotify{
   text-align: center;
   margin-left: -50px;
   overflow: hidden;
+    padding-top: 5px;
 }
 a.new-room {
-  background: #fff;
-  border: none;
-  color: #5b687b;
-  font-family: helvetica;
-  text-align: center;
-  display: inline-block;
-  padding: 16px 9px;
-  width: 82px;
-}
-button.video-chat {
-  background: #428bca;
+  background: #428BCA;
   border: none;
   color: #fff;
-  padding: 13px;
-  position: relative;
-  top: -1px;
-  left: -2px;
+  font-family: helvetica;
+  text-align: center;
+  display: block;
+  width: 82px;
+  font-size: 19px;
+  float: left;
+    padding: 12px 0px;
+    cursor: pointer;
+}
+a.new-room:hover{
+    background-color: #3276B1;
+}
+a.new-room span {
+    position: relative;
+    top: 4px;
+    left: -1px;
+}
+button.video-chat {
+    background: #428BCA;
+    border: none;
+    color: #FFF;
+    padding: 13px;
+    display: block;
+    float: left;
+    width: 51px;
+    height: 52px;
 }
 button.video-chat:hover {
   background: #3276b1;
@@ -1203,4 +1229,7 @@ button.video-chat:hover {
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
   color:    #5b687b;
+}
+input:disabled {
+    background: inherit;
 }
